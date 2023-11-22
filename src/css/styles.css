@@ -8,6 +8,9 @@
 @import url('./footer.css');
 @import url('./modal.css');
 @import url('./reset.css');
+@import url('./filters.css');
+@import url('./fonts.css');
+@import url('./popular.css');
 
 :root {
 	--background-color:#E8E8E2;
