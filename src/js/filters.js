@@ -19,10 +19,23 @@ export class RequestToTheServer {
     }
 };
 
-
+const searchForm = document.querySelector('.search-form');
 const inputSearch = document.querySelector('.input-search');
 const buttonSearch = document.querySelector('.button-search');
+const filtersResult = document.querySelector('.filters-result');
 let productsHomePage ={};
+
+const messageForError = () => {
+    const htmlError = `<div class="error">
+    <p class="title-error">
+        Nothing was found for the selected <span><a class="a-title-error" href="">filters...</a></span>
+    </p>
+    <p class="p-error">
+        Try adjusting your search parameters or browse our range by other criteria to find the perfect product for you.
+    </p>
+</div>`;
+    filtersResult.innerHTML = htmlError;
+}
 
 async function ifEmptyInput() {
     try {
@@ -52,12 +65,23 @@ ifEmptyInput();
 
 
 
-buttonSearch.addEventListener('click', (event) => {
+searchForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const textInputFilters = inputSearch.value.trim();
     if(!textInputFilters){
         ifEmptyInput();
+        filtersResult.innerHTML = '';
     } else{
-        console.log(textInputFilters);
+        const valueFilters = `products?keyword=${textInputFilters}`;
+            const classResultProductsWithFilters = new RequestToTheServer(valueFilters);
+            productsHomePage = await classResultProductsWithFilters.fetchBreeds();
+            // localStorage.setItem('products-with-filters', JSON.stringify(productsHomePage));
+            if(productsHomePage.totalPages === 0){
+                messageForError();
+            }
     }
+    console.log(productsHomePage.totalPages);
 })
+
+
+
