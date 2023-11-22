@@ -1,38 +1,32 @@
-import axios from 'axios';
+import { RequestToTheServer } from './js/filtrues';
 
-document.addEventListener('DOMContentLoaded', function () {
-  // Додавання слухача подій DOMContentLoaded для завантаження сторінки
-  const productsData = getProductsFromLocalStorage();
-  if (productsData) {
-    displayProducts(productsData);
-  } else {
-    fetchPopularProducts();
+document.addEventListener('DOMContentLoaded', async function () {
+  const request = new RequestToTheServer('products/popular?limit=5');
+
+  try {
+    // Спробуйте отримати дані з локального сховища
+    const productsData = getProductsFromLocalStorage();
+
+    if (!productsData) {
+      // Якщо дані відсутні в локальному сховищі, отримуйте їх з сервера
+      const fetchedData = await request.fetchBreeds();
+
+      // Збережіть отримані дані в локальному сховищі
+      saveProductsToLocalStorage(fetchedData);
+
+      // Використовуйте отримані дані для відображення продуктів
+      displayProducts(fetchedData);
+    } else {
+      // Використовуйте дані з локального сховища для відображення продуктів
+      displayProducts(productsData);
+    }
+  } catch (error) {
+    console.error('Error:', error);
   }
 });
 
-function fetchPopularProducts() {
-  axios
-    .get('https://food-boutique.b.goit.study/api/products/popular?limit=5')
-    .then(response => {
-      // Виконано запит до сервера та відображення популярних продуктів
-      displayProducts(response.data);
-      saveProductsToLocalStorage(response.data);
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-function saveProductsToLocalStorage(products) {
-  //  Збереження популярних продуктів в локальне сховище
-  localStorage.setItem('popularProducts', JSON.stringify(products));
-}
-
-function getProductsFromLocalStorage() {
-  //  Отримання популярних продуктів з локального сховища
-  const storedData = localStorage.getItem('popularProducts');
-  return storedData ? JSON.parse(storedData) : null;
-}
-
-function displayProducts(products) {
+// Змінена функція для відображення популярних продуктів
+async function displayProducts(products) {
   const productsContainer = document.querySelector('.products-container');
   const template = document.querySelector('.product-template');
 
@@ -42,7 +36,7 @@ function displayProducts(products) {
     productClone.querySelector('.product-image').src = product.img;
     productClone.querySelector('.product-name').textContent = product.name;
 
-    //  Відображення продуктів на сторінці з даними з сервера
+    // Заповнюємо дані з сервера в спани
     productClone.querySelector('.category-value').textContent =
       product.category.replace('_', ' ');
     productClone.querySelector('.size-value').textContent = product.size;
@@ -51,7 +45,6 @@ function displayProducts(products) {
 
     const addToCartBtn = productClone.querySelector('.add-to-cart-btn');
     addToCartBtn.onclick = function () {
-      //  Додавання продукту до кошика за допомогою кнопки
       addToCart(product._id);
     };
 
@@ -59,6 +52,18 @@ function displayProducts(products) {
   });
 }
 
+// Функція збереження продуктів в локальному сховищі
+function saveProductsToLocalStorage(products) {
+  localStorage.setItem('popularProducts', JSON.stringify(products));
+}
+
+// Функція отримання продуктів з локального сховища
+function getProductsFromLocalStorage() {
+  const storedData = localStorage.getItem('popularProducts');
+  return storedData ? JSON.parse(storedData) : null;
+}
+
+// Змінена функція для додавання продукту в кошик
 function addToCart(productId) {
   console.log('Додавання продукту в кошик:', productId);
   // Тут буде функціонал для додавання продукту в кошик
