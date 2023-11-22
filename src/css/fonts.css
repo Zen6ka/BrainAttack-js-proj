@@ -1,0 +1,22 @@
+/* neue-montreal - bold*/
+
+@font-face {
+	font-family: "Neue Montreal Bold";
+	src: url("https://db.onlinewebfonts.com/t/1a991b240e707c46ca904d731893f108.eot");
+	src: url("https://db.onlinewebfonts.com/t/1a991b240e707c46ca904d731893f108.eot?#iefix")format("embedded-opentype"),
+	url("https://db.onlinewebfonts.com/t/1a991b240e707c46ca904d731893f108.woff2")format("woff2"),
+	url("https://db.onlinewebfonts.com/t/1a991b240e707c46ca904d731893f108.woff")format("woff"),
+	url("https://db.onlinewebfonts.com/t/1a991b240e707c46ca904d731893f108.ttf")format("truetype"),
+	url("https://db.onlinewebfonts.com/t/1a991b240e707c46ca904d731893f108.svg#Neue Montreal Bold")format("svg");
+}
+
+/* neue-montreal*/
+@font-face {
+	font-family: "Neue Montreal";
+	src: url("https://db.onlinewebfonts.com/t/4366ceae6f7564999a0f0c3e8698a4ad.eot");
+	src: url("https://db.onlinewebfonts.com/t/4366ceae6f7564999a0f0c3e8698a4ad.eot?#iefix")format("embedded-opentype"),
+	url("https://db.onlinewebfonts.com/t/4366ceae6f7564999a0f0c3e8698a4ad.woff2")format("woff2"),
+	url("https://db.onlinewebfonts.com/t/4366ceae6f7564999a0f0c3e8698a4ad.woff")format("woff"),
+	url("https://db.onlinewebfonts.com/t/4366ceae6f7564999a0f0c3e8698a4ad.ttf")format("truetype"),
+	url("https://db.onlinewebfonts.com/t/4366ceae6f7564999a0f0c3e8698a4ad.svg#Neue Montreal")format("svg");
+}
