@@ -10,7 +10,7 @@ export class RequestToTheServer {
 
     async fetchBreeds(){
     try{
-        const response = await axios.get(`${this.baseUrl}${this.endPoint}`);
+        const response = await axios.get(`${this.baseUrl}${this.endPoint}?limit=10`);
         console.log(response.data);
         return response.data
     } catch(error){
@@ -42,7 +42,9 @@ async function ifEmptyInput() {
         const storageDataHomePage = localStorage.getItem('products-home-page-filters');
         if (storageDataHomePage) {
             productsHomePage = JSON.parse(storageDataHomePage);
+            // localStorage.removeItem('products-home-page-filters');
         } else {
+            console.log(1);
             const firstProductsFilters = "products";
             const classFirstProducts = new RequestToTheServer(firstProductsFilters);
             productsHomePage = await classFirstProducts.fetchBreeds();
