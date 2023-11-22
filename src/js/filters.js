@@ -10,7 +10,7 @@ export class RequestToTheServer {
 
     async fetchBreeds(){
     try{
-        const response = await axios.get(`${this.baseUrl}${this.endPoint}?limit=10`);
+        const response = await axios.get(`${this.baseUrl}${this.endPoint}?page=1&limit=10`);
         console.log(response.data);
         return response.data
     } catch(error){
