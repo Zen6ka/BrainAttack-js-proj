@@ -160,9 +160,7 @@ function addListenerLi(buttonsLiFilters){
 };
 
 function renderEndPoint(event){
-    console.log(2);
     const nameCategoty = event.currentTarget.textContent;
     console.log(nameCategoty);
-    console.log(1)
 }
 
