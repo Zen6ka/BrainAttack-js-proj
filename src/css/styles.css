@@ -4,26 +4,24 @@
   | default @import url()
   |============================
 */
-@import url('./header.css');
-@import url('./footer.css');
-@import url('./modal.css');
+
 @import url('./reset.css');
-@import url('./filters.css');
 @import url('./fonts.css');
+@import url('./header.css');
+@import url('./filters.css');
 @import url('./popular.css');
 @import url('./product-cards.css');
+@import url('./footer.css');
+@import url('./modal.css');
 
-/* :root {
-	--background-color:#E8E8E2;
-	--content-text-color:#010101;
+:root {
+  --background-color: #e8e8e2;
+  --content-text-color: #010101;
 
-	--footer-background: #6D8434;
-	--footer-logo-text: #E8E8E2;
-
+  --footer-background: #6d8434;
+  --footer-logo-text: #e8e8e2;
 }
 
 .list {
-	list-style: none;
-} */
-
-
+  list-style: none;
+}

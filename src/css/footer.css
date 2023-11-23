@@ -1,23 +1,227 @@
-/* ==================FOOTER================== */
 .footer {
-  padding: 80px 0;
+  padding-top: 40px;
+  padding-bottom: 20px;
   background-color: var(--footer-background);
+  color: var(--footer-logo-text);
 }
 
-.container {
-  width: 100%;
-	height: 386px;
+.footer-container {
+  max-width: 375px;
   padding: 0 20px;
   margin: 0 auto;
 }
+.footer-content-wrap {
+  margin-bottom: 80px;
+}
+.footer-logo-icon {
+  width: 28px;
+  height: 28px;
+}
+.footer-logo-social {
+  margin-bottom: 40px;
+}
+.footer-logo-link {
+  color: #e8e8e2;
+  font-family: Quincy CF;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.11;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
+.footer-logo-icon {
+  margin-right: 8px;
+}
+.footer-social-media-list {
+  display: flex;
+  gap: 12px;
+}
+
+.social-media-icon {
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.social-media-link:hover .social-media-icon,
+.social-media-link:focus .social-media-icon {
+  background-color: rgba(232, 232, 226, 0.2);
+}
+.social-media-icon {
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid var(--footer-logo-text);
+  width: 40px;
+  height: 40px;
+  display: block;
+}
 .text-block {
-	color: var(--footer-logo-text);
+  font-family: 'NeueMontreal';
+  margin-bottom: 80px;
+}
+.footer-slogan-title {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.17;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+}
+.footer-slogan {
+  color: rgba(232, 232, 226, 0.7);
+  font-size: 14px;
+  line-height: 1.29;
+}
 
-font-family: Neue Montreal;
-font-size: 40px;
-font-style: normal;
-font-weight: 500;
-line-height: 44px; /* 110% */
-letter-spacing: -0.8px;
+.subscription-wrap {
+  font-family: 'NeueMontreal';
+}
+.suscription-text {
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.29;
+}
+.contact-form-input {
+  padding: 12px 18px;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.29;
+  border-radius: 30px;
+  border: 1px solid var(--footer-logo-text);
+  background-color: transparent;
+  color: var(--footer-logo-text);
+  margin-bottom: 14px;
+}
+.contact-form-input::placeholder {
+  color: rgba(232, 232, 226, 0.6);
+}
+.footer-form-btn {
+  width: 100%;
+  padding-top: 12px;
+  color: var(--content-text-color);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.29;
+  padding-bottom: 12px;
+  border-radius: 30px;
+  background-color: var(--footer-logo-text);
+  border: none;
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.footer-form-btn:hover,
+.footer-form-btn:focus {
+  color: var(--footer-background);
+}
+
+.footer-policy-wrap {
+  font-family: 'NeueMontreal';
+  color: var(--footer-logo-text);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.29;
+}
+.footer-copywriting-text {
+  opacity: 0.9;
+  margin-bottom: 8px;
+}
+.footer-policy-dividion {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.footer-privacy-policy-link {
+  transition: text-decoration 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.footer-privacy-policy-link:hover,
+.footer-privacy-policy-link:focus {
+  text-decoration: underline;
+}
+.footer-terms-link {
+  transition: text-decoration 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.footer-terms-link:hover,
+.footer-terms-link:focus {
+  text-decoration: underline;
+}
+/*=======media768====================================*/
+@media (min-width: 768px) {
+  .footer-container {
+    max-width: 768px;
+    padding: 0 32px;
+  }
+  .footer-content-wrap {
+    justify-content: space-between;
+    display: flex;
+    margin-bottom: 120px;
+  }
+  .footer-logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .footer-logo-social {
+    margin-bottom: 0;
+  }
+  .footer-logo-link {
+    font-size: 24px;
+    line-height: 1;
+  }
+  .social-media-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .text-block {
+    max-width: 429px;
+    margin-bottom: 64px;
+  }
+  .footer-slogan-title {
+    font-size: 40px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .footer-slogan {
+    font-size: 18px;
+    line-height: 1.33;
+  }
+
+  .subscription-wrap {
+    max-width: 336px;
+  }
+  .suscription-text {
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 1.33;
+  }
+  .contact-form-input {
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .footer-form-btn {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .footer-policy-wrap {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+/*=======media1440====================================*/
+@media (min-width: 1440px) {
+  .footer-container {
+    max-width: 1440px;
+    padding: 0 100px;
+  }
+  .footer-content-wrap {
+    margin-bottom: 128px;
+  }
+  .footer-main-info-wrap {
+    display: flex;
+  }
+  .text-block {
+    margin-right: 148px;
+    max-width: 410px;
+    margin-bottom: 0;
+  }
 }
