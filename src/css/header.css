@@ -82,17 +82,18 @@ body {
   width: 32px;
   height: 32px;
   margin-right: 8px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* .header-logo-icon:hover,
+.header-logo-icon:focus {
+  fill: #e8e8e2;
+} */
 
 .main-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.logo-wrapper {
-  display: flex;
-  align-items: center;
 }
 
 .navig-wrapper {
@@ -115,7 +116,18 @@ body {
   font-weight: 900;
   line-height: 24px; /* 100% */
   letter-spacing: -0.48px;
+  display: flex;
+  align-items: center;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* .logo-link:hover,
+.logo-link:focus {
+  color: #e8e8e2;
+  width: 220px;
+  height: 60px;
+  background-color: #6d8434;
+} */
 
 .hero-title {
   color: #010101;
@@ -166,6 +178,12 @@ body {
   height: 38px;
   border: none;
   margin-right: 14px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-basket:hover,
+.btn-basket:focus {
+  background: #586f1f;
 }
 .cart-amount {
   color: #010101;
