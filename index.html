@@ -5,7 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/BrainAttack-js-proj/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Food Boutique</title>
-		<link
+    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/2.0.0/modern-normalize.min.css"
       integrity="sha512-4xo8blKMVCiXpTaLzQSLSw3KFOVPWhm/TRtuPVc4WG6kUgjH6J03IBuG7JZPkcWMxJ5huwaBpOpnwYElP/m6wg=="
@@ -15,7 +15,7 @@
     
     <script type="module" crossorigin src="/BrainAttack-js-proj/commonHelpers.js"></script>
     <link rel="modulepreload" crossorigin href="/BrainAttack-js-proj/assets/vendor-a61d8330.js">
-    <link rel="stylesheet" href="/BrainAttack-js-proj/assets/index-b7e8de9b.css">
+    <link rel="stylesheet" href="/BrainAttack-js-proj/assets/index-16f74d45.css">
   </head>
 
   <body>
@@ -33,62 +33,9 @@
   </nav>
 </header>
 
-	
-    <!-- <section>
-      <h1>Lorem ipsum dolor sit amet.</h1> -->
-      <!-- Path to images as from index.html file -->
-      <!-- <img src="./img/javascript.svg" alt="" />
-    </section> -->
-
-    <!-- Loads the specified .html file -->
-    <section class="vite-promo">
-  <!-- <div class="container">
-    <div class="wrapper">
-      <h2 class="title">
-        <span class="gradient">Vite</span>
-      </h2>
-      <p class="text">Next Generation Frontend Tooling</p>
-      <p class="tagline">
-        Get ready for a development environment that can finally catch up with
-        you.
-      </p>
-
-      <ul class="actions">
-        <li class="action">
-          <a
-            class="link"
-            href="https://vitejs.dev/guide/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Get Started</a
-          >
-        </li>
-        <li class="action">
-          <a
-            class="link"
-            href="https://github.com/vitejs/vite"
-            target="_blank"
-            rel="noopener noreferrer"
-            >View on GitHub</a
-          >
-        </li>
-      </ul>
-    </div>
-
-    <div class="thumb"> -->
-      <!-- Path to images as from index.html file -->
-      <!-- <img
-        class="pic"
-        src="./img/vite-logo.png"
-        alt="Vite logo"
-        width="640"
-        height="640"
-      />
-    </div>
-  </div> -->
-</section>
-
-    
+    <section class="main-page">
+      <div class="container flex-container">
+        
 <div class="filters">
     <form class="search-form" id="search-form">
         <label class="label-filters">Filters:</label>
@@ -110,25 +57,20 @@
 </div>
 
 
-		ENOENT: no such file or directory, open '/home/runner/work/BrainAttack-js-proj/BrainAttack-js-proj/src/partials/popular.html'
-		<!-- FOOTER  -->
+        ENOENT: no such file or directory, open '/home/runner/work/BrainAttack-js-proj/BrainAttack-js-proj/src/partials/popular.html'
+      </div>
+    </section>
+    
 <footer class="footer">
-
 	<div class="container footer-container">
-	<!-- <div class="footer-main-wrap"> -->
-	<div class="footer-logo-wrap">
-					
-	<!-- LOGO -->
-	<a  class="link footer-logo-link" href="./index.html">
-		<svg class="footer-logo-icon" width="32" height="32">
+<div class="footer-content-wrap">
+	<div class="footer-logo-social">
+	<a  class="link footer-logo-link" href="../index.html">
+		<svg class="footer-logo-icon">
 			<use href="../img/icons.svg#icon-logo"></use>
-		</svg>
-	<p class="footer-logo-text">Food Boutique</p>
+		</svg>Food Boutique
 	</a>
-	</div>
-	
-		 <!-- SOCIAL MEDIA -->
-	<ul class="social-media-list list">
+	<ul class="footer-social-media-list list">
 			<li class="social-media-item">
 			<a
 			class="social-media-link link"
@@ -136,7 +78,7 @@
 			target="_blank"
 			rel="noopener noreferrer"
 			>
-	<svg class="social-media-icon" width="28" height="28">
+	<svg class="social-media-icon">
 			<use href="../img/icons.svg#icon-facebook"></use>
 	</svg>
 				</a>
@@ -149,7 +91,7 @@
 			target="_blank"
 			rel="noopener noreferrer"
 			>
-	<svg class="social-media-icon" width="28" height="28">
+	<svg class="social-media-icon">
 			<use href="../img/icons.svg#icon-instagram"></use>
 	</svg>
 			</a>
@@ -162,21 +104,22 @@
 			target="_blank"
 			rel="noopener noreferrer"
 			>
-	<svg class="social-media-icon" width="28" height="28">
+	<svg class="social-media-icon">
 			<use href="../img/icons.svg#icon-youtube"></use>
 	</svg>
 			</a>
 		</li>
 	
 	</ul>
-	
-		<!-- FOOTER TEXT CENTRE -->
+	</div>
+	<div class="footer-main-info-wrap">
 	<div class = "text-block">
-			<h2>Discover the Variety of Flavors and Quality</h2>
-			<p>An online store where you will find fresh, natural and delicious products for a healthy life and unforgettable gastronomic adventures.</p>
+			<h2 class="footer-slogan-title">Discover the Variety of Flavors and Quality</h2>
+			<p class="footer-slogan">An online store where you will find fresh, natural and delicious products for a healthy life and unforgettable gastronomic adventures.</p>
 	</div>
 	
-	<!-- FOOTER FORM -->
+<div class="subscription-wrap">
+	<p class="suscription-text">Subscribe and learn about new products!</p>
 	
 	<form class="footer-form">
 		<div class="contact-form-box">
@@ -187,36 +130,32 @@
 		placeholder="Email"
 		class="contact-form-input"
 		pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-		title="Please enter a valid email address"
 		required />
 	
 		<button type="submit" class="footer-form-btn">Sent</button>
 		</div>
-	
-	
-		<!-- BOTTOM NAVIGATION не пам'ятаю с #-->
-	<div>
-			<p>Food Boutique. All rights reserved.</p>
-		<ul class="bottom-menu">
-			<li class="bottom-menu-item">
-			<a href="#three-steps" class="link footer-menu-link">Privacy Policy /</a>
-			</li>
-			<li class="bottom-menu-item">
-			<a href="#three-steps" class="link footer-menu-link">Terms of Service</a>
-			</li>
-		</ul>
-	</div>
-	
-	
 	</form>
+	</div>
+	</div>
+</div>
+	<div class="footer-policy-wrap">
+		<div>
+			<p class="footer-copywriting-text">Food Boutique. All rights reserved.</p>
+		</div>
+			<div>
+			<a href="#" class="link footer-privacy-policy-link">Privacy Policy</a>
+			<span class="footer-policy-dividion">/</span>
+			
+			<a href="#" class="link footer-terms-link">Terms of Service</a>
+			</div>
+	</div>
 	
 	</div>
-	<!-- </div> -->
+	
 	</footer>
 	</body>
 	</html>
 
     
-
   </body>
 </html>
