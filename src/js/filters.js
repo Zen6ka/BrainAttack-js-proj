@@ -3,13 +3,14 @@ import axios from 'axios';
 export class RequestToTheServer {
     baseUrl = 'https://food-boutique.b.goit.study/api/'
 
-    constructor(endPoint){
+    constructor(endPoint, filters){
         this.endPoint = endPoint;
+        this.filters = filters;
     }
 
     async fetchBreeds(){
     try{
-        const response = await axios.get(`${this.baseUrl}${this.endPoint}?limit=10`);
+        const response = await axios.get(`${this.baseUrl}${this.endPoint}?${this.filters}&limit=10`);
         console.log(response.data);
         return response.data
     } catch(error){
@@ -25,9 +26,15 @@ const inputSearch = document.querySelector('.first-input-search');
 const filtersResult = document.querySelector('.filters-result');
 const firctSelectSearch = document.querySelector('.first-select-search-not-focus');
 const buttonCategories = document.querySelector('.button-categories');
+const spanButtonCategories = document.querySelector('.span-button-categories');
 
+
+const products = "products";
+
+let filters = "";
 let productsHomePage ={};
 let productsCategories = {};
+let nameCategoty = '';
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -44,7 +51,7 @@ const messageForError = () => {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+////////////////////////////////////////// HOME /// PAGE ////////////////////////////////////////////////////////////
 async function ifEmptyInput() {
     try {
         const storageDataHomePage = localStorage.getItem('products-home-page-filters');
@@ -52,8 +59,7 @@ async function ifEmptyInput() {
             productsHomePage = JSON.parse(storageDataHomePage);
             // localStorage.removeItem('products-home-page-filters');
         } else {
-            const firstProductsFilters = "products";
-            const classFirstProducts = new RequestToTheServer(firstProductsFilters);
+            const classFirstProducts = new RequestToTheServer(products, filters);
             productsHomePage = await classFirstProducts.fetchBreeds();
             localStorage.setItem('products-home-page-filters', JSON.stringify(productsHomePage));
         }
@@ -68,7 +74,7 @@ ifEmptyInput();
 
 
 
-
+//////////////////////////////////////// INPUT ////////////////////////////////////////////////////////////////////
 
 
 
@@ -77,12 +83,14 @@ ifEmptyInput();
 searchForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const textInputFilters = inputSearch.value.trim();
-    if(!textInputFilters){
+    if(!textInputFilters && nameCategoty === ''){
         ifEmptyInput();
         filtersResult.innerHTML = '';
+    } else if(!textInputFilters){
+
     } else{
-        const valueFilters = `products?keyword=${textInputFilters}`;
-            const classResultProductsWithFilters = new RequestToTheServer(valueFilters);
+            filters = `keyword=${textInputFilters}&category=${nameCategoty}`;
+            const classResultProductsWithFilters = new RequestToTheServer(products, filters);
             productsHomePage = await classResultProductsWithFilters.fetchBreeds();
             // localStorage.setItem('products-with-filters', JSON.stringify(productsHomePage));
             if(productsHomePage.totalPages === 0){
@@ -94,7 +102,7 @@ searchForm.addEventListener('submit', async (event) => {
 
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////// ALL CATEGORIES ////////////////////////////////////////////////////////////////////
 
 
 
@@ -107,8 +115,8 @@ async function ifEmptyCategories() {
             productsCategories = JSON.parse(storageDataCategories);
             // localStorage.removeItem('categories-filters');
         } else {
-            const firstProductsCategoriesFilters = "products/categories";
-            const classFirstCategoriesProducts = new RequestToTheServer(firstProductsCategoriesFilters);
+            const firstProductsCategoriesFilters = `${products}/categories`;
+            const classFirstCategoriesProducts = new RequestToTheServer(firstProductsCategoriesFilters, filters);
             productsCategories = await classFirstCategoriesProducts.fetchBreeds();
             localStorage.setItem('categories-filters', JSON.stringify(productsCategories));
         }
@@ -160,7 +168,9 @@ function addListenerLi(buttonsLiFilters){
 };
 
 function renderEndPoint(event){
-    const nameCategoty = event.currentTarget.textContent;
+    const nameCategotyForSelect = event.currentTarget.textContent;
+    nameCategoty = nameCategotyForSelect.replace(/ /g, '_').replace(/\//g, '&');
+    spanButtonCategories.innerHTML = `${nameCategotyForSelect}`;
     console.log(nameCategoty);
 }
 
