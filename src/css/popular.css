@@ -131,7 +131,6 @@ span {
 :focus {
   stroke: #e8e8e2;
 }
-.add-to-cart-btn:hover,
-:focus {
+.add-to-cart-btn:hover {
   background: #586f1f;
 }

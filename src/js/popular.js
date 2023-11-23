@@ -68,7 +68,3 @@ function displayProducts(products) {
     };
   });
 }
-function addToCart(productId) {
-  console.log('Додавання продукту в кошик:', productId);
-  // Тут буде функціонал для додавання продукту в кошик
-}
