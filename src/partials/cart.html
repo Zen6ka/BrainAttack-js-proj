@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <title>Cart</title>
+</head>
+<body>
+    <!-- header -->
+    <load src="./header.html"></load>
+
+<!-- Cart -->
+<div class="total-cart-container">
+
+<div class="cart-quantity">
+    <div class="cart-icon-wrapper">
+    <svg class="cart-basket-icon">
+        <use href="../img/icons.svg#icon-heroicons-solid_shopping-cart"></use>
+    </svg>
+</div>
+
+    <p class="cart-title"><b>CART (<span class="js-cart-items-quantity"></span>)</b></p>
+</div>
+
+<div class="js-cart-empty">
+    <img src="../img/yellow-shopping-basket-x1.png" alt="Yellow basket" class="cart-basket-img">
+<div class="text-frame"> 
+    <p class="cart-text-empty-1"><b>Your basket is <a href=".index.html" style="color: #6D8434; text-decoration: none;">empty...</a></b></p>
+<p class="cart-text-empty-2">Go to the main page to select your favorite products and add them to the cart.</p>
+</div>   
+</div>
+
+
+<div class="js-cart-container">
+    <div class="cart-products">
+   <button class="js-delete-all-btn"><b>Delete All</b><svg class="cart-delete-all-icon">
+    <use href="../img/icons.svg#icon-ion_close-sharp"></use> </svg></button>
+
+    <div  class="js-cart-selected-products">
+    </div>
+</div>
+
+    <div class="js-cart-order-details">
+        <p class="cart-order-text"><b>YOUR ORDER</b></p>
+<div class="cart-total-cost-wrap"> 
+    <div class="cart-total-cost"> 
+<p class="cart-total-cost-text-1"><b>Total</b></p>
+<p  class="cart-total-cost-text-2">Sum: <span class="js-total-ordered-price"><b>$12.50</b></span></p>
+</div></div>
+<div class="js-email-form"> 
+<input class="input" type="text" placeholder="Mail: " pattern="[a-zA-Z0-9\-.]+">
+<button type="submit" class="js-email-checkout">Checkout</button>
+    </div>
+</div>
+
+</div>
+
+</div>
+
+    <!-- Footer -->
+    <load src="./footer.html"></load>
+
+    <script src="../js/cart.js" type="module"></script>
+</body>
+</html>

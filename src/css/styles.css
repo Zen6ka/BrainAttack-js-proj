@@ -8,6 +8,7 @@
 @import url('./footer.css');
 @import url('./modal.css');
 @import url('./reset.css');
+@import url('./cart.css');
 
 :root {
 	font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
