@@ -35,6 +35,7 @@ let filters = "";
 let productsHomePage ={};
 let productsCategories = {};
 let nameCategoty = '';
+let productsFromTheLS = {};
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -82,22 +83,42 @@ ifEmptyInput();
 
 searchForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    const resultSearch = localStorage.getItem('result-search-filters');
     const textInputFilters = inputSearch.value.trim();
     if(!textInputFilters && nameCategoty === ''){
         ifEmptyInput();
         filtersResult.innerHTML = '';
     } else if(!textInputFilters){
-
+        console.log(productsHomePage);
+        productsFromTheLS = JSON.parse(localStorage.getItem('products-home-page-filters')).results;
+        
+        productsFromTheLS = JSON.parse(localStorage.getItem('products-home-page-filters')).results;
+        console.log(productsFromTheLS);
     } else{
             filters = `keyword=${textInputFilters}&category=${nameCategoty}`;
             const classResultProductsWithFilters = new RequestToTheServer(products, filters);
-            productsHomePage = await classResultProductsWithFilters.fetchBreeds();
-            // localStorage.setItem('products-with-filters', JSON.stringify(productsHomePage));
-            if(productsHomePage.totalPages === 0){
+            const inputResultSearch = await classResultProductsWithFilters.fetchBreeds();
+            if(inputResultSearch.totalPages === 0){
                 messageForError();
+            } else {
+                if(resultSearch){
+                    const resultNewResultSearch = JSON.parse(resultSearch);
+                    const resultInputResultSearch = inputResultSearch.results;
+                    resultInputResultSearch.forEach((resultObject) => {
+                        if(!resultNewResultSearch.find(newResult => newResult._id === resultObject._id)){
+                            resultNewResultSearch.push(resultObject);
+                        }
+                    });
+                    
+                    localStorage.setItem('result-search-filters', JSON.stringify(resultNewResultSearch));
+                    // localStorage.removeItem('result-search-filters');
+                    console.log(resultNewResultSearch);
+                } else {
+                    console.log(inputResultSearch.results);
+                    localStorage.setItem('result-search-filters', JSON.stringify(inputResultSearch.results));
+                };
             }
     }
-    console.log(productsHomePage.totalPages);
 })
 
 
