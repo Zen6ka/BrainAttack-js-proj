@@ -14,6 +14,7 @@
 @import url('./footer.css');
 @import url('./modal.css');
 @import url('./cart.css');
+@import url('./discount.css');
 
 :root {
   --background-color: #e8e8e2;
@@ -26,4 +27,3 @@
 .list {
   list-style: none;
 }
-
