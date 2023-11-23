@@ -86,12 +86,16 @@ span {
 
 .add-to-cart-btn {
   border: none;
-  background: none;
-  padding: 0;
+  display: inline-flex;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
   cursor: pointer;
 
   border-radius: 30px;
-  background: #e8e8e2;
+
   position: absolute;
   top: 16px;
   right: 16px;
@@ -113,4 +117,21 @@ span {
 }
 .size-value {
   margin-right: 9px;
+}
+.popular-con {
+  display: flex;
+  gap: 9px;
+}
+.ico {
+  stroke: #6d8434;
+  width: 12px;
+  height: 12px;
+}
+.ico:hover,
+:focus {
+  stroke: #e8e8e2;
+}
+.add-to-cart-btn:hover,
+:focus {
+  background: #586f1f;
 }
