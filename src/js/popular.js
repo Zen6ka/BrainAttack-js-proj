@@ -1,4 +1,4 @@
-import { RequestToTheServer } from './js/filtrues';
+import { RequestToTheServer } from './filters';
 
 document.addEventListener('DOMContentLoaded', async function () {
   const request = new RequestToTheServer('products/popular?limit=5');
