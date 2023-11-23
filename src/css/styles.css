@@ -11,8 +11,9 @@
 @import url('./filters.css');
 @import url('./fonts.css');
 @import url('./popular.css');
+@import url('./product-cards.css');
 
-:root {
+/* :root {
 	--background-color:#E8E8E2;
 	--content-text-color:#010101;
 
@@ -23,6 +24,6 @@
 
 .list {
 	list-style: none;
-}
+} */
 
 
