@@ -1,0 +1,116 @@
+.product {
+  color: rgba(1, 1, 1, 0.3);
+  font-family: Neue Montreal;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px;
+}
+.margin {
+  margin-bottom: 9px;
+}
+.category-value,
+.popularity-value,
+.size-value {
+  color: #010101;
+
+  font-family: Neue Montreal;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px;
+}
+.product-name {
+  color: #010101;
+  margin-bottom: 10px;
+  font-family: Neue Montreal;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+}
+.product-text {
+  display: flex;
+  width: 152px;
+  height: 74px;
+
+  flex-direction: column;
+  align-items: flex-start;
+
+  flex-shrink: 0;
+}
+body,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.product-template {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding-left: 12px;
+}
+
+.product-image {
+  width: 56px;
+  height: 56px;
+}
+.product-image-container {
+  background: #e8e8e2;
+  width: 74px; /* Розмір фону 74x74 */
+  height: 74px;
+
+  border-radius: 10px; /* Округлені кути фону, якщо потрібно */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Обрізати зображення, якщо воно виходить за межі фону */
+}
+.product-template {
+  position: relative;
+
+  width: 275px;
+  height: 98px;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+.add-to-cart-btn {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+
+  border-radius: 30px;
+  background: #e8e8e2;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+.h1-popular {
+  color: #010101;
+  margin-bottom: 20px;
+  font-family: Neue Montreal;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px;
+}
+.products-container {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 13px;
+}
+.size-value {
+  margin-right: 9px;
+}

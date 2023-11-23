@@ -4,9 +4,13 @@
   | default @import url()
   |============================
 */
+
 @import url('./reset.css');
 @import url('./fonts.css');
 @import url('./header.css');
+@import url('./filters.css');
+@import url('./popular.css');
+@import url('./product-cards.css');
 @import url('./footer.css');
 @import url('./modal.css');
 
