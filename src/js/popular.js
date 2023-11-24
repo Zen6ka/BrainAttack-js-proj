@@ -2,7 +2,7 @@ import { RequestToTheServer } from './filters';
 
 document.addEventListener('DOMContentLoaded', async function () {
   const request = new RequestToTheServer('products/popular?limit=5');
-
+  updateAddToCartButtonStyle();
   try {
     //  отримати дані з локального сховища
     const productsData = getProductsFromLocalStorage();
@@ -73,25 +73,31 @@ function displayProducts(products) {
     };
     const addToCartBtn = container.querySelector('.add-to-cart-btn');
     addToCartBtn.onclick = function () {
+      addToCartBtn.setAttribute('data-product-id', product._id);
       addToCart(productInfo);
     };
   });
 }
 
 // Функція для додавання продукту в кошик
-function addToCart(product) {
+function addToCart(productInfo) {
   // Отримуємо дані про кошик з локального сховища
   const cart = JSON.parse(localStorage.getItem('cart')) || {};
 
   // Перевіряємо, чи товар вже є в кошику за його ідентифікатором
-  if (!cart[product.productId]) {
+  if (cart[productInfo.productId]) {
+    // Якщо товар вже є в кошику, видаляємо його
+    delete cart[productInfo.productId];
+  } else {
     // Якщо товару немає в кошику, додаємо його
-    cart[product.productId] = product;
-    localStorage.setItem('cart', JSON.stringify(cart));
+    cart[productInfo.productId] = productInfo;
   }
 
-  // Повертаємо об'єкт продукту, який був доданий до кошика
-  return product;
+  // Оновлюємо кошик у локальному сховищі
+  localStorage.setItem('cart', JSON.stringify(cart));
+
+  // Оновлюємо стиль кнопок після зміни кошика
+  updateAddToCartButtonStyle();
 }
 
 const productId = '';
@@ -101,5 +107,25 @@ const addToCartBtn = document.querySelector(
 if (addToCartBtn) {
   addToCartBtn.addEventListener('click', () => {
     addToCart(productId);
+  });
+}
+function updateAddToCartButtonStyle() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || {};
+  const addToCartButtons = document.querySelectorAll('.cart-btn');
+
+  addToCartButtons.forEach(btn => {
+    const productId = btn.getAttribute('data-product-id');
+    const icon = btn.querySelector('svg > use');
+
+    if (cart[productId]) {
+      btn.classList.add('added-to-cart');
+      icon.setAttribute('href', '../img/icons.svg#icon-check'); // Іконка "вже в кошику"
+    } else {
+      btn.classList.remove('added-to-cart');
+      icon.setAttribute(
+        'href',
+        '../img/icons.svg#icon-heroicons-solid_shopping-cart'
+      ); // Звичайна іконка кошика
+    }
   });
 }
