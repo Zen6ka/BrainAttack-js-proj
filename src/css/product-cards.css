@@ -4,7 +4,7 @@
     --cards-light-color:#010101;
     --cards-cart-color:#6D8434;
 }
-.card-list {
+/* .card-list {
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -22,7 +22,7 @@
     width: 295px;
     height: 178px;
     object-fit: cover;
-  }
+  } */
   
 .cardlist-product {
     overflow: hidden;
@@ -52,7 +52,6 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     white-space: pre-wrap;
-    
   }
 
   .cardlist-descr-light {

@@ -1,3 +1,10 @@
+.root{
+    --cards-color:#FAFAFA;
+    --cards-text-color:#000001;
+    --cards-light-color:#010101;
+    --cards-cart-color:#6D8434;
+}
+
 .filters{
     margin: 0 auto;
     max-width: 375px;
@@ -172,6 +179,44 @@
     font-style: normal;
     font-weight: 400;
     line-height: 18px;
+}
+
+.card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex-basis: 100%;
+}
+
+.card-list-item{
+    background-color: var(--cards-color);
+    border-radius: 20px;
+    height: 356px;
+    padding: 14px;
+    transition: all 250ms cubic-bezier(0.5, -0.75, 0.7, 2);
+}
+
+.cardlist-img {
+    border-radius: 16px;
+    width: 295px;
+    height: 178px;
+    object-fit: cover;
+    }
+
+
+.cardlist-descr{
+    margin-bottom: 20px;
+    margin-left: 6px;
+    height: 54px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    white-space: pre-wrap;
 }
 
 

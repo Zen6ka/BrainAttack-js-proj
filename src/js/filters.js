@@ -29,7 +29,7 @@ const filtersResult = document.querySelector('.filters-result');
 const firctSelectSearch = document.querySelector('.first-select-search-not-focus');
 const buttonCategories = document.querySelector('.button-categories');
 const spanButtonCategories = document.querySelector('.span-button-categories');
-const cardlist = document.querySelector('.cardlist');
+const cardList = document.querySelector('.card-list');
 
 
 const products = "products";
@@ -186,9 +186,9 @@ function renderEndPoint(event){
 function renderCards(products) {
     const listResult = [];
     products.forEach((product) => {
-        const itemResult = `<li class="cardlist-item id-for-del" data-id=${product._id}>
+        const itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
                 <img src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" onerror="this.onerror=null;this.src='';" width=300>
-                <h3 class="cardlist-product">${product.name}</h3>
+                <h3 class="card-list-product">${product.name}</h3>
                 <ul class="cardlist-descr">
                     <li class ="li-p-cards"><span class ="span-p-cards">Category: </span>${product.category}</li>
                     <li class ="li-p-cards"><span class ="span-p-cards">Size: </span>${product.size}</li>
@@ -203,7 +203,7 @@ function renderCards(products) {
                 </li>`;
                 listResult.push(itemResult)
     });
-    cardlist.innerHTML = listResult.join(" ")
+    cardList.innerHTML = listResult.join(" ")
 };
 
 
