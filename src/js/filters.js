@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { all } from 'axios';
 
 export class RequestToTheServer {
     baseUrl = 'https://food-boutique.b.goit.study/api/'
@@ -33,8 +33,9 @@ const products = "products";
 
 let filters = "";
 let productsHomePage ={};
+let inputResultSearch = {};
 let productsCategories = {};
-let nameCategoty = '';
+let nameCategory = '';
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -80,53 +81,88 @@ ifEmptyInput();
 
 
 
-searchForm.addEventListener('submit', async (event) => {
+searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    const productsFromTheLS = JSON.parse(localStorage.getItem('products-home-page-filters')).results;
-    let resultSearch = localStorage.getItem('result-search-filters');
     const textInputFilters = inputSearch.value.trim();
-    if(!textInputFilters && nameCategoty === ''){
-        ifEmptyInput();
-        filtersResult.innerHTML = '';
-    } else if(productsFromTheLS.find(newResult => newResult.name === textInputFilters) ||
-    productsFromTheLS.find(newResult => newResult.category === nameCategoty)){
-        
-        productsFromTheLS
-        
-        
-        
-    } else{
-            filters = `keyword=${textInputFilters}&category=${nameCategoty}`;
-            const classResultProductsWithFilters = new RequestToTheServer(products, filters);
-            const inputResultSearch = await classResultProductsWithFilters.fetchBreeds();
-            if(inputResultSearch.totalPages === 0){
-                messageForError();
-            } else {
-                if(resultSearch){
-                    const resultNewResultSearch = JSON.parse(resultSearch);
-                    const resultInputResultSearch = inputResultSearch.results;
-                    resultInputResultSearch.forEach((resultObject) => {
-                        if(!resultNewResultSearch.find(newResult => newResult._id === resultObject._id)){
-                            resultNewResultSearch.push(resultObject);
-                        }
-                    });
-                    localStorage.setItem('result-search-filters', JSON.stringify(resultNewResultSearch));
-                    // localStorage.removeItem('result-search-filters');
-                    console.log(resultNewResultSearch);
-                } else {
-                    console.log(inputResultSearch.results);
-                    localStorage.setItem('result-search-filters', JSON.stringify(inputResultSearch.results));
-                };
-                resultSearch = localStorage.getItem('result-search-filters');
-                const resultSearchFromTheLS = JSON.parse(resultSearch);
-                resultSearchFromTheLS.forEach((resultObject) => {
-                    if(!productsFromTheLS.find(newResult => newResult._id === resultObject._id)){
-                        productsFromTheLS.push(resultObject);
+    const allValueInputLS = localStorage.getItem('all-value-input');
+    
+    functionInputSearch(textInputFilters, allValueInputLS, nameCategory)
+});
+
+
+
+function functionInputSearch(textInputFilters, allValueInputLS, nameCategory){
+    const productsFromTheLS = JSON.parse(localStorage.getItem('products-home-page-filters')).results;
+let resultSearch = localStorage.getItem('result-search-filters');
+if(!textInputFilters && nameCategory === ''){
+    ifEmptyInput();
+    filtersResult.innerHTML = '';
+} else if(allValueInputLS){
+        const allValueInput = JSON.parse(allValueInputLS);
+        allValueInput.push(textInputFilters)
+        const uniqueAllValueInput = allValueInput.filter(
+            (value, index, array) => array.indexOf(value) === index
+        );
+        localStorage.setItem('all-value-input', JSON.stringify(uniqueAllValueInput));
+        // localStorage.removeItem('all-value-input');
+        console.log(uniqueAllValueInput);
+        if(allValueInput.find(value => value === textInputFilters) && resultSearch){
+            const massOldResult = JSON.parse(resultSearch);
+            inputResultSearch = massOldResult.filter(obj => obj.name === textInputFilters);
+            massOldResult.forEach((obj) => {console.log(obj.name)});
+            console.log(textInputFilters);
+            console.log(massOldResult);
+            console.log(inputResultSearch);
+            if(Object.keys(inputResultSearch).length === 0){
+                searchWithFilters(productsFromTheLS, resultSearch, textInputFilters, nameCategory)
+            }
+        } else {
+            searchWithFilters(productsFromTheLS, resultSearch, textInputFilters, nameCategory)
+        }
+    } else {
+        console.log([textInputFilters]);
+        localStorage.setItem('all-value-input', JSON.stringify([textInputFilters]));
+        searchWithFilters(productsFromTheLS, resultSearch, textInputFilters, nameCategory)
+}
+console.log(inputResultSearch)
+};
+
+
+async function searchWithFilters(productsFromTheLS, resultSearch, textInputFilters, nameCategory) {
+    filters = `keyword=${textInputFilters}&category=${nameCategory}`;
+        const classResultProductsWithFilters = new RequestToTheServer(products, filters);
+        inputResultSearch = await classResultProductsWithFilters.fetchBreeds();
+        console.log(filters);
+        console.log(nameCategory);
+        console.log(inputResultSearch);
+        if(inputResultSearch.totalPages === 0){
+            messageForError();
+        } else {
+            if(resultSearch){
+                const resultNewResultSearch = JSON.parse(resultSearch);
+                const resultInputResultSearch = inputResultSearch.results;
+                resultInputResultSearch.forEach((resultObject) => {
+                    if(!resultNewResultSearch.find(newResult => newResult._id === resultObject._id)){
+                        resultNewResultSearch.push(resultObject);
                     }
                 });
-            }
-    }
-});
+                localStorage.setItem('result-search-filters', JSON.stringify(resultNewResultSearch));
+                // localStorage.removeItem('result-search-filters');
+                console.log(resultNewResultSearch);
+            } else {
+                console.log(inputResultSearch.results);
+                localStorage.setItem('result-search-filters', JSON.stringify(inputResultSearch.results));
+            };
+            resultSearch = localStorage.getItem('result-search-filters');
+            const resultSearchFromTheLS = JSON.parse(resultSearch);
+            resultSearchFromTheLS.forEach((resultObject) => {
+                if(!productsFromTheLS.find(newResult => newResult._id === resultObject._id)){
+                    productsFromTheLS.push(resultObject);
+                }
+            });
+        }
+        console.log(inputResultSearch)
+}
 
 
 
@@ -196,9 +232,10 @@ function addListenerLi(buttonsLiFilters){
 };
 
 function renderEndPoint(event){
-    const nameCategotyForSelect = event.currentTarget.textContent;
-    nameCategoty = nameCategotyForSelect.replace(/ /g, '_').replace(/\//g, '&');
-    spanButtonCategories.innerHTML = `${nameCategotyForSelect}`;
-    console.log(nameCategoty);
+    const nameCategoryForSelect = event.currentTarget.textContent;
+    nameCategory = nameCategoryForSelect.replace(/ /g, '_').replace(/\//g, '&');
+    spanButtonCategories.innerHTML = `${nameCategoryForSelect}`;
+    console.log(nameCategory);
 }
 
+// localStorage.clear()
