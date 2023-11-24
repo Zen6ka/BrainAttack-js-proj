@@ -2,7 +2,7 @@ import { RequestToTheServer } from './filters';
 
 document.addEventListener('DOMContentLoaded', async function () {
   const request = new RequestToTheServer('products/popular?limit=5');
-  updateAddToCartButtonStyle();
+
   try {
     //  отримати дані з локального сховища
     const productsData = getProductsFromLocalStorage();
@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       // дані з локального сховища для відображення продуктів
       displayProducts(productsData);
     }
+    updateAddToCartButtonStyle();
   } catch (error) {
     console.error('Error:', error);
   }
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 function saveProductsToLocalStorage(products) {
   //  Збереження продуктів в локальне сховище
   localStorage.setItem('popularProducts', JSON.stringify(products));
+  updateAddToCartButtonStyle();
 }
 
 function getProductsFromLocalStorage() {
@@ -73,9 +75,9 @@ function displayProducts(products) {
     };
     const addToCartBtn = container.querySelector('.add-to-cart-btn');
     addToCartBtn.onclick = function () {
-      addToCartBtn.setAttribute('data-product-id', product._id);
       addToCart(productInfo);
     };
+    addToCartBtn.setAttribute('data-product-id', product._id);
   });
 }
 
@@ -115,17 +117,19 @@ function updateAddToCartButtonStyle() {
 
   addToCartButtons.forEach(btn => {
     const productId = btn.getAttribute('data-product-id');
-    const icon = btn.querySelector('svg > use');
+    const iconInCart = btn.querySelector('.icon-off');
+    const iconAddToCart = btn.querySelector('.icon-on');
 
-    if (cart[productId]) {
-      btn.classList.add('added-to-cart');
-      icon.setAttribute('href', '../img/icons.svg#icon-check'); // Іконка "вже в кошику"
-    } else {
-      btn.classList.remove('added-to-cart');
-      icon.setAttribute(
-        'href',
-        '../img/icons.svg#icon-heroicons-solid_shopping-cart'
-      ); // Звичайна іконка кошика
+    if (iconInCart && iconAddToCart) {
+      if (cart[productId]) {
+        btn.classList.add('added-to-cart');
+        iconInCart.style.display = 'block';
+        iconAddToCart.style.display = 'none';
+      } else {
+        btn.classList.remove('added-to-cart');
+        iconInCart.style.display = 'none';
+        iconAddToCart.style.display = 'block';
+      }
     }
   });
 }
