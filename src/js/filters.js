@@ -3,14 +3,16 @@ import axios, { all } from 'axios';
 export class RequestToTheServer {
     baseUrl = 'https://food-boutique.b.goit.study/api/'
 
-    constructor(endPoint, filters){
+    constructor(endPoint, filters, page, limit){
         this.endPoint = endPoint;
         this.filters = filters;
+        this.page = page;
+        this.limit = limit;
     }
 
     async fetchBreeds(){
     try{
-        const response = await axios.get(`${this.baseUrl}${this.endPoint}?${this.filters}&limit=10`);
+        const response = await axios.get(`${this.baseUrl}${this.endPoint}?${this.filters}&page=${this.page}&limit=${this.limit}`);
         console.log(response.data);
         return response.data
     } catch(error){
@@ -27,15 +29,40 @@ const filtersResult = document.querySelector('.filters-result');
 const firctSelectSearch = document.querySelector('.first-select-search-not-focus');
 const buttonCategories = document.querySelector('.button-categories');
 const spanButtonCategories = document.querySelector('.span-button-categories');
+const cardList = document.querySelector('.card-list');
 
 
 const products = "products";
 
-let filters = "";
+let keyword = '';
+let category = '';
+let page = 1;
+let limit = 6;
 let productsHomePage ={};
 let inputResultSearch = {};
 let productsCategories = {};
-let nameCategory = '';
+let fullInputResultSearch ={};
+
+function recordsDataForSearch(keyword, category, page, limit){
+    localStorage.setItem('data-for-search', JSON.stringify(
+        {
+            keyword, 
+            category,
+            page,
+            limit
+        }
+        ))
+};
+
+recordsDataForSearch(keyword, category, page, limit);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+async function search () {
+    const letForSearch = JSON.parse(localStorage.getItem('data-for-search'));
+    const filters = `keyword=${letForSearch.keyword}&category=${letForSearch.category}`;
+        const classResultProductsWithFilters = new RequestToTheServer(products, filters, page, limit);
+        fullInputResultSearch = await classResultProductsWithFilters.fetchBreeds();
+};
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -60,107 +87,36 @@ async function ifEmptyInput() {
             productsHomePage = JSON.parse(storageDataHomePage);
             // localStorage.removeItem('products-home-page-filters');
         } else {
-            const classFirstProducts = new RequestToTheServer(products, filters);
-            const fullProductsHomePage = await classFirstProducts.fetchBreeds();
-            productsHomePage = fullProductsHomePage.results;
+            await search();
+            productsHomePage = fullInputResultSearch.results;
+            console.log(fullInputResultSearch);
             localStorage.setItem('products-home-page-filters', JSON.stringify(productsHomePage));
         }
     } catch (error) {
         console.error("Error:", error.message);
     }
     console.log(productsHomePage);
+    renderCards(productsHomePage)
+    // localStorage.removeItem('products-home-page-filters');
 }
 
 ifEmptyInput();
 
-
-
-
 //////////////////////////////////////// INPUT ////////////////////////////////////////////////////////////////////
 
-
-
-
-
-searchForm.addEventListener('submit', (event) => {
+searchForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const textInputFilters = inputSearch.value.trim();
-    const allValueInputLS = localStorage.getItem('all-value-input');
-    
-    functionInputSearch(textInputFilters, allValueInputLS, nameCategory)
+    keyword = inputSearch.value.trim();
+    recordsDataForSearch(keyword, category, page, limit);
+    await search();
+    inputResultSearch = fullInputResultSearch.results;
+    console.log(inputResultSearch);
+    if(fullInputResultSearch.totalPages === 0){
+        messageForError();
+    }
 });
 
-
-
-async function functionInputSearch(textInputFilters, allValueInputLS, nameCategory){
-let resultSearch = localStorage.getItem('result-search-filters');
-if(!textInputFilters && nameCategory === ''){
-    ifEmptyInput();
-    filtersResult.innerHTML = '';
-} else if(allValueInputLS){
-        const allValueInput = JSON.parse(allValueInputLS);
-        allValueInput.push(textInputFilters)
-        const uniqueAllValueInput = allValueInput.filter(
-            (value, index, array) => array.indexOf(value) === index
-        );
-        localStorage.setItem('all-value-input', JSON.stringify(uniqueAllValueInput));
-        // localStorage.removeItem('all-value-input');
-        console.log(uniqueAllValueInput);
-        if(allValueInput.find(value => value === textInputFilters) && resultSearch){
-            const massOldResult = JSON.parse(resultSearch);
-            inputResultSearch = massOldResult.filter(
-                obj => obj.name.toLowerCase().includes(textInputFilters.toLowerCase())
-                ).filter(obj => obj.category === nameCategory);
-            if(Object.keys(inputResultSearch).length === 0){
-                await searchWithFilters(resultSearch, textInputFilters, nameCategory)
-            }
-            console.log(inputResultSearch);
-        } else {
-            searchWithFilters(resultSearch, textInputFilters, nameCategory)
-        }
-    } else {
-        console.log([textInputFilters]);
-        localStorage.setItem('all-value-input', JSON.stringify([textInputFilters]));
-        searchWithFilters(resultSearch, textInputFilters, nameCategory)
-}
-};
-
-
-async function searchWithFilters(resultSearch, textInputFilters, nameCategory) {
-    filters = `keyword=${textInputFilters}&category=${nameCategory}`;
-        const classResultProductsWithFilters = new RequestToTheServer(products, filters);
-        const fullInputResultSearch = await classResultProductsWithFilters.fetchBreeds();
-        inputResultSearch = fullInputResultSearch.results;
-        console.log(inputResultSearch);
-        if(fullInputResultSearch.totalPages === 0){
-            messageForError();
-        } else {
-            if(resultSearch){
-                const resultNewResultSearch = JSON.parse(resultSearch);
-                const resultInputResultSearch = inputResultSearch;
-                resultInputResultSearch.forEach((resultObject) => {
-                    if(!resultNewResultSearch.find(newResult => newResult._id === resultObject._id)){
-                        resultNewResultSearch.push(resultObject);
-                    }
-                });
-                localStorage.setItem('result-search-filters', JSON.stringify(resultNewResultSearch));
-                // localStorage.removeItem('result-search-filters');
-                console.log(resultNewResultSearch);
-            } else {
-                console.log(inputResultSearch);
-                localStorage.setItem('result-search-filters', JSON.stringify(inputResultSearch));
-            };
-        }
-        console.log(inputResultSearch)
-}
-
-
-
 ////////////////////////////////////////// ALL CATEGORIES ////////////////////////////////////////////////////////////////////
-
-
-
-
 
 async function ifEmptyCategories() {
     try {
@@ -169,8 +125,9 @@ async function ifEmptyCategories() {
             productsCategories = JSON.parse(storageDataCategories);
             // localStorage.removeItem('categories-filters');
         } else {
+            const filters = '';
             const firstProductsCategoriesFilters = `${products}/categories`;
-            const classFirstCategoriesProducts = new RequestToTheServer(firstProductsCategoriesFilters, filters);
+            const classFirstCategoriesProducts = new RequestToTheServer(firstProductsCategoriesFilters, filters, page, limit);
             productsCategories = await classFirstCategoriesProducts.fetchBreeds();
             localStorage.setItem('categories-filters', JSON.stringify(productsCategories));
         }
@@ -193,12 +150,9 @@ function renderCategories(productsCategories){
     addListenerLi(buttonsLiFilters)
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 buttonCategories.addEventListener('click', () => addListenerButton(buttonCategories, firctSelectSearch));
-
 
 function addListenerButton(button, buttonList) {
     buttonList.classList.add('first-select-search');
@@ -223,11 +177,81 @@ function addListenerLi(buttonsLiFilters){
 
 function renderEndPoint(event){
     const nameCategoryForSelect = event.currentTarget.textContent;
-    nameCategory = nameCategoryForSelect.replace(/ /g, '_').replace(/\//g, '&');
+    category = nameCategoryForSelect.replace(/ /g, '_').replace(/\//g, '&');
     spanButtonCategories.innerHTML = `${nameCategoryForSelect}`;
 }
 
+///////////////////////////////////////////////////////  RENDER  CARDS  /////////////////////////////////////////////////////////////
+
+function renderCards(products) {
+    const listResult = [];
+    products.forEach((product) => {
+        const itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
+                <img src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" onerror="this.onerror=null;this.src='';" width=300>
+                <h3 class="card-list-product">${product.name}</h3>
+                <ul class="cardlist-descr">
+                    <li class ="li-p-cards"><span class ="span-p-cards">Category: </span>${product.category}</li>
+                    <li class ="li-p-cards"><span class ="span-p-cards">Size: </span>${product.size}</li>
+                    <li class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</li>
+                </ul>
+                <div class="cartlist-btn"><button class="cardlist-add-cart add-to-cart-product ">
+                <svg class="cardlist-svg" weight="18" height="18">
+                <use href=""#cart"></use>
+                </svg>
+                </button>
+                </div>
+                </li>`;
+                listResult.push(itemResult)
+    });
+    cardList.innerHTML = listResult.join(" ")
+};
+
+
 // localStorage.clear()
+
+
+
+
+
+
+
+
+
+// const allValueInputLS = localStorage.getItem('all-value-input');
+
+// async function functionInputSearch(textInputFilters, allValueInputLS, nameCategory){
+    // let resultSearch = localStorage.getItem('result-search-filters');
+    // if(!textInputFilters && nameCategory === ''){
+    //     ifEmptyInput();
+    //     filtersResult.innerHTML = '';
+    // } else if(allValueInputLS){
+    //         const allValueInput = JSON.parse(allValueInputLS);
+    //         allValueInput.push(textInputFilters)
+    //         const uniqueAllValueInput = allValueInput.filter(
+    //             (value, index, array) => array.indexOf(value) === index
+    //         );
+    //         localStorage.setItem('all-value-input', JSON.stringify(uniqueAllValueInput));
+    //         // localStorage.removeItem('all-value-input');
+    //         console.log(uniqueAllValueInput);
+    //         if(allValueInput.find(value => value === textInputFilters) && resultSearch){
+    //             const massOldResult = JSON.parse(resultSearch);
+    //             inputResultSearch = massOldResult.filter(
+    //                 obj => obj.name.toLowerCase().includes(textInputFilters.toLowerCase())
+    //                 ).filter(obj => obj.category === nameCategory);
+    //             if(Object.keys(inputResultSearch).length === 0){
+    //                 await searchWithFilters(resultSearch, textInputFilters, nameCategory)
+    //             }
+    //             console.log(inputResultSearch);
+    //         } else {
+    //             searchWithFilters(resultSearch, textInputFilters, nameCategory)
+    //         }
+    //     } else {
+    //         console.log([textInputFilters]);
+    //         localStorage.setItem('all-value-input', JSON.stringify([textInputFilters]));
+    //         searchWithFilters(resultSearch, textInputFilters, nameCategory)
+    // }
+    // };
+
 
 
 
@@ -246,3 +270,35 @@ function renderEndPoint(event){
 //                     productsFromTheLS.push(resultObject);
 //                 }
 //             });
+
+
+
+
+
+
+// async function searchWithFilters(textInputFilters, nameCategory) {
+    
+
+
+
+//         if(fullInputResultSearch.totalPages === 0){
+//             messageForError();
+//         } else {
+//             if(resultSearch){
+//                 const resultNewResultSearch = JSON.parse(resultSearch);
+//                 const resultInputResultSearch = inputResultSearch;
+//                 resultInputResultSearch.forEach((resultObject) => {
+//                     if(!resultNewResultSearch.find(newResult => newResult._id === resultObject._id)){
+//                         resultNewResultSearch.push(resultObject);
+//                     }
+//                 });
+//                 localStorage.setItem('result-search-filters', JSON.stringify(resultNewResultSearch));
+//                 // localStorage.removeItem('result-search-filters');
+//                 console.log(resultNewResultSearch);
+//             } else {
+//                 console.log(inputResultSearch);
+//                 localStorage.setItem('result-search-filters', JSON.stringify(inputResultSearch));
+//             };
+//         }
+//         console.log(inputResultSearch)
+// }
