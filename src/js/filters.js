@@ -88,8 +88,8 @@ searchForm.addEventListener('submit', async (event) => {
     if(!textInputFilters && nameCategoty === ''){
         ifEmptyInput();
         filtersResult.innerHTML = '';
-    } else if(!textInputFilters){
-        console.log(productsHomePage);
+    } else if(productsFromTheLS.find(newResult => newResult.name === textInputFilters) ||
+    productsFromTheLS.find(newResult => newResult.category === nameCategoty)){
         
         productsFromTheLS
         
