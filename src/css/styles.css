@@ -16,6 +16,7 @@
 @import url('./modal.css');
 @import url('./cart.css');
 @import url('./discount.css');
+@import url('./app.css');
 
 :root {
   --background-color: #e8e8e2;
