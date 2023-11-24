@@ -61,7 +61,8 @@ async function ifEmptyInput() {
             // localStorage.removeItem('products-home-page-filters');
         } else {
             const classFirstProducts = new RequestToTheServer(products, filters);
-            productsHomePage = await classFirstProducts.fetchBreeds();
+            const fullProductsHomePage = await classFirstProducts.fetchBreeds();
+            productsHomePage = fullProductsHomePage.results;
             localStorage.setItem('products-home-page-filters', JSON.stringify(productsHomePage));
         }
     } catch (error) {
@@ -91,8 +92,7 @@ searchForm.addEventListener('submit', (event) => {
 
 
 
-function functionInputSearch(textInputFilters, allValueInputLS, nameCategory){
-    const productsFromTheLS = JSON.parse(localStorage.getItem('products-home-page-filters')).results;
+async function functionInputSearch(textInputFilters, allValueInputLS, nameCategory){
 let resultSearch = localStorage.getItem('result-search-filters');
 if(!textInputFilters && nameCategory === ''){
     ifEmptyInput();
@@ -108,39 +108,42 @@ if(!textInputFilters && nameCategory === ''){
         console.log(uniqueAllValueInput);
         if(allValueInput.find(value => value === textInputFilters) && resultSearch){
             const massOldResult = JSON.parse(resultSearch);
-            inputResultSearch = massOldResult.filter(obj => obj.name === textInputFilters);
-            massOldResult.forEach((obj) => {console.log(obj.name)});
+            inputResultSearch = massOldResult.filter(
+                obj => obj.name.toLowerCase().includes(textInputFilters.toLowerCase())
+                ).filter(obj => obj.category === nameCategory);
+            
             console.log(textInputFilters);
             console.log(massOldResult);
-            console.log(inputResultSearch);
+            
             if(Object.keys(inputResultSearch).length === 0){
-                searchWithFilters(productsFromTheLS, resultSearch, textInputFilters, nameCategory)
+                await searchWithFilters(resultSearch, textInputFilters, nameCategory)
             }
+            console.log(inputResultSearch);
         } else {
-            searchWithFilters(productsFromTheLS, resultSearch, textInputFilters, nameCategory)
+            searchWithFilters(resultSearch, textInputFilters, nameCategory)
         }
     } else {
         console.log([textInputFilters]);
         localStorage.setItem('all-value-input', JSON.stringify([textInputFilters]));
-        searchWithFilters(productsFromTheLS, resultSearch, textInputFilters, nameCategory)
+        searchWithFilters(resultSearch, textInputFilters, nameCategory)
 }
-console.log(inputResultSearch)
 };
 
 
-async function searchWithFilters(productsFromTheLS, resultSearch, textInputFilters, nameCategory) {
+async function searchWithFilters(resultSearch, textInputFilters, nameCategory) {
     filters = `keyword=${textInputFilters}&category=${nameCategory}`;
         const classResultProductsWithFilters = new RequestToTheServer(products, filters);
-        inputResultSearch = await classResultProductsWithFilters.fetchBreeds();
+        const fullInputResultSearch = await classResultProductsWithFilters.fetchBreeds();
+        inputResultSearch = fullInputResultSearch.results;
         console.log(filters);
         console.log(nameCategory);
         console.log(inputResultSearch);
-        if(inputResultSearch.totalPages === 0){
+        if(fullInputResultSearch.totalPages === 0){
             messageForError();
         } else {
             if(resultSearch){
                 const resultNewResultSearch = JSON.parse(resultSearch);
-                const resultInputResultSearch = inputResultSearch.results;
+                const resultInputResultSearch = inputResultSearch;
                 resultInputResultSearch.forEach((resultObject) => {
                     if(!resultNewResultSearch.find(newResult => newResult._id === resultObject._id)){
                         resultNewResultSearch.push(resultObject);
@@ -150,16 +153,9 @@ async function searchWithFilters(productsFromTheLS, resultSearch, textInputFilte
                 // localStorage.removeItem('result-search-filters');
                 console.log(resultNewResultSearch);
             } else {
-                console.log(inputResultSearch.results);
-                localStorage.setItem('result-search-filters', JSON.stringify(inputResultSearch.results));
+                console.log(inputResultSearch);
+                localStorage.setItem('result-search-filters', JSON.stringify(inputResultSearch));
             };
-            resultSearch = localStorage.getItem('result-search-filters');
-            const resultSearchFromTheLS = JSON.parse(resultSearch);
-            resultSearchFromTheLS.forEach((resultObject) => {
-                if(!productsFromTheLS.find(newResult => newResult._id === resultObject._id)){
-                    productsFromTheLS.push(resultObject);
-                }
-            });
         }
         console.log(inputResultSearch)
 }
@@ -239,3 +235,21 @@ function renderEndPoint(event){
 }
 
 // localStorage.clear()
+
+
+
+
+
+
+
+
+
+
+// const productsFromTheLS = JSON.parse(localStorage.getItem('products-home-page-filters')).results;
+// resultSearch = localStorage.getItem('result-search-filters');
+//             const resultSearchFromTheLS = JSON.parse(resultSearch);
+//             resultSearchFromTheLS.forEach((resultObject) => {
+//                 if(!productsFromTheLS.find(newResult => newResult._id === resultObject._id)){
+//                     productsFromTheLS.push(resultObject);
+//                 }
+//             });
