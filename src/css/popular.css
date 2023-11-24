@@ -66,24 +66,29 @@ span {
 }
 .product-image-container {
   background: #e8e8e2;
-  width: 74px; /* Розмір фону 74x74 */
+  width: 74px;
   height: 74px;
 
-  border-radius: 10px; /* Округлені кути фону, якщо потрібно */
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Обрізати зображення, якщо воно виходить за межі фону */
+  overflow: hidden;
 }
 .product-template {
   position: relative;
-
   width: 275px;
   height: 98px;
   border-radius: 10px;
   background: #fafafa;
 }
+.added-to-cart {
+  background-color: #6d8434; /*  змінf кольору фону кнопки */
+}
 
+.added-to-cart svg {
+  fill: #e8e8e2; /* Зміна кольору SVG-іконки */
+}
 .add-to-cart-btn {
   border: none;
   display: inline-flex;
@@ -91,11 +96,8 @@ span {
   justify-content: center;
   align-items: center;
   gap: 10px;
-
   cursor: pointer;
-
   border-radius: 30px;
-
   position: absolute;
   top: 16px;
   right: 16px;
