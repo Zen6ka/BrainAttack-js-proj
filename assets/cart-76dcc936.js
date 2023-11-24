@@ -59,4 +59,4 @@
     </div>
 </div>
 `}function m(){l.style.display="flex"}function b(){l.style.display="none"}function S(){p.style.display="flex"}function q(){p.style.display="none"}console.log("qwewqe");const L={id:"640c2dd963a319ea671e383b",name:"Ackee",img:"https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png",category:"Fresh_Produce",price:8.99,size:16},{id:P,name:M,img:O,category:H,price:_,size:T}=L,w=u(P,M,O,H,_,T);d.innerHTML=w;
-//# sourceMappingURL=cart-d1d83587.js.map
+//# sourceMappingURL=cart-76dcc936.js.map
