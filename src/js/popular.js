@@ -39,11 +39,10 @@ function getProductsFromLocalStorage() {
 }
 
 function displayProducts(products) {
-  const productContainers = document.querySelectorAll('.product-template'); // Знайти всі блоки "product-template"
+  const productContainers = document.querySelectorAll('.product-template');
 
   // Очистити вміст всіх блоків "product-template"
   productContainers.forEach(container => {
-    container.style.display = 'none'; // Приховати блоки
     container.querySelector('.product-image').src = '';
     container.querySelector('.product-name').textContent = '';
     container.querySelector('.category-value').textContent = '';
@@ -52,8 +51,8 @@ function displayProducts(products) {
   });
 
   products.slice(0, productContainers.length).forEach((product, index) => {
-    const container = productContainers[index]; // Вибрати поточний блок
-    container.style.display = 'flex'; // Показати блок
+    const container = productContainers[index];
+    container.style.display = 'flex';
 
     // Заповнити дані блоку з даними з сервера
     container.querySelector('.product-image').src = product.img;
@@ -73,6 +72,12 @@ function displayProducts(products) {
       productIs10PercentOff: product.is10PercentOff,
       productPopularity: product.popularity,
     };
+    // Налаштування слухача подій для кліку на фото
+    const addIdImg = container.querySelector('.product-image-container');
+    addIdImg.addEventListener('click', function () {
+      localStorage.setItem('popul', JSON.stringify(productInfo));
+    });
+    // Налаштування слухача подій для кліку на кнопку "Додати в кошик"
     const addToCartBtn = container.querySelector('.add-to-cart-btn');
     addToCartBtn.onclick = function () {
       addToCart(productInfo);
@@ -105,12 +110,12 @@ function addToCart(productInfo) {
 function cartButtonStyle() {
   const cart = JSON.parse(localStorage.getItem('cart')) || {};
   const addToCartButtons = document.querySelectorAll('.cart-btn');
-
+  //надаємо стилі кнопкам "Додати в кошик"
   addToCartButtons.forEach(btn => {
     const productId = btn.getAttribute('data-product-id');
     const iconInCart = btn.querySelector('.icon-off');
     const iconAddToCart = btn.querySelector('.icon-on');
-
+    //якщо товар вже є в кошику, то змінюємо стиль кнопки
     if (iconInCart && iconAddToCart) {
       if (cart[productId]) {
         btn.classList.add('added-to-cart');
