@@ -5,6 +5,7 @@
   |============================
 */
 
+
 @import url('./reset.css');
 @import url('./fonts.css');
 @import url('./header.css');
@@ -27,3 +28,25 @@
   list-style: none;
 }
 
+.main-page {
+  padding-top: 40px;
+}
+
+.flex-container {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+}
+
+@media screen and (min-width: 768px) {
+	.flex-container {
+		gap: 100px;
+	}
+}
+
+@media screen and (min-width: 1440px) {
+	.flex-container {
+		flex-direction: row;
+		gap: 40px;
+	}
+}

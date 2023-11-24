@@ -85,10 +85,9 @@ body {
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* .header-logo-icon:hover,
-.header-logo-icon:focus {
+.logo-wrapper:hover .header-logo-icon {
   fill: #e8e8e2;
-} */
+}
 
 .main-nav {
   display: flex;
