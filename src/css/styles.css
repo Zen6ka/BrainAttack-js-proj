@@ -30,10 +30,6 @@
   list-style: none;
 }
 
-.main-page {
-  padding-top: 40px;
-}
-
 .flex-container {
 	display: flex;
 	flex-direction: column;
