@@ -5,6 +5,10 @@
     --cards-cart-color:#6D8434;
 }
 
+.card-list{
+    background-color: #000001;
+}
+
 .filters{
     margin: 0 auto;
     max-width: 375px;
@@ -189,19 +193,46 @@
 }
 
 .card-list-item{
-    background-color: var(--cards-color);
+    background-color: #FAFAFA;
     border-radius: 20px;
     height: 356px;
     padding: 14px;
     transition: all 250ms cubic-bezier(0.5, -0.75, 0.7, 2);
 }
 
-.cardlist-img {
-    border-radius: 16px;
+.div-img{
     width: 295px;
     height: 178px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #E8E8E2;
+}
+
+.cardlist-img {
+    border-radius: 16px;
+    width: 140px;
+height: 140px;
+flex-shrink: 0;
     object-fit: cover;
-    }
+    background: url(<path-to-image>), #E8E8E2 50% / cover no-repeat;
+}
+
+
+.cardlist-product {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 20px;
+    margin-left: 6px;
+    margin-bottom: 14px;
+    color: var(--cards-text-color);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    white-space: pre-wrap;
+}
 
 
 .cardlist-descr{
@@ -218,6 +249,56 @@
     -webkit-line-clamp: 3;
     white-space: pre-wrap;
 }
+
+.cardlist-descr-light {
+    color: var(--cards-light-color);
+    opacity: 0.3;
+ 
+  }
+
+  
+  .cardlist-price {
+    margin-left: 6px;
+    color: var(--cards-text-color);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 2;
+    letter-spacing: 0.28px;
+    text-transform: uppercase;  
+    transition: all 250ms linear;
+  }
+
+
+  .cardlist-add-cart {
+    display: flex;
+    width: 48px;
+    height: 48px;
+  
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--cards-cart-color);
+    border-color: transparent;
+  
+    transition: all 250ms linear;
+  }
+  
+  .cardlist-add-cart:hover,
+  .cardlist-add-cart:focus {
+    transform: scale(1.05);
+  }
+  
+  .cardlist-svg {
+    stroke: var(--cards-color);
+    fill: var(--cards-color);
+    width: 18px;
+  }
+  
+  .cartlist-btn {
+    display: flex;
+    column-gap: 15px;
+  }
 
 
 

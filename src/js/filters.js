@@ -187,7 +187,9 @@ function renderCards(products) {
     const listResult = [];
     products.forEach((product) => {
         const itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
-                <img src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" onerror="this.onerror=null;this.src='';" width=300>
+                <div class = "div-img">
+                <img src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" />
+                </div>
                 <h3 class="card-list-product">${product.name}</h3>
                 <ul class="cardlist-descr">
                     <li class ="li-p-cards"><span class ="span-p-cards">Category: </span>${product.category}</li>
@@ -196,7 +198,7 @@ function renderCards(products) {
                 </ul>
                 <div class="cartlist-btn"><button class="cardlist-add-cart add-to-cart-product ">
                 <svg class="cardlist-svg" weight="18" height="18">
-                <use href=""#cart"></use>
+                <use href="../img/icons.svg#icon-ic_baseline-search#icon-heroicons-solid_shopping-cart"></use>
                 </svg>
                 </button>
                 </div>
