@@ -29,6 +29,7 @@ const filtersResult = document.querySelector('.filters-result');
 const firctSelectSearch = document.querySelector('.first-select-search-not-focus');
 const buttonCategories = document.querySelector('.button-categories');
 const spanButtonCategories = document.querySelector('.span-button-categories');
+const cardlist = document.querySelector('.cardlist');
 
 
 const products = "products";
@@ -56,20 +57,12 @@ function recordsDataForSearch(keyword, category, page, limit){
 recordsDataForSearch(keyword, category, page, limit);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
 async function search () {
     const letForSearch = JSON.parse(localStorage.getItem('data-for-search'));
     const filters = `keyword=${letForSearch.keyword}&category=${letForSearch.category}`;
         const classResultProductsWithFilters = new RequestToTheServer(products, filters, page, limit);
         fullInputResultSearch = await classResultProductsWithFilters.fetchBreeds();
 };
-
-
-
-
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -103,19 +96,13 @@ async function ifEmptyInput() {
         console.error("Error:", error.message);
     }
     console.log(productsHomePage);
+    renderCards(productsHomePage)
     // localStorage.removeItem('products-home-page-filters');
 }
 
 ifEmptyInput();
 
-
-
-
 //////////////////////////////////////// INPUT ////////////////////////////////////////////////////////////////////
-
-
-
-
 
 searchForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -124,48 +111,12 @@ searchForm.addEventListener('submit', async (event) => {
     await search();
     inputResultSearch = fullInputResultSearch.results;
     console.log(inputResultSearch);
-    // searchWithFilters(textInputFilters, nameCategory)
+    if(fullInputResultSearch.totalPages === 0){
+        messageForError();
+    }
 });
 
-
-
-
-
-
-// async function searchWithFilters(textInputFilters, nameCategory) {
-    
-
-
-
-//         if(fullInputResultSearch.totalPages === 0){
-//             messageForError();
-//         } else {
-//             if(resultSearch){
-//                 const resultNewResultSearch = JSON.parse(resultSearch);
-//                 const resultInputResultSearch = inputResultSearch;
-//                 resultInputResultSearch.forEach((resultObject) => {
-//                     if(!resultNewResultSearch.find(newResult => newResult._id === resultObject._id)){
-//                         resultNewResultSearch.push(resultObject);
-//                     }
-//                 });
-//                 localStorage.setItem('result-search-filters', JSON.stringify(resultNewResultSearch));
-//                 // localStorage.removeItem('result-search-filters');
-//                 console.log(resultNewResultSearch);
-//             } else {
-//                 console.log(inputResultSearch);
-//                 localStorage.setItem('result-search-filters', JSON.stringify(inputResultSearch));
-//             };
-//         }
-//         console.log(inputResultSearch)
-// }
-
-
-
 ////////////////////////////////////////// ALL CATEGORIES ////////////////////////////////////////////////////////////////////
-
-
-
-
 
 async function ifEmptyCategories() {
     try {
@@ -199,12 +150,9 @@ function renderCategories(productsCategories){
     addListenerLi(buttonsLiFilters)
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 buttonCategories.addEventListener('click', () => addListenerButton(buttonCategories, firctSelectSearch));
-
 
 function addListenerButton(button, buttonList) {
     buttonList.classList.add('first-select-search');
@@ -232,6 +180,32 @@ function renderEndPoint(event){
     category = nameCategoryForSelect.replace(/ /g, '_').replace(/\//g, '&');
     spanButtonCategories.innerHTML = `${nameCategoryForSelect}`;
 }
+
+///////////////////////////////////////////////////////  RENDER  CARDS  /////////////////////////////////////////////////////////////
+
+function renderCards(products) {
+    const listResult = [];
+    products.forEach((product) => {
+        const itemResult = `<li class="cardlist-item id-for-del" data-id=${product._id}>
+                <img src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" onerror="this.onerror=null;this.src='';" width=300>
+                <h3 class="cardlist-product">${product.name}</h3>
+                <ul class="cardlist-descr">
+                    <li class ="li-p-cards"><span class ="span-p-cards">Category: </span>${product.category}</li>
+                    <li class ="li-p-cards"><span class ="span-p-cards">Size: </span>${product.size}</li>
+                    <li class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</li>
+                </ul>
+                <div class="cartlist-btn"><button class="cardlist-add-cart add-to-cart-product ">
+                <svg class="cardlist-svg" weight="18" height="18">
+                <use href=""#cart"></use>
+                </svg>
+                </button>
+                </div>
+                </li>`;
+                listResult.push(itemResult)
+    });
+    cardlist.innerHTML = listResult.join(" ")
+};
+
 
 // localStorage.clear()
 
@@ -296,3 +270,35 @@ function renderEndPoint(event){
 //                     productsFromTheLS.push(resultObject);
 //                 }
 //             });
+
+
+
+
+
+
+// async function searchWithFilters(textInputFilters, nameCategory) {
+    
+
+
+
+//         if(fullInputResultSearch.totalPages === 0){
+//             messageForError();
+//         } else {
+//             if(resultSearch){
+//                 const resultNewResultSearch = JSON.parse(resultSearch);
+//                 const resultInputResultSearch = inputResultSearch;
+//                 resultInputResultSearch.forEach((resultObject) => {
+//                     if(!resultNewResultSearch.find(newResult => newResult._id === resultObject._id)){
+//                         resultNewResultSearch.push(resultObject);
+//                     }
+//                 });
+//                 localStorage.setItem('result-search-filters', JSON.stringify(resultNewResultSearch));
+//                 // localStorage.removeItem('result-search-filters');
+//                 console.log(resultNewResultSearch);
+//             } else {
+//                 console.log(inputResultSearch);
+//                 localStorage.setItem('result-search-filters', JSON.stringify(inputResultSearch));
+//             };
+//         }
+//         console.log(inputResultSearch)
+// }
