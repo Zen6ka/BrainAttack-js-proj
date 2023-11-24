@@ -35,7 +35,6 @@ let filters = "";
 let productsHomePage ={};
 let productsCategories = {};
 let nameCategoty = '';
-let productsFromTheLS = {};
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -83,17 +82,19 @@ ifEmptyInput();
 
 searchForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const resultSearch = localStorage.getItem('result-search-filters');
+    const productsFromTheLS = JSON.parse(localStorage.getItem('products-home-page-filters')).results;
+    let resultSearch = localStorage.getItem('result-search-filters');
     const textInputFilters = inputSearch.value.trim();
     if(!textInputFilters && nameCategoty === ''){
         ifEmptyInput();
         filtersResult.innerHTML = '';
     } else if(!textInputFilters){
         console.log(productsHomePage);
-        productsFromTheLS = JSON.parse(localStorage.getItem('products-home-page-filters')).results;
         
-        productsFromTheLS = JSON.parse(localStorage.getItem('products-home-page-filters')).results;
-        console.log(productsFromTheLS);
+        productsFromTheLS
+        
+        
+        
     } else{
             filters = `keyword=${textInputFilters}&category=${nameCategoty}`;
             const classResultProductsWithFilters = new RequestToTheServer(products, filters);
@@ -109,7 +110,6 @@ searchForm.addEventListener('submit', async (event) => {
                             resultNewResultSearch.push(resultObject);
                         }
                     });
-                    
                     localStorage.setItem('result-search-filters', JSON.stringify(resultNewResultSearch));
                     // localStorage.removeItem('result-search-filters');
                     console.log(resultNewResultSearch);
@@ -117,9 +117,16 @@ searchForm.addEventListener('submit', async (event) => {
                     console.log(inputResultSearch.results);
                     localStorage.setItem('result-search-filters', JSON.stringify(inputResultSearch.results));
                 };
+                resultSearch = localStorage.getItem('result-search-filters');
+                const resultSearchFromTheLS = JSON.parse(resultSearch);
+                resultSearchFromTheLS.forEach((resultObject) => {
+                    if(!productsFromTheLS.find(newResult => newResult._id === resultObject._id)){
+                        productsFromTheLS.push(resultObject);
+                    }
+                });
             }
     }
-})
+});
 
 
 
