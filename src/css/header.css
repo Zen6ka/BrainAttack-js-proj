@@ -1,1 +1,397 @@
+/**
+  |============================
+  | include css partials with
+  | default @import url()
+  |============================
+*/
+@import url('./header.css');
+@import url('./footer.css');
+@import url('./modal.css');
+@import url('./reset.css');
 
+:root {
+  --primary-font: 'Neue Montreal', sans-serif;
+  --secondary-font: 'Quincy CF;', sans-serif;
+  --background-color: #e8e8e2;
+  --content-text-color: #010101;
+
+  --footer-background: #6d8434;
+  --footer-logo-text: #e8e8e2;
+}
+
+.list {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+img {
+  display: block;
+}
+
+button {
+  cursor: pointer;
+}
+
+.list {
+  list-style: none;
+}
+
+.link {
+  text-decoration: none;
+}
+
+body {
+  color: var(--content-text-color);
+  background-color: var(--background-color);
+}
+
+/* =============Components============ */
+
+.container {
+  max-width: 375px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.section {
+  padding-top: 72px;
+  padding-bottom: 74px;
+}
+
+/* =============Header============ */
+
+.header-logo-icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo-wrapper:hover .header-logo-icon {
+  fill: #e8e8e2;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navig-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-nav {
+  padding-top: 24px;
+}
+.hero-container {
+  position: relative;
+}
+
+.logo-link {
+  color: #010101;
+  font-family: Quincy CF;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 24px; /* 100% */
+  letter-spacing: -0.48px;
+  display: flex;
+  align-items: center;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* .logo-link:hover,
+.logo-link:focus {
+  color: #e8e8e2;
+  width: 220px;
+  height: 60px;
+  background-color: #6d8434;
+} */
+
+.hero-title {
+  color: #010101;
+  text-align: center;
+  font-family: 'NeueMontreal';
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 80px; /* 100% */
+  letter-spacing: -1.6px;
+  margin-bottom: 20px;
+}
+
+.hero-title-color {
+  color: #6d8434;
+  font-family: 'NeueMontreal';
+  font-size: 80px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 80px;
+  letter-spacing: -1.6px;
+}
+
+.hero-text {
+  color: rgba(1, 1, 1, 0.8);
+  text-align: center;
+  font-family: 'NeueMontreal';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 133.333% */
+  margin-bottom: 40px;
+}
+
+.hero-picture {
+  border-radius: 20px;
+}
+
+.icon-basket-header {
+  width: 18px;
+  height: 18px;
+}
+.btn-basket {
+  border-radius: 50%;
+  background: #6d8434;
+  padding: 10px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  margin-right: 14px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-basket:hover,
+.btn-basket:focus {
+  background: #586f1f;
+}
+.cart-amount {
+  color: #010101;
+  font-family: 'NeueMontreal';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 133.333% */
+  text-transform: uppercase;
+}
+
+/*=======media767====================================*/
+@media (max-width: 767px) {
+  .container {
+    max-width: 767px;
+    padding: 0 20px;
+  }
+
+  .main-nav {
+    padding-top: 18px;
+  }
+
+  .header-logo-icon {
+    width: 28px;
+    height: 28px;
+  }
+  .logo-link {
+    color: #010101;
+    font-family: Quincy CF;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 20px; /* 111.111% */
+    letter-spacing: -0.36px;
+  }
+
+  .link-home {
+    border-radius: 30px;
+    background: #6d8434;
+    padding: 10px 20px;
+    color: #e8e8e2;
+    font-family: Neue Montreal;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px; /* 128.571% */
+    border: none;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .link-home:hover,
+  .link-home:focus {
+    background: #586f1f;
+  }
+
+  .hero-title {
+    color: #010101;
+    text-align: center;
+    font-family: 'NeueMontreal';
+    font-size: 44px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 48px; /* 109.091% */
+    letter-spacing: -0.88px;
+    margin-bottom: 16px;
+  }
+
+  .hero-title-color {
+    color: #6d8434;
+    font-family: 'NeueMontreal';
+    font-size: 44px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 48px;
+    letter-spacing: -0.88px;
+  }
+
+  .hero-text {
+    color: rgba(1, 1, 1, 0.8);
+    text-align: center;
+    font-family: 'NeueMontreal';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px; /* 128.571% */
+    margin-bottom: 32px;
+  }
+
+  .hero-title {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-text {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-img {
+    border-radius: 20px;
+  }
+  .icon-organic-food {
+    position: absolute;
+    right: 8%;
+    top: 28%;
+  }
+  .icon-basket-header {
+    width: 14px;
+    height: 14px;
+  }
+  .btn-basket {
+    border-radius: 50%;
+    background: #6d8434;
+    padding: 12px;
+    width: 38px;
+    height: 38px;
+    border: none;
+  }
+  .navig-wrapper {
+    gap: 6px;
+  }
+
+  .cart-amount {
+    display: none;
+  }
+}
+
+/*=======media768====================================*/
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding: 0 32px;
+  }
+  .header-logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .hero-title {
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-text {
+    max-width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-img {
+    border-radius: 40px;
+  }
+  .icon-organic-food {
+    position: absolute;
+    right: 6%;
+    top: 28%;
+  }
+  .navig-wrapper {
+    gap: 16px;
+  }
+  .link-home {
+    border-radius: 30px;
+    background: #6d8434;
+    padding: 12px 28px;
+    color: #e8e8e2;
+    font-family: 'NeueMontreal';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px; /* 128.571% */
+    border: none;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .link-home:hover,
+  .link-home:focus {
+    background: #586f1f;
+  }
+}
+
+/*=======media1440====================================*/
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
+    padding: 0 100px;
+  }
+  .footer-content-wrap {
+    margin-bottom: 128px;
+  }
+  .footer-main-info-wrap {
+    display: flex;
+  }
+  .text-block {
+    margin-right: 148px;
+    max-width: 410px;
+    margin-bottom: 0;
+  }
+  .hero-title {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-text {
+    max-width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .icon-organic-food {
+    position: absolute;
+    right: 8%;
+    top: 26%;
+  }
+}

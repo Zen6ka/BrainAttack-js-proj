@@ -1,3 +1,10 @@
+.root{
+    --cards-color:#FAFAFA;
+    --cards-text-color:#000001;
+    --cards-light-color:#010101;
+    --cards-cart-color:#6D8434;
+}
+
 .filters{
     margin: 0 auto;
     max-width: 375px;
@@ -31,6 +38,7 @@
     border-radius: 30px;
     border: 1px solid rgba(1, 1, 1, 0.30);
     color: #010101;
+    background-color: transparent;
     font-family: Neue Montreal;
     font-size: 14px;
     font-style: normal;
@@ -72,6 +80,73 @@
     height: 20px;
 }
 
+
+.button-categories{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-arrow{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.first-select-search-not-focus{
+    width: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: translateY(-100%);
+    background-color: #fff;
+    z-index: 2;
+    white-space: nowrap;
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+    transition: transform 250ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.first-select-search{
+    margin: 0;
+    white-space: normal;
+    clip: auto;
+    overflow: visible;
+    transform: translateY(0);
+    top: 56px;
+    display: flex;
+    width: 335px;
+    padding: 14px 0 14px 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 8px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 11.2125px 0px rgba(0, 0, 0, 0.04), 0px 20px 69px 0px rgba(0, 0, 0, 0.07);
+}
+
+.li-first-select-search{
+    width: 100%;
+}
+
+.button-li-filters{
+    color: rgba(1, 1, 1, 0.50);
+    font-family: Neue Montreal;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px; 
+    border: 0px transparent solid;
+    background-color: transparent;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
 .error{
     margin: 100px 0 180px;
 }
@@ -104,6 +179,44 @@
     font-style: normal;
     font-weight: 400;
     line-height: 18px;
+}
+
+.card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex-basis: 100%;
+}
+
+.card-list-item{
+    background-color: var(--cards-color);
+    border-radius: 20px;
+    height: 356px;
+    padding: 14px;
+    transition: all 250ms cubic-bezier(0.5, -0.75, 0.7, 2);
+}
+
+.cardlist-img {
+    border-radius: 16px;
+    width: 295px;
+    height: 178px;
+    object-fit: cover;
+    }
+
+
+.cardlist-descr{
+    margin-bottom: 20px;
+    margin-left: 6px;
+    height: 54px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    white-space: pre-wrap;
 }
 
 
