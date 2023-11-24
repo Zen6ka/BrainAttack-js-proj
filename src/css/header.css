@@ -72,7 +72,7 @@ body {
 
 .section {
   padding-top: 72px;
-  padding-bottom: 74px;
+  margin-bottom: 74px;
 }
 
 /* =============Header============ */
