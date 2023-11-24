@@ -141,13 +141,138 @@ line-height: 1.28; /* 128.571% */
     flex-direction: column;
     margin: 0 auto;
     width: 100%;
+    gap: 60px;
+    max-height: 420px;
+
+    overflow: scroll;
+    position: relative;
 }
+
+/* ------------------ДОРОБИТИ СКРОЛ----------------------------- */
+/* .js-cart-selected-products::-webkit-scrollbar {
+    width: 12px;
+  } */
+.js-cart-selected-products::-webkit-scrollbar-thumb {
+    /* width: 22px; */
+    top: 0;
+  bottom: 0;
+    position: absolute;
+    right: -12px;
+    height: 117px; /* Довжина вертикальної полоси прокрутки */
+  }
+
+
+/* Класи для стилізації продуктів які прийдуть з локального сховища */
+
+.selected-item {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+}
+
+.cart-remove-product-btn{
+    position: absolute;
+
+padding: 0;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    border: none;
+
+    top: 0; /* Переміщення на половину висоти батьківського елемента */
+    right: 0; /* Переміщення на половину ширини батьківського елемента */
+    /* transform: translate(-50%, -50%);  */
+    background: #E8E8E2;
+    
+  }
+.js-delete-product-icon {
+  width: 100%;
+  height: 100%;
+}
+
+
+.js-selected-item-img {
+width: 100px;
+height: 100px;
+border-radius: 10px;
+background: #FAFAFA;
+
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.js-product-item-img{
+    max-width: 64px;
+    max-height: 64px;
+    margin: 0 auto;
+top: 50%;
+bottom: 50%;
+   
+    
+}
+
+.js-selected-item-descroption {
+    max-width: 215px;
+}
+
+.js-item-product-name{
+    height: 20px;
+    max-width: 215px;
+margin-bottom: 10px;
+
+color: #010101;
+
+font-family: Neue Montreal;
+font-size: 18px;
+font-style: normal;
+font-weight: 500;
+line-height: 1.11; /* 111.111% */
+}
+.js-item-product-properties{
+max-width: 215px;
+max-height: 14px;
+margin-bottom: 36px;
+
+white-space: nowrap; 
+overflow: hidden; 
+text-overflow: ellipsis;
+
+color: rgba(1, 1, 1, 0.30);
+font-family: Neue Montreal;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 1.17; /* 116.667% */
+}
+
+.js-item-product-descr {
+margin-left: 4px;
+margin-right: 6px;
+    
+    color: #010101;
+    font-family: Neue Montreal;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.17; /* 116.667% */
+}
+
+.js-item-product-price{
+    color: #010101;
+    font-family: Neue Montreal;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.11; /* 111.111% */
+}
+
+
 
 
 
 .js-cart-order-details {
 
-/* display: flex; */
+display: flex;
 flex-direction: column;
 /* justify-content: center;
 align-items: center; */
@@ -267,15 +392,6 @@ line-height: 18px; /* 128.571% */
 
 
 
-/* це буде для стилізації продуктів які прийдуть з локального сховища
-.js-selected-item-img {
-}
-.js-selected-item-descroption {
-} */
-
-
-
-
 /* Cart Tablet */
 @media screen and (min-width: 768px) {
     .total-cart-container {
@@ -326,7 +442,8 @@ line-height: 18px; /* 128.571% */
 
 
         .js-cart-container {
-            max-width: 672px;
+            max-width: 100%;
+            margin: 0 auto;
         }
         .js-delete-all-btn{
             width: 96px;
@@ -335,12 +452,71 @@ line-height: 18px; /* 128.571% */
     line-height: 1.25; /* 125% */
         }
         .js-cart-selected-products {
-            max-width: 672px;
+            max-width: 100%;
             margin: 0;
             align-items: flex-start;
             align-content: flex-start;
 justify-content: flex-start;
+
+max-height: 520px;
         }
+
+        .selected-item {
+width: 100%;
+justify-content: flex-start;
+gap: 40px;
+        }
+
+        .cart-remove-product-btn{
+            width: 20px;
+            height: 20px;
+          
+        }
+
+        .js-selected-item-img { 
+            width: 120px;
+            height: 120px;
+        }
+        .js-product-item-img{
+            max-width: 72px;
+            max-height: 72px;}
+
+
+            .js-selected-item-descroption {
+                max-width: 762px;
+               
+            }
+
+            .js-item-product-name{
+                max-width: 100%;
+                height: 24px;
+                margin-bottom: 10px;
+
+
+                font-size: 20px;
+                line-height: 1.2; /* 120% */
+            }
+
+            .js-item-product-properties{
+                max-width: 100%;
+                height: 18px;
+                margin-bottom: 44px;
+            }
+            .js-item-product-descr {
+                margin-right: 16px;
+                max-width: 100%;
+font-size: 14px;
+line-height: 1.28; /* 128.571% */
+            }
+
+            .js-item-product-price{
+                height: 24px;
+font-size: 20px;
+line-height: 1.2; /* 120% */
+            }
+
+
+
 
         .js-cart-order-details {
             margin: 100px auto 100px 0;
@@ -430,7 +606,65 @@ max-width: 500px;
 
     .js-cart-selected-products {
         max-width: 500px;
+        max-height: 520px;
     }
+
+    .selected-item {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 40px;
+                }
+        
+                .cart-remove-product-btn{
+                    width: 20px;
+                    height: 20px;
+                  
+                }
+        
+                .js-selected-item-img { 
+                    width: 120px;
+                    height: 120px;
+                }
+                .js-product-item-img{
+                    max-width: 72px;
+                    max-height: 72px;}
+        
+        
+                    .js-selected-item-descroption {
+                        max-width: 340px;
+                       
+                    }
+        
+                    .js-item-product-name{
+                        max-width: 100%;
+                        height: 24px;
+                        margin-bottom: 10px;
+        
+        
+                        font-size: 20px;
+                        line-height: 1.2; /* 120% */
+                    }
+        
+                    .js-item-product-properties{
+                        max-width: 100%;
+                        height: 18px;
+                        margin-bottom: 44px;
+                    }
+                    .js-item-product-descr {
+                        margin-right: 16px;
+                        max-width: 100%;
+        font-size: 14px;
+        line-height: 1.28; /* 128.571% */
+                    }
+        
+                    .js-item-product-price{
+                        height: 24px;
+        font-size: 20px;
+        line-height: 1.2; /* 120% */
+                    }
+        
+
+
     .js-cart-order-details {
         display: flex;
         margin-bottom: 0;

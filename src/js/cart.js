@@ -1,4 +1,4 @@
-const cartItemsQuantitu = document.querySelector(".js-cart-items-quantity"); // Місце де буде оновлюватись кількість товарів в кошику
+const cartItemsQuantity = document.querySelector(".js-cart-items-quantity"); // Місце де буде оновлюватись кількість товарів в кошику
 const cartEmpty = document.querySelector(".js-cart-empty");
 const cartContainer = document.querySelector(".js-cart-container");
 const deleteAllBtn = document.querySelector('.js-delete-all-btn');
@@ -20,48 +20,78 @@ console.log("sdsd");
 
 
 // ФУНКЦІЯ ПЕРЕВІРКИ ЛОКАЛЬНОГО СХОВИЩА НА ВМІСТ ДАНИХ
-function localStorageCheck() { // ****** ізніше підшаманити, щоб просто повертати результат сховище, а логіку відпрацьовувати далі поза функцією.
+function localStorageCheck() { // ****** пізніше підшаманити, щоб просто повертати результат сховище, а логіку відпрацьовувати далі поза функцією.
   const savedProducts = localStorage.getItem("cart-products");
-  const parsedSavedProducts = JSON.parse(savedProducts);
+  return  savedProducts ? JSON.parse(savedProducts) : null; //повертаю розпарсені дані з ЛС або null якщо там нічого не має
+}
 
-  cartItemsQuantitu.innerHTML = parsedSavedProducts.length;
+const parsedSavedProducts = localStorageCheck(); // результат повернення передаю змінній Розпарсених даних
+console.log(parsedSavedProducts) //тест
 
-  const { name, img, category, size, price } = parsedSavedProducts; // повинен повертатись об`єкт за запитом до сховища. Тому одразу роблю його деструктуризацію, щоб потім відмальовувати розмітку.
+if (parsedSavedProducts) {
+  cartItemsQuantity.innerHTML = parsedSavedProducts.length;
+  cartEmptyHidden();
+  cartContainerShow();
+  //-------Тут треба буде глянути що саме повертається і в якому вигляді.
+  const { id, name, img, category, size, price } = parsedSavedProducts; // повинен повертатись об`єкт за запитом до сховища. Тому одразу роблю його деструктуризацію, щоб потім відмальовувати розмітку.
+  const productMarkup = selectedProductsMarkup(id, name, img, category, size, price);
+  cartSelectedProducts.innerHTML = productMarkup;
 
+
+  // метод редюс буде рахувати мені суму цін за всі продукти. Потім цей результат я буду передавати в Тотал під час перевірки.
+  const sumPrice = parsedSavedProducts.reduce((acc, currentProduct)=>{
+return acc + currentProduct.price;
+  }, 0);
+totalOrderedPrice.innerHTML = `$${sumPrice}`;
+
+// треба написати функцію запиту на сервер, яка буде мені повертати отримані дані які записані під ID в ЛС і вже тоді їх підставляти в функцію розмітки... треба подумати.
+//Не потрібно, хлопці все передадуть в ЛС, буду брати дані звідти
+
+
+ } else {
+  cartItemsQuantity.innerHTML = 0;
+  cartEmptyShow();
+// cartContainerHidden();
+ }
+
+
+// const localStorageResult = parsedSavedProducts ? parsedSavedProducts.length : 0; // Далі умова, якщо після парсингу дані є, то записую їх кількість в змінну, але якщо немає, тоді записую нуль. 
+//   cartItemsQuantity.innerHTML = localStorageResult; //отриманий результат передаю в HTML
+  // На разі закоментую
+  // const { name, img, category, size, price } = parsedSavedProducts; // повинен повертатись об`єкт за запитом до сховища. Тому одразу роблю його деструктуризацію, щоб потім відмальовувати розмітку.
   // метод редюс буде рахувати мені суму цін за всі продукти. Потім цей результат я буду передавати в Тотал під час перевірки.
 //   const sumPrice = parsedSavedProducts.reduce((acc, currentProduct)=>{
 // return acc + currentPrice.price;
 //   }  , 0) 
 
+//   if (savedProducts.length === 0) {
+//     // або пустий масив/об`єкт null/undefined (потім подивитись що повертається і підкорегувати логіку)
+//     // ТОДІ виклик функції яка покаже нашу порожню розмітку пустого кошику і приховає розмітку товарів.
+// // cartEmptyShow();
+// // cartContainerHidden();
+//   } else {
+//     // Якщо масив не порожній, тоді приховуємо розмітку порожнього масиву і показужмо розмітку товарів.
+// //     cartEmptyHidden();
+// // cartContainerShow();
 
-  if (savedProducts.length === 0) {
-    // або пустий масив/об`єкт null/undefined (потім подивитись що повертається і підкорегувати логіку)
-    // ТОДІ виклик функції яка покаже нашу порожню розмітку і приховає розмітку товарів.
-// cartEmptyShow();
-// cartContainerHidden();
-  } else {
-    // Якщо масив не порожній, тоді приховуємо розмітку порожнього масиву і показужмо розмітку товарів.
-//     cartEmptyHidden();
-// cartContainerShow();
-
-    //     // виклик функції з відмалюванням даних продукту i передача її результату в дівчик
-    //     const productMarkup = cartSelectedProducts();
-    //     cartSelectedProducts.innerHTML = productMarkup;
-    //Реалізую переший варіант і просто буду показувати або приховувати цей блок в залежності від результату ( і буду викликати функцію показу (треба її ще написати))
-    // // виклик функції з відмальовуванням даних замовлення і передача її результату в дівчик
-    // const detailsMarkup = orderDetailsMarkup ();
-    // cartOrderDetails.innerHTML = detailsMarkup;
+//     //     // виклик функції з відмалюванням даних продукту i передача її результату в дівчик
+//     //     const productMarkup = selectedProductsMarkup();
+//     //     cartSelectedProducts.innerHTML = productMarkup;
+//     //Реалізую переший варіант і просто буду показувати або приховувати цей блок в залежності від результату ( і буду викликати функцію показу (треба її ще написати))
+//     // // виклик функції з відмальовуванням даних замовлення і передача її результату в дівчик
+//     // const detailsMarkup = orderDetailsMarkup ();
+//     // cartOrderDetails.innerHTML = detailsMarkup;
 
 
-// передаємо суму цін в Тотал
-    // totalOrderedPrice.innerHTML = `$${sumPrice}`;
+// // передаємо суму цін в Тотал
+//     // totalOrderedPrice.innerHTML = `$${sumPrice}`;
 
-    // Слухач на форму по сабміту а ще треба буде по кліку на кнопку
-form.addEventListener('submit', (event) => {
-    event.preventDefault();
-})
-  }
-}
+//     // Слухач на форму по сабміту а ще треба буде по кліку на кнопку
+// form.addEventListener('submit', (event) => {
+//     event.preventDefault();
+// })
+//   }
+
 
 
 
@@ -72,13 +102,15 @@ function removeLocalStorage(event){
     localStorage.removeItem('cart-products'); // очищую сховище
     cartSelectedProducts.innerHTML = "";
     cartContainerHidden(); // приховую контейнер кошика
-                           // показую пустий кошик
-
+    cartEmptyShow();             // показую пустий кошик
+// cartEmptyHidden();
+// cartContainerHidden();
 }
 
 
 // ФУНКЦІЯ ВІДМАЛЬОВУВАННЯ ОБРАНИХ ТОВАРІВ
 function selectedProductsMarkup(
+  productId,
   productName,
   productImg,
   productCategory,
@@ -87,15 +119,69 @@ function selectedProductsMarkup(
 ) {
   return `
 <div class="selected-item">
-    <button>X</button>
-    <div class="js-selected-item-img"><img src="${productImg}" alt=""></div>
+    <button class="cart-remove-product-btn"><svg class="js-delete-product-icon"><use href="./img/icons.svg#icon-ion_close-sharp"></use></svg></button>
+    <div class="js-selected-item-img"><img class='js-product-item-img' src="${productImg}" alt="Product"></div>
     <div class="js-selected-item-descroption">
-        <h3>${productName}</h3>
-        <p>Category: ${productCategory} Size: ${productSize}</p>
-        <h3>$${productPrice}</h3>
+        <p class="js-item-product-name">${productName}</p>
+        <p class="js-item-product-properties">Category: <span class="js-item-product-descr">${productCategory}</span> Size: <span class="js-item-product-descr">${productSize}</span></p>
+        <p class="js-item-product-price">$${productPrice}</p>
+    </div>
+</div>
+
+<div class="selected-item">
+    <button class="cart-remove-product-btn"><svg class="js-delete-product-icon"><use href="./img/icons.svg#icon-ion_close-sharp"></use></svg></button>
+    <div class="js-selected-item-img"><img class='js-product-item-img' src="${productImg}" alt="Product"></div>
+    <div class="js-selected-item-descroption">
+        <p class="js-item-product-name">${productName}</p>
+        <p class="js-item-product-properties">Category: <span class="js-item-product-descr">${productCategory}</span> Size: <span class="js-item-product-descr">${productSize}</span></p>
+        <p class="js-item-product-price">$${productPrice}</p>
+    </div>
+</div>
+
+<div class="selected-item">
+    <button class="cart-remove-product-btn"><svg class="js-delete-product-icon"><use href="./img/icons.svg#icon-ion_close-sharp"></use></svg></button>
+    <div class="js-selected-item-img"><img class='js-product-item-img' src="${productImg}" alt="Product"></div>
+    <div class="js-selected-item-descroption">
+        <p class="js-item-product-name">${productName}</p>
+        <p class="js-item-product-properties">Category: <span class="js-item-product-descr">${productCategory}</span> Size: <span class="js-item-product-descr">${productSize}</span></p>
+        <p class="js-item-product-price">$${productPrice}</p>
+    </div>
+</div>
+
+<div class="selected-item">
+    <button class="cart-remove-product-btn"><svg class="js-delete-product-icon"><use href="./img/icons.svg#icon-ion_close-sharp"></use></svg></button>
+    <div class="js-selected-item-img"><img class='js-product-item-img' src="${productImg}" alt="Product"></div>
+    <div class="js-selected-item-descroption">
+        <p class="js-item-product-name">${productName}</p>
+        <p class="js-item-product-properties">Category: <span class="js-item-product-descr">${productCategory}</span> Size: <span class="js-item-product-descr">${productSize}</span></p>
+        <p class="js-item-product-price">$${productPrice}</p>
+    </div>
+</div>
+
+<div class="selected-item">
+    <button class="cart-remove-product-btn"><svg class="js-delete-product-icon"><use href="./img/icons.svg#icon-ion_close-sharp"></use></svg></button>
+    <div class="js-selected-item-img"><img class='js-product-item-img' src="${productImg}" alt="Product"></div>
+    <div class="js-selected-item-descroption">
+        <p class="js-item-product-name">${productName}</p>
+        <p class="js-item-product-properties">Category: <span class="js-item-product-descr">${productCategory}</span> Size: <span class="js-item-product-descr">${productSize}</span></p>
+        <p class="js-item-product-price">$${productPrice}</p>
+    </div>
+</div>
+
+<div class="selected-item">
+    <button class="cart-remove-product-btn"><svg class="js-delete-product-icon"><use href="./img/icons.svg#icon-ion_close-sharp"></use></svg></button>
+    <div class="js-selected-item-img"><img class='js-product-item-img' src="${productImg}" alt="Product"></div>
+    <div class="js-selected-item-descroption">
+        <p class="js-item-product-name">${productName}</p>
+        <p class="js-item-product-properties">Category: <span class="js-item-product-descr">${productCategory}</span> Size: <span class="js-item-product-descr">${productSize}</span></p>
+        <p class="js-item-product-price">$${productPrice}</p>
     </div>
 </div>
 `
+
+
+
+
 }
 
 // На разі закую її просто в розмітку і буду приховувати або показувати в залежності від результату
@@ -116,7 +202,7 @@ function selectedProductsMarkup(
 
 // ФУНКЦІЯ ПОКАЗУ ПОРОЖНЬОГО КОШИКА - EMPTY
 function cartEmptyShow () {
-    cartEmpty.style.display = 'block';
+    cartEmpty.style.display = 'flex';
 }
 // ФУНКЦІЯ ПРИХОВУВАННЯ ПОРОЖНЬОГО КОШИКА - EMPTY
 function cartEmptyHidden () {
@@ -126,7 +212,7 @@ function cartEmptyHidden () {
 
 // ФУНКЦІЯ ПОКАЗУ ПОРОЖНЬОГО КОНТЕЙНЕРУ
 function cartContainerShow () {
-    cartContainer.style.display = 'block';
+    cartContainer.style.display = 'flex';
 }
 // ФУНКЦІЯ Приховування ПОРОЖНЬОГО КОНТЕЙНЕРУ
 // --------- буду викликати функцію яка приховує вміст коли отриманий результат запиту буде не порожнім
@@ -146,3 +232,23 @@ function cartContainerHidden () {
 // }
 
 console.log("qwewqe");
+
+
+
+
+
+
+// Тест---------------------
+const testObject = { 
+  id: '640c2dd963a319ea671e383b',
+  name: 'Ackee', 
+  img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
+  category: 'Fresh_Produce',
+  price: 8.99, 
+  size: 16 
+}
+
+const { id, name, img, category, price, size} = testObject;
+   const markup  = selectedProductsMarkup(id, name, img, category, price, size);
+   cartSelectedProducts.innerHTML = markup;
+
