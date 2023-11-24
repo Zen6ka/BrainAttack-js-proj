@@ -13,6 +13,9 @@
 .footer-content-wrap {
   margin-bottom: 80px;
 }
+
+/*=======logo and social media====================================*/
+
 .footer-logo-icon {
   width: 28px;
   height: 28px;
@@ -55,6 +58,9 @@
   height: 40px;
   display: block;
 }
+
+/*=======slogan====================================*/
+
 .text-block {
   font-family: 'NeueMontreal';
   margin-bottom: 80px;
@@ -71,6 +77,8 @@
   font-size: 14px;
   line-height: 1.29;
 }
+
+/*=======subscription form====================================*/
 
 .subscription-wrap {
   font-family: 'NeueMontreal';
@@ -114,6 +122,8 @@
   color: var(--footer-background);
 }
 
+/*=======policy====================================*/
+
 .footer-policy-wrap {
   font-family: 'NeueMontreal';
   color: var(--footer-logo-text);
@@ -124,6 +134,9 @@
 .footer-copywriting-text {
   opacity: 0.9;
   margin-bottom: 8px;
+}
+.footer-terms-wrap {
+  display: flex;
 }
 .footer-policy-dividion {
   margin-left: 8px;
@@ -143,7 +156,9 @@
 .footer-terms-link:focus {
   text-decoration: underline;
 }
+
 /*=======media768====================================*/
+
 @media (min-width: 768px) {
   .footer-container {
     max-width: 768px;
@@ -208,6 +223,7 @@
 }
 
 /*=======media1440====================================*/
+
 @media (min-width: 1440px) {
   .footer-container {
     max-width: 1440px;
@@ -224,4 +240,93 @@
     max-width: 410px;
     margin-bottom: 0;
   }
+}
+
+/*=======modal policy and terms====================================*/
+
+.modal-policy-container {
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transition: opacity 300ms ease-in-out, visibility 300ms ease-in-out;
+}
+.modal-policy-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 10px;
+  transition: transform 300ms ease-in-out;
+}
+
+.modal-privacy-policy {
+  border-radius: 6px;
+  max-width: 375px;
+  background-color: black;
+  color: var(--footer-logo-text);
+  font-family: 'NeueMontreal';
+  line-height: 1.5;
+  padding: 20px 10px;
+}
+
+.is-hidden-policy {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.privacy-policy-content {
+  height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px 10px;
+  margin-bottom: 30px;
+}
+.privacy-policy-content::-webkit-scrollbar {
+  width: 10px;
+  background-color: beige;
+}
+.privacy-policy-content::-webkit-scrollbar-thumb {
+  background-color: var(--footer-background);
+}
+.policy-title {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+.policy-date {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.policy-greeting {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.policy-text {
+  font-size: 14px;
+}
+.policy-button-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.policy-btn {
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  color: var(--content-text-color);
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.policy-btn:hover,
+.policy-btn:focus {
+  color: var(--footer-background);
+}
+.no-scroll {
+  overflow: hidden;
 }
