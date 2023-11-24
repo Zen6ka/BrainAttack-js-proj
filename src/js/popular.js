@@ -102,15 +102,6 @@ function addToCart(productInfo) {
   updateAddToCartButtonStyle();
 }
 
-const productId = '';
-const addToCartBtn = document.querySelector(
-  `button[data-product-id="${productId}"]`
-);
-if (addToCartBtn) {
-  addToCartBtn.addEventListener('click', () => {
-    addToCart(productId);
-  });
-}
 function updateAddToCartButtonStyle() {
   const cart = JSON.parse(localStorage.getItem('cart')) || {};
   const addToCartButtons = document.querySelectorAll('.cart-btn');
