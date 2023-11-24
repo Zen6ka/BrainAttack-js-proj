@@ -1,0 +1,45 @@
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 472px;
+
+  }
+  
+  .pagination ul{
+    display: flex;
+    background-color: #E8E8E2;
+    
+  }
+
+  .pagination ul li{
+    height: 40px;
+    width: 40px;
+    list-style: none;
+    line-height: 40px;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    
+  }
+
+  .pagination ul li.numb{
+    border-radius: 50%;
+    cursor: pointer;
+    text-align: center;
+    
+  }
+
+  .pagination ul li.dots{
+    font-size: 20px;
+    cursor: default;
+  }
+
+  .pagination ul li.active,
+  .pagination ul li.numb:hover,
+  
+  .pagination ul li.btn:hover{
+    background-color: #6D8434;
+    color: #fff;
+  }
