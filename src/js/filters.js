@@ -192,7 +192,7 @@ function renderCards(products) {
                 </div>
                 <h3 class="card-list-product">${product.name}</h3>
                 <ul class="cardlist-descr">
-                    <li class ="li-p-cards"><span class ="span-p-cards">Category: </span>${product.category}</li>
+                    <li class ="li-p-cards"><span class ="span-p-cards">Category: </span>${product.category.replace(/_/g, ' ').replace(/&/g, '/')}</li>
                     <li class ="li-p-cards"><span class ="span-p-cards">Size: </span>${product.size}</li>
                     <li class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</li>
                 </ul>
