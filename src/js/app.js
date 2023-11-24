@@ -20,8 +20,7 @@ function element(totalPages, page){
   //    }
   //   }
   // }
-  
-  for (let pageLength = beforePages; pageLength <= afterPades; pageLength++){
+    for (let pageLength = beforePages; pageLength <= afterPades; pageLength++){
     if(pageLength > totalPages){
       continue;
     }
