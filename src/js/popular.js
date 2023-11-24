@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       // дані з локального сховища для відображення продуктів
       displayProducts(productsData);
     }
-    updateAddToCartButtonStyle();
+    cartButtonStyle();
   } catch (error) {
     console.error('Error:', error);
   }
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 function saveProductsToLocalStorage(products) {
   //  Збереження продуктів в локальне сховище
   localStorage.setItem('popularProducts', JSON.stringify(products));
-  updateAddToCartButtonStyle();
+  cartButtonStyle();
 }
 
 function getProductsFromLocalStorage() {
@@ -99,10 +99,10 @@ function addToCart(productInfo) {
   localStorage.setItem('cart', JSON.stringify(cart));
 
   // Оновлюємо стиль кнопок після зміни кошика
-  updateAddToCartButtonStyle();
+  cartButtonStyle();
 }
 
-function updateAddToCartButtonStyle() {
+function cartButtonStyle() {
   const cart = JSON.parse(localStorage.getItem('cart')) || {};
   const addToCartButtons = document.querySelectorAll('.cart-btn');
 
