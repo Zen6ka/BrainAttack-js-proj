@@ -182,6 +182,7 @@
 }
 
 .card-list {
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -189,35 +190,113 @@
 }
 
 .card-list-item{
-    background-color: var(--cards-color);
+    background-color: #FAFAFA;
     border-radius: 20px;
     height: 356px;
     padding: 14px;
     transition: all 250ms cubic-bezier(0.5, -0.75, 0.7, 2);
 }
 
-.cardlist-img {
-    border-radius: 16px;
+.div-img{
+    margin: auto;
     width: 295px;
     height: 178px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #E8E8E2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardlist-img {
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
     object-fit: cover;
-    }
+    background: url(<path-to-image>), #E8E8E2 50% / cover no-repeat;
+}
+
+
+.card-list-product {
+    margin-top: 20px;
+    color: #010101;
+    font-family: Neue Montreal;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; 
+}
 
 
 .cardlist-descr{
-    margin-bottom: 20px;
-    margin-left: 6px;
-    height: 54px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    white-space: pre-wrap;
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
 }
+
+.li-p-cards{
+    color: #010101;
+    font-family: Neue Montreal;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 14px; 
+}
+
+.span-p-cards{
+    color: rgba(1, 1, 1, 0.30);;
+}
+
+.cardlist-descr-light {
+    color: var(--cards-light-color);
+    opacity: 0.3;
+ 
+  }
+
+  
+  .cardlist-price {
+    margin-left: 6px;
+    color: var(--cards-text-color);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 2;
+    letter-spacing: 0.28px;
+    text-transform: uppercase;  
+    transition: all 250ms linear;
+  }
+
+
+  .cardlist-add-cart {
+    display: flex;
+    width: 48px;
+    height: 48px;
+  
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--cards-cart-color);
+    border-color: transparent;
+  
+    transition: all 250ms linear;
+  }
+  
+  .cardlist-add-cart:hover,
+  .cardlist-add-cart:focus {
+    transform: scale(1.05);
+  }
+  
+  .cardlist-svg {
+    stroke: var(--cards-color);
+    fill: var(--cards-color);
+    width: 18px;
+  }
+  
+  .cartlist-btn {
+    display: flex;
+    column-gap: 15px;
+  }
 
 
 
