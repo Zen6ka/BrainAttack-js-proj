@@ -29,7 +29,6 @@ const filtersResult = document.querySelector('.filters-result');
 const firctSelectSearch = document.querySelector('.first-select-search-not-focus');
 const buttonCategories = document.querySelector('.button-categories');
 const spanButtonCategories = document.querySelector('.span-button-categories');
-const cardList = document.querySelector('.card-list');
 
 
 const products = "products";
@@ -111,6 +110,7 @@ searchForm.addEventListener('submit', async (event) => {
     await search();
     inputResultSearch = fullInputResultSearch.results;
     console.log(inputResultSearch);
+    renderCards(inputResultSearch);
     if(fullInputResultSearch.totalPages === 0){
         messageForError();
     }
@@ -187,23 +187,25 @@ function renderCards(products) {
     const listResult = [];
     products.forEach((product) => {
         const itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
-                <img src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" onerror="this.onerror=null;this.src='';" width=300>
+                <div class = "div-img">
+                <img src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" />
+                </div>
                 <h3 class="card-list-product">${product.name}</h3>
                 <ul class="cardlist-descr">
-                    <li class ="li-p-cards"><span class ="span-p-cards">Category: </span>${product.category}</li>
+                    <li class ="li-p-cards"><span class ="span-p-cards">Category: </span>${product.category.replace(/_/g, ' ').replace(/&/g, '/')}</li>
                     <li class ="li-p-cards"><span class ="span-p-cards">Size: </span>${product.size}</li>
                     <li class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</li>
                 </ul>
                 <div class="cartlist-btn"><button class="cardlist-add-cart add-to-cart-product ">
                 <svg class="cardlist-svg" weight="18" height="18">
-                <use href=""#cart"></use>
+                <use href="../img/icons.svg#icon-ic_baseline-search#icon-heroicons-solid_shopping-cart"></use>
                 </svg>
                 </button>
                 </div>
                 </li>`;
                 listResult.push(itemResult)
     });
-    cardList.innerHTML = listResult.join(" ")
+    filtersResult.innerHTML = `<ul class="card-list">${listResult.join(" ")}</ul>`;
 };
 
 
