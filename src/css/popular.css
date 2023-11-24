@@ -86,9 +86,6 @@ span {
   background-color: #6d8434; /*  змінf кольору фону кнопки */
 }
 
-.added-to-cart svg {
-  fill: #e8e8e2; /* Зміна кольору SVG-іконки */
-}
 .add-to-cart-btn {
   border: none;
   display: inline-flex;
