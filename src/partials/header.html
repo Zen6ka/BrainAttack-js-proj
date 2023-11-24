@@ -1,13 +1,77 @@
-<header class="header">
-  <nav class="nav">
-    <ul class="nav-list">
-      <li class="nav-item">
-        <a href="./page-2.html" class="nav-link">Page 2</a>
-      </li>
+<header class="page-header-container container">
+  <nav class="main-nav">
+    <div class="logo-wrapper">
+      <a class="logo-link" href="../index.html">
+        <svg class="header-logo-icon">
+          <use href="/img/icons.svg#icon-logo-header"></use></svg
+        >Food Boutique</a
+      >
+    </div>
 
-      <li class="nav-item">
-        <!-- <a href="./page-3.html" class="nav-link">Page 3</a> -->
+    <ul class="navig-wrapper list">
+      <li>
+        <a class="link-home" href="#home">Home</a>
+      </li>
+      <li class="header-basket">
+        <!-- <li class="social-list-footer-item">
+          <a class="social-list-footer-link" href="">
+            <svg class="social-list-footer-icon" width="24" height="24">
+              <use href="./images/icons.svg#icon-instagram"></use>
+            </svg>
+          </a>
+        </li> -->
+
+        <button class="btn-basket" type="button">
+          <svg
+            class="icon-basket-header"
+            aria-label="close icon"
+            width="38"
+            height="38"
+          >
+            <use href="/img/icons.svg#icon-basket"></use>
+          </svg>
+        </button>
+        <span class="cart-amount">Cart (3)</span>
       </li>
     </ul>
   </nav>
 </header>
+<section class="section">
+  <div class="hero-container container">
+    <h1 class="hero-title">
+      Welcome to the <span class="hero-title-color">Food</span> Boutique!
+    </h1>
+    <h2 class="hero-text">
+      With Food Boutique, you're not just subscribing to food, you're signing up
+      for a fresher, fitter, and happier you.
+    </h2>
+
+    <picture class="hero-picture">
+      <source
+        srcset="/img/img-desktop.png 1x, /img/img-desktop@2x.png 2x"
+        media="(min-width: 1240px)"
+      />
+
+      <source
+        srcset="/img/img-tablet.png 1x, /img/img-tablet@2x.png 2x"
+        media="(min-width: 768px)"
+      />
+      <!-- max-width: 767.9px -->
+
+      <source
+        srcset="/img/img-mobile.png 1x, /img/img-mobile@2x.png 2x"
+        media="(max-width: 767.9px)"
+      />
+
+      <img
+        class="hero-img"
+        src="/img/img-desktop.png"
+        alt="hero-desktop"
+        alt="Black chocolate"
+      />
+    </picture>
+    <svg class="icon-organic-food" width="100" height="100">
+      <use href="/img/icons.svg#icon-organic-food"></use>
+    </svg>
+  </div>
+</section>
