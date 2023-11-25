@@ -129,7 +129,7 @@
   gap: 13px;
 }
 /* ///////////////////////////////////// */
-@media (min-width: 768px) and (max-width: 1440px) {
+@media (min-width: 768px) and (max-width: 1280px) {
   .products-container {
     display: inline-flex;
     flex-direction: row;
@@ -144,8 +144,8 @@
     height: 98px;
   }
 }
-@media (min-width: 1440px) {
-  /* Для екранів більше 769px */
+@media (min-width: 1280px) {
+  /* Для екранів більше 1280px */
   .product-name {
     margin-bottom: 10px;
   }

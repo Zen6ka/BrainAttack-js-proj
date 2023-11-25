@@ -89,7 +89,7 @@ function displayProducts(products) {
 // Функція для додавання продукту в кошик
 function addToCart(productInfo) {
   // Отримуємо дані про кошик з локального сховища
-  const cart = JSON.parse(localStorage.getItem('cart')) || {};
+  let cart = JSON.parse(localStorage.getItem('cart')) || {};
 
   // Перевіряємо, чи товар вже є в кошику за його ідентифікатором
   if (cart[productInfo.productId]) {
