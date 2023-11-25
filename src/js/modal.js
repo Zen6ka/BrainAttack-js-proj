@@ -38,7 +38,7 @@ cardImages.forEach(img => {
 const baseUrl = 'https://food-boutique.b.goit.study/api/';
 
 // Оновлюємо інтерфейс модального вікна при відкритті
-async function onOpenModal(productId) {
+export async function onOpenModal(productId) {
   // Додаємо слухач
   window.addEventListener('keydown', onCloseByEsc);
   document.body.classList.add('show-modal');
