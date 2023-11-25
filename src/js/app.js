@@ -65,6 +65,7 @@ async function main() {
   displayPagination(postsData, rows);
 }
 
+
 // -----------------------------2var-----------------------
 const ulTag = document.querySelector("btns");
 let totalPages = 8;
