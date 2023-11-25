@@ -63,61 +63,73 @@ function displayProducts(products) {
     container.querySelector('.popularity-value').textContent =
       product.popularity;
     const productInfo = {
-      productId: product._id,
-      productName: product.name,
-      productImg: product.img,
-      productCategory: product.category,
-      productPrice: product.price,
-      productSize: product.size,
-      productIs10PercentOff: product.is10PercentOff,
-      productPopularity: product.popularity,
+      _Id: product._id,
+      name: product.name,
+      img: product.img,
+      category: product.category,
+      price: product.price,
+      size: product.size,
+      is10PercentOff: product.is10PercentOff,
+      popularity: product.popularity,
     };
+
     // Налаштування слухача подій для кліку на фото
     const addIdImg = container.querySelector('.product-image-container');
     addIdImg.addEventListener('click', function () {
-      localStorage.setItem('popul', JSON.stringify(productInfo));
+      // Створюємо масив з одного елемента - нової інформації про продукт
+      let populArray = [productInfo];
+
+      // Зберігаємо оновлений масив у локальне сховище
+      localStorage.setItem('popul', JSON.stringify(populArray));
     });
     // Налаштування слухача подій для кліку на кнопку "Додати в кошик"
     const addToCartBtn = container.querySelector('.add-to-cart-btn');
     addToCartBtn.onclick = function () {
       addToCart(productInfo);
+      updateCart();
     };
     addToCartBtn.setAttribute('data-product-id', product._id);
   });
 }
 
 // Функція для додавання продукту в кошик
-function addToCart(productInfo) {
-  // Отримуємо дані про кошик з локального сховища
-  let cart = JSON.parse(localStorage.getItem('cart')) || {};
+export function addToCart(productInfo) {
+  // Отримуємо масив продуктів з локального сховища
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-  // Перевіряємо, чи товар вже є в кошику за його ідентифікатором
-  if (cart[productInfo.productId]) {
+  // Перевіряємо, чи товар вже є в кошику
+  const existingProductIndex = cart.findIndex(
+    item => item._Id === productInfo._Id
+  );
+
+  if (existingProductIndex !== -1) {
     // Якщо товар вже є в кошику, видаляємо його
-    delete cart[productInfo.productId];
+    cart.splice(existingProductIndex, 1);
   } else {
     // Якщо товару немає в кошику, додаємо його
-    cart[productInfo.productId] = productInfo;
+    cart.push(productInfo);
   }
 
   // Оновлюємо кошик у локальному сховищі
   localStorage.setItem('cart', JSON.stringify(cart));
-
+  updateCart();
   // Оновлюємо стиль кнопок після зміни кошика
   cartButtonStyle();
 }
 
-function cartButtonStyle() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || {};
+// Функція для оновлення стилю кнопок
+export function cartButtonStyle() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const addToCartButtons = document.querySelectorAll('.cart-btn');
-  //надаємо стилі кнопкам "Додати в кошик"
+
   addToCartButtons.forEach(btn => {
-    const productId = btn.getAttribute('data-product-id');
+    const _Id = btn.getAttribute('data-product-id');
     const iconInCart = btn.querySelector('.icon-off');
     const iconAddToCart = btn.querySelector('.icon-on');
-    //якщо товар вже є в кошику, то змінюємо стиль кнопки
+    const isProductInCart = cart.some(item => item._Id === _Id);
+
     if (iconInCart && iconAddToCart) {
-      if (cart[productId]) {
+      if (isProductInCart) {
         btn.classList.add('added-to-cart');
         iconInCart.style.display = 'block';
         iconAddToCart.style.display = 'none';
@@ -129,3 +141,13 @@ function cartButtonStyle() {
     }
   });
 }
+
+// Виклик події "cartUpdated" після зміни кошика
+export function updateCart() {
+  document.dispatchEvent(new CustomEvent('cartUpdated'));
+}
+
+// Обробник події "cartUpdated"
+document.addEventListener('cartUpdated', () => {
+  cartButtonStyle();
+});
