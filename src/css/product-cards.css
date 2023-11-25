@@ -112,6 +112,7 @@
 .cardlist-add-cart:hover,
 .cardlist-add-cart:focus {
   transform: scale(1.05);
+  background: #586F1F;
 }
 
 .cardlist-svg {

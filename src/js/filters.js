@@ -13,7 +13,6 @@ export class RequestToTheServer {
     async fetchBreeds(){
     try{
         const response = await axios.get(`${this.baseUrl}${this.endPoint}?${this.filters}&page=${this.page}&limit=${this.limit}`);
-        console.log(response.data);
         return response.data
     } catch(error){
         console.error("Error:", error.message);
@@ -215,9 +214,20 @@ async function renderEndPoint(event){
 
 function renderCards(products) {
     const listResult = [];
+    const infoAboutCard = JSON.parse(localStorage.getItem('cart'));
     products.forEach((product) => {
+        let itemResult = '';
+        let idIconShop = "icon-heroicons-solid_shopping-cart";
+        if(infoAboutCard){
+            const cardInInfoAboutCard = infoAboutCard.some((obj) => obj._id === product._id);
+            if(cardInInfoAboutCard){
+                idIconShop = "icon-check";
+            } else{
+                idIconShop = "icon-heroicons-solid_shopping-cart";
+            }
+        };
         if(product.is10PercentOff){
-        const itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
+        itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
                 <div class = "div-img">
                 <img src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" />
                 </div>
@@ -231,7 +241,7 @@ function renderCards(products) {
                 </div>
                 <div class="cartlist-btn"><button class="cardlist-add-cart" id=${product._id}>
                 <svg class="cardlist-svg" weight="18" height="18">
-                <use href="../img/icons.svg#icon-heroicons-solid_shopping-cart"></use>
+                <use href="../img/icons.svg#${idIconShop}"></use>
                 </svg>
                 </button>
                 </div>
@@ -240,9 +250,8 @@ function renderCards(products) {
                 <use href="../img/icons.svg#icon-discount-1"></use>
                 </svg>
                 </li>`;
-                listResult.push(itemResult)
         } else {
-            const itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
+            itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
                 <div class = "div-img">
                 <img src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" />
                 </div>
@@ -256,7 +265,7 @@ function renderCards(products) {
                 </div>
                 <div class="cartlist-btn"><button class="cardlist-add-cart" id=${product._id}>
                 <svg class="cardlist-svg" weight="18" height="18">
-                <use href="../img/icons.svg#icon-heroicons-solid_shopping-cart"></use>
+                <use href="../img/icons.svg#${idIconShop}"></use>
                 </svg>
                 </button>
                 </div>
@@ -265,8 +274,8 @@ function renderCards(products) {
                 <use href="../img/icons.svg#icon-discount-1"></use>
                 </svg>
                 </li>`;
-                listResult.push(itemResult)
         }
+        listResult.push(itemResult)
     });
     filtersResult.innerHTML = `<ul class="card-list">${listResult.join(" ")}</ul>`;
     workShopButton(products);
@@ -278,13 +287,13 @@ function workShopButton(products) {
         shopButton.addEventListener('click', (event) => {
             const idShopButton = event.currentTarget.getAttribute('id');
             const ourProduct = products.find((odj) => odj._id === idShopButton);
-            const cardLS = localStorage.getItem('card');
+            const cardLS = localStorage.getItem('cart');
             if(cardLS){
                 const infoInCardLS = JSON.parse(cardLS);
                 infoInCardLS.push(ourProduct);
-                localStorage.setItem('card', JSON.stringify(infoInCardLS));
+                localStorage.setItem('cart', JSON.stringify(infoInCardLS));
             } else{
-                localStorage.setItem('card', JSON.stringify([ourProduct]));
+                localStorage.setItem('cart', JSON.stringify([ourProduct]));
             }
             event.currentTarget.innerHTML = `<svg class="cardlist-svg" weight="18" height="18">
             <use href="../img/icons.svg#icon-check"></use>
