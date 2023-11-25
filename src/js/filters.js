@@ -42,6 +42,16 @@ let inputResultSearch = {};
 let productsCategories = {};
 let fullInputResultSearch ={};
 
+let littleMediaQuery = window.matchMedia('(min-width: 768px)').matches;
+let bigMediaQuery = window.matchMedia('(min-width: 1280px)').matches;
+if(bigMediaQuery){
+    limit = 9;
+} else if(littleMediaQuery){
+    limit = 8;
+} else{
+    limit = 6;
+}
+
 function recordsDataForSearch(keyword, category, page, limit){
     localStorage.setItem('data-for-search', JSON.stringify(
         {
@@ -57,10 +67,16 @@ recordsDataForSearch(keyword, category, page, limit);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 async function search () {
-    const letForSearch = JSON.parse(localStorage.getItem('data-for-search'));
+    try{
+        const letForSearch = JSON.parse(localStorage.getItem('data-for-search'));
     const filters = `keyword=${letForSearch.keyword}&category=${letForSearch.category}`;
         const classResultProductsWithFilters = new RequestToTheServer(products, filters, page, limit);
         fullInputResultSearch = await classResultProductsWithFilters.fetchBreeds();
+    } catch (error){
+        messageForError();
+        console.error("Error:", error.message);
+    }
+    
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,21 +99,25 @@ async function ifEmptyInput() {
     try {
         const storageDataHomePage = localStorage.getItem('products-home-page-filters');
         if (storageDataHomePage) {
-            productsHomePage = JSON.parse(storageDataHomePage);
-            // localStorage.removeItem('products-home-page-filters');
+            const preProductsHomePage = JSON.parse(storageDataHomePage);
+            if(preProductsHomePage.length >= limit){
+                productsHomePage = preProductsHomePage.slice(0, limit)
+            } else {
+                await search();
+            productsHomePage = fullInputResultSearch.results;
+            localStorage.setItem('products-home-page-filters', JSON.stringify(productsHomePage));
+            }
         } else {
             await search();
             productsHomePage = fullInputResultSearch.results;
-            console.log(fullInputResultSearch);
             localStorage.setItem('products-home-page-filters', JSON.stringify(productsHomePage));
         }
+        renderCards(productsHomePage);
     } catch (error) {
+        messageForError();
         console.error("Error:", error.message);
     }
-    console.log(productsHomePage);
-    renderCards(productsHomePage)
-    // localStorage.removeItem('products-home-page-filters');
-}
+};
 
 ifEmptyInput();
 
@@ -109,7 +129,6 @@ searchForm.addEventListener('submit', async (event) => {
     recordsDataForSearch(keyword, category, page, limit);
     await search();
     inputResultSearch = fullInputResultSearch.results;
-    console.log(inputResultSearch);
     renderCards(inputResultSearch);
     if(fullInputResultSearch.totalPages === 0){
         messageForError();
@@ -123,7 +142,6 @@ async function ifEmptyCategories() {
         const storageDataCategories = localStorage.getItem('categories-filters');
         if (storageDataCategories) {
             productsCategories = JSON.parse(storageDataCategories);
-            // localStorage.removeItem('categories-filters');
         } else {
             const filters = '';
             const firstProductsCategoriesFilters = `${products}/categories`;
@@ -131,11 +149,12 @@ async function ifEmptyCategories() {
             productsCategories = await classFirstCategoriesProducts.fetchBreeds();
             localStorage.setItem('categories-filters', JSON.stringify(productsCategories));
         }
+        renderCategories(productsCategories);
     } catch (error) {
+        messageForError();
         console.error("Error:", error.message);
     }
-    renderCategories(productsCategories);
-}
+};
 
 ifEmptyCategories();
 
@@ -145,6 +164,7 @@ function renderCategories(productsCategories){
         const itemCategories = `<li class="li-first-select-search"><button class="button-li-filters">${productsCategorie.replace(/_/g, ' ').replace(/&/g, '/')}</button></li>`;
         listCategories.push(itemCategories)
     });
+    listCategories.push(`<li class="li-first-select-search"><button class="button-li-filters">Show all</button></li>`);
     firctSelectSearch.insertAdjacentHTML('beforeend', listCategories.join(''));
     const buttonsLiFilters = document.querySelectorAll('.button-li-filters');
     addListenerLi(buttonsLiFilters)
@@ -175,10 +195,20 @@ function addListenerLi(buttonsLiFilters){
 })
 };
 
-function renderEndPoint(event){
+async function renderEndPoint(event){
     const nameCategoryForSelect = event.currentTarget.textContent;
     category = nameCategoryForSelect.replace(/ /g, '_').replace(/\//g, '&');
     spanButtonCategories.innerHTML = `${nameCategoryForSelect}`;
+    if(category === 'Show_all'){
+        category = ''
+    }
+    recordsDataForSearch(keyword, category, page, limit);
+    await search();
+    inputResultSearch = fullInputResultSearch.results;
+    renderCards(inputResultSearch);
+    if(fullInputResultSearch.totalPages === 0){
+        messageForError();
+    }
 }
 
 ///////////////////////////////////////////////////////  RENDER  CARDS  /////////////////////////////////////////////////////////////
