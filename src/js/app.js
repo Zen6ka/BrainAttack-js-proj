@@ -65,74 +65,8 @@ async function main() {
   displayPagination(postsData, rows);
 }
 
-// -----------------------------2variant-----------------------
-const ulTag = document.querySelector("async function getData() {
-  const response = await fetch('/https://food-boutique.b.goit.study/api/products');
-  const data = await response.json();
-  return data;
-}
-
-async function main() {
-  const productsData = await getData();
-  let currentPage = 1;
-  let rows = 9;
-//   ------------ вывод информации ----------
-  
-  function displayList(arrData, rowPerPage, page) {
-    const productsEl = document.querySelector('.products');
-    postsEl.innerHTML = "";
-    page--;
-// вывод послдоватльно каждые 9 страниц
-    const start = rowPerPage * page;
-    const end = start + rowPerPage;
-    const paginatedData = arrData.slice(start, end);
-
-    paginatedData.forEach((el) => {
-      const productEl = document.createElement("div");
-      productEl.classList.add("product");
-      productEl.innerText = `${el.title}`;
-      productsEl.appendChild(productEl);
-    })
-  }
-//   ------------ пагинация ----------
-  function displayPagination(arrData, rowPerPage) {
-    const paginationEl = document.querySelector('.pagination');
-  //   const pagesCount = Math.ceil(arrData.length / rowPerPage);
-    const totalPages = 8;
-    const ulEl = document.createElement("ul");
-    ulEl.classList.add('pagination');
-
-    for (let i = 1; i < pagesCount; i++) {
-      const liEl = displayPaginationBtn(i + 1);
-      ulEl.appendChild(liEl)
-    }
-    paginationEl.appendChild(ulEl)
-  }
-//   ------------ адресация кнопок ----------
-  function displayPaginationBtn(page) {
-    const liEl = document.createElement("li");
-    liEl.classList.add('pagination')
-    liEl.innerText = page
-
-    if (currentPage == page) liEl.classList.add('pagination--active');
-
-    liEl.addEventListener('click', () => {
-      currentPage = page
-      displayList(postsData, rows, currentPage)
-
-      let currentItemLi = document.querySelector('li.pagination__item--active');
-      currentItemLi.classList.remove('pagination__item--active');
-
-      liEl.classList.add('pagination__item--active');
-    })
-
-    return liEl;
-  }
-
-  //  displayList(postsData, rows, currentPage);
-  displayPagination(postsData, rows);
-}
-");
+// -----------------------------2var-----------------------
+const ulTag = document.querySelector("btns");
 let totalPages = 8;
 
 function element(totalPages, page){
