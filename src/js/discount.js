@@ -3,30 +3,18 @@ import axios from 'axios';
 const discountEl = document.querySelector('.discount-container');
 
 let products = [];
+let addedProducts = [];
 
-const addIdToStorage = id => {
-  if (localStorage.getItem('addedProducts')) {
-    const item = JSON.parse(localStorage.getItem('addedProducts'));
-    // console.log(item.includes(id));
-    if (!item.includes(id)) {
-      item.push(id);
-      //   console.log(item);
-      localStorage.setItem('addedProducts', JSON.stringify(item));
-    }
-  } else {
-    localStorage.setItem('addedProducts', JSON.stringify([id]));
+const addProductToStorage = product => {
+  const existingProduct = addedProducts.find(p => p._id === product._id);
+  if (!existingProduct) {
+    addedProducts.push(product);
+    localStorage.setItem('addedProducts', JSON.stringify(addedProducts));
   }
-
-  //   console.log(document.querySelector(`[data-id="${id}"]`).querySelector('use'));
 };
 
-const buttonIcon = id => {
-  if (localStorage.getItem('addedProducts')) {
-    return JSON.parse(localStorage.getItem('addedProducts')).includes(id)
-      ? 'icon-check'
-      : 'icon-heroicons-solid_shopping-cart';
-  }
-  return 'icon-heroicons-solid_shopping-cart';
+const isProductInCart = id => {
+  return addedProducts.some(product => product._id === id);
 };
 
 async function getDiscountProduct() {
@@ -34,8 +22,8 @@ async function getDiscountProduct() {
     const res = await axios.get(
       'https://food-boutique.b.goit.study/api/products/discount'
     );
+
     products = res.data;
-    // console.log(products);
 
     function productTemplate(product) {
       const { _id, name, img, price } = product;
@@ -43,7 +31,7 @@ async function getDiscountProduct() {
       return `<div class="discount-card">
                   <div class="discount-logo">
                   <svg class="logo">
-                      <use href="../img/icons.svg#icon-discount" width="60" height="60"></use>
+                      <use href="../img/icons.svg#icon-discount-1" width="60" height="60"></use>
                   </svg>
                   </div>
                   <div class="discount-card-image">
@@ -59,7 +47,11 @@ async function getDiscountProduct() {
   
                       <button class="discount-card-button" type="button" data-id=${_id}>
                       <svg class="">
-                          <use href="../img/icons.svg#${buttonIcon(_id)}"></use>
+                          <use href="../img/icons.svg#${
+                            isProductInCart(_id)
+                              ? 'icon-check'
+                              : 'icon-heroicons-solid_shopping-cart'
+                          }"></use>
                       </svg>
                       </button>
                   </div>
@@ -76,13 +68,17 @@ async function getDiscountProduct() {
       discountEl.innerHTML = markup;
     }
 
+    addedProducts = JSON.parse(localStorage.getItem('addedProducts')) || [];
+
     renderProducts();
 
     const cartButtons = document.querySelectorAll('.discount-card-button');
     Array.from(cartButtons).forEach(el => {
       el.addEventListener('click', ev => {
-        // console.log(ev.currentTarget.dataset.id);
-        addIdToStorage(ev.currentTarget.dataset.id);
+        const productId = ev.currentTarget.dataset.id;
+        const selectedProduct = products.find(p => p._id === productId);
+        addProductToStorage(selectedProduct);
+        renderProducts();
       });
     });
   } catch (error) {
