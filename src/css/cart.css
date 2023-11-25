@@ -10,6 +10,8 @@ body {
     max-width: 335px;
 margin: 0 auto;
 padding-top: 72px;
+padding-left: 20px;
+padding-right: 20px;
 }
 
 .cart-quantity {
@@ -144,22 +146,21 @@ line-height: 1.28; /* 128.571% */
     gap: 60px;
     max-height: 420px;
 
-    overflow: scroll;
+    overflow: auto;
     position: relative;
 }
 
 /* ------------------ДОРОБИТИ СКРОЛ----------------------------- */
-/* .js-cart-selected-products::-webkit-scrollbar {
-    width: 12px;
-  } */
-.js-cart-selected-products::-webkit-scrollbar-thumb {
-    /* width: 22px; */
+.js-cart-selected-products::-webkit-scrollbar {
+    width: 6px;
+  }
+/* .js-cart-selected-products::-webkit-scrollbar-thumb {
     top: 0;
   bottom: 0;
     position: absolute;
     right: -12px;
-    height: 117px; /* Довжина вертикальної полоси прокрутки */
-  }
+    height: 25px;
+  } */
 
 
 /* Класи для стилізації продуктів які прийдуть з локального сховища */
