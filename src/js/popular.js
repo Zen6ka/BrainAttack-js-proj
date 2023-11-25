@@ -1,5 +1,5 @@
 import { RequestToTheServer } from './filters';
-
+import { onOpenModal } from './modal';
 document.addEventListener('DOMContentLoaded', async function () {
   const request = new RequestToTheServer('products/popular?limit=5');
 
@@ -73,7 +73,6 @@ function displayProducts(products) {
       popularity: product.popularity,
     };
 
-    // Налаштування слухача подій для кліку на фото
     const addIdImg = container.querySelector('.product-image-container');
     addIdImg.addEventListener('click', function () {
       // Створюємо масив з одного елемента - нової інформації про продукт
@@ -81,6 +80,9 @@ function displayProducts(products) {
 
       // Зберігаємо оновлений масив у локальне сховище
       localStorage.setItem('popul', JSON.stringify(populArray));
+
+      // Викликаємо onOpenModal з ID продукту
+      onOpenModal(productInfo._Id);
     });
     // Налаштування слухача подій для кліку на кнопку "Додати в кошик"
     const addToCartBtn = container.querySelector('.add-to-cart-btn');
