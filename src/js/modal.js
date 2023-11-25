@@ -23,7 +23,9 @@ const refs = {
 };
 
 // Слухачі
-refs.openModalBtn.addEventListener('click', onOpenModal);
+refs.openModalBtn.addEventListener('click', () =>
+  onOpenModal(refs.openModalBtn.dataset.productId)
+);
 refs.closeModalBtn.addEventListener('click', onCloseModal);
 refs.backdrop.addEventListener('click', onBackdropClick);
 
@@ -36,27 +38,25 @@ cardImages.forEach(img => {
 const baseUrl = 'https://food-boutique.b.goit.study/api/';
 
 // Оновлюємо інтерфейс модального вікна при відкритті
-async function onOpenModal(event, productId) {
-  console.log('onOpenModal is called');
-  await handleProductDetails(event, productId);
+async function onOpenModal(productId) {
   // Додаємо слухач
   window.addEventListener('keydown', onCloseByEsc);
   document.body.classList.add('show-modal');
 
   // Перевіряємо, чи продукт вже в корзині
+  await handleProductDetails(productId);
   checkIfProductInCart(productId);
+  toggleBodyScroll();
 }
 
-// Функція по кліку на зображення
-async function handleImageClick(event) {
-  const listItem = event.currentTarget.closest('.card-list-item');
-
-  if (listItem) {
-    const productId = listItem.dataset.id;
-    console.log('Clicked on product with ID:', productId);
-
-    // Викликаємо ту ж саму функцію, яка відкриває модальне вікно
-    await onOpenModal(event, productId);
+// Запит за допомогою Axios
+async function fetchProductById(productId) {
+  try {
+    const response = await axios.get(`${baseUrl}products/${productId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error:', error.message);
+    return null;
   }
 }
 
@@ -75,24 +75,17 @@ async function handleProductDetails(productId) {
     refs.modalPrice.textContent = `$${productDetails.price.toFixed(2)}`;
 
     // Перевіряємо чи продукт в корзині
-    checkIfProductInCart(productId);
-  }
-}
+    const isInCart = checkIfProductInCart(productId);
+    const isAdded = getCartFromStorage().includes(productId);
 
-// Запит за допомогою Axios
-async function fetchProductById(productId) {
-  try {
-    const response = await axios.get(`${baseUrl}products/${productId}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error:', error.message);
-    return null;
+    // Оновлюємо текст кнопки
+    updateAddToCartButton(isInCart, isAdded);
   }
 }
 
 // Міняю текст кнопки в залежності чи в корзині продукт
-function updateAddToCartButton(isInCart) {
-  const buttonText = isInCart ? 'Remove from' : 'Add to';
+function updateAddToCartButton(isInCart, isAdded) {
+  const buttonText = isInCart ? 'Remove from' : isAdded ? 'Added to' : 'Add to';
   refs.addToCart.querySelector('.modal-btn-sabmit-span').textContent =
     buttonText;
   refs.addToCart.disabled = isInCart; // кнопка не активна якщо товар в корзині
@@ -103,24 +96,22 @@ function checkIfProductInCart(productId) {
   let cart = getCartFromStorage();
   const isInCart = cart.includes(productId);
 
-  // Оновлюю текст
-  updateAddToCartButton(isInCart);
-
   // Додавання слухача для кнопки
   refs.addToCart.addEventListener('click', () => {
     if (isInCart) {
       // Видалення товару з корзини
       removeFromCart(productId);
       // Оновлюємо текст кнопки та робимо її неактивною
-      updateAddToCartButton(false);
-      refs.addToCart.removeEventListener('click', null); // Видаляємо слухача
+      updateAddToCartButton(false, false);
     } else {
       // Товару немає в кошику, додаємо
       addToCart(productId);
       // Оновлюємо текст кнопки
-      updateAddToCartButton(true);
+      updateAddToCartButton(true, true);
     }
   });
+
+  return isInCart;
 }
 
 // Функція для отримання корзини з локального сховища
@@ -153,6 +144,7 @@ function onCloseModal() {
   // Зняв слухач
   window.removeEventListener('keydown', onCloseByEsc);
   document.body.classList.remove('show-modal');
+  toggleBodyScroll();
 }
 
 // Закритя модального вікна по кліку за модалку (на темний фон)
@@ -167,4 +159,12 @@ function onCloseByEsc(event) {
   if (event.code === 'Escape') {
     onCloseModal();
   }
+}
+
+function isModalOpen() {
+  return document.body.classList.contains('show-modal');
+}
+
+function toggleBodyScroll() {
+  document.body.style.overflow = isModalOpen() ? 'hidden' : '';
 }
