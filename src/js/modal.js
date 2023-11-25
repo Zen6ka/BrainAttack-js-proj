@@ -27,13 +27,18 @@ refs.openModalBtn.addEventListener('click', onOpenModal);
 refs.closeModalBtn.addEventListener('click', onCloseModal);
 refs.backdrop.addEventListener('click', onBackdropClick);
 
+const cardImages = document.querySelectorAll('.cardlist-img');
+cardImages.forEach(img => {
+  img.addEventListener('click', event => handleImageClick(event));
+});
+
 // Зовнішній URL для запитів
 const baseUrl = 'https://food-boutique.b.goit.study/api/';
 
 // Оновлюємо інтерфейс модального вікна при відкритті
-async function onOpenModal() {
-  const productId = this.dataset.productId;
-  await handleProductDetails(productId);
+async function onOpenModal(event, productId) {
+  console.log('onOpenModal is called');
+  await handleProductDetails(event, productId);
   // Додаємо слухач
   window.addEventListener('keydown', onCloseByEsc);
   document.body.classList.add('show-modal');
@@ -42,14 +47,16 @@ async function onOpenModal() {
   checkIfProductInCart(productId);
 }
 
-// Запит за допомогою Axios
-async function fetchProductById(productId) {
-  try {
-    const response = await axios.get(`${baseUrl}products/${productId}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error:', error.message);
-    return null;
+// Функція по кліку на зображення
+async function handleImageClick(event) {
+  const listItem = event.currentTarget.closest('.card-list-item');
+
+  if (listItem) {
+    const productId = listItem.dataset.id;
+    console.log('Clicked on product with ID:', productId);
+
+    // Викликаємо ту ж саму функцію, яка відкриває модальне вікно
+    await onOpenModal(event, productId);
   }
 }
 
@@ -69,6 +76,17 @@ async function handleProductDetails(productId) {
 
     // Перевіряємо чи продукт в корзині
     checkIfProductInCart(productId);
+  }
+}
+
+// Запит за допомогою Axios
+async function fetchProductById(productId) {
+  try {
+    const response = await axios.get(`${baseUrl}products/${productId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error:', error.message);
+    return null;
   }
 }
 
@@ -110,6 +128,7 @@ function getCartFromStorage() {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   return cart;
 }
+
 // Функція для додавання продукту до корзини в локальному сховищі
 function addToCart(productId) {
   let cart = getCartFromStorage();
