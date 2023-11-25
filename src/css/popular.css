@@ -89,6 +89,7 @@
   right: 16px;
 }
 .h1-popular {
+  align-self: baseline;
   color: #010101;
   margin-bottom: 20px;
   font-family: Neue Montreal;
@@ -161,5 +162,14 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 13px;
+  }
+  .contain {
+    margin-top: 136px;
+    width: 275px;
+    display: flex;
+    flex-direction: column;
+
+    align-content: flex-end;
+    align-items: flex-end;
   }
 }
