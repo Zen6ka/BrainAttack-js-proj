@@ -5,7 +5,7 @@
   color: var(--footer-logo-text);
 }
 
-.footer-container {
+.container.footer-container {
   max-width: 375px;
   padding: 0 20px;
   margin: 0 auto;
@@ -82,6 +82,7 @@
 
 .subscription-wrap {
   font-family: 'NeueMontreal';
+  max-width: 335px;
 }
 .suscription-text {
   margin-bottom: 20px;
@@ -160,7 +161,7 @@
 /*=======media768====================================*/
 
 @media (min-width: 768px) {
-  .footer-container {
+  .container.footer-container {
     max-width: 768px;
     padding: 0 32px;
   }
@@ -222,12 +223,12 @@
   }
 }
 
-/*=======media1440====================================*/
+/*=======media1280====================================*/
 
-@media (min-width: 1440px) {
-  .footer-container {
-    max-width: 1440px;
-    padding: 0 100px;
+@media (min-width: 1280px) {
+  .container.footer-container {
+    max-width: 1280px;
+    padding: 0 20px;
   }
   .footer-content-wrap {
     margin-bottom: 128px;
@@ -245,7 +246,7 @@
 /*=======modal policy and terms====================================*/
 
 .modal-policy-container {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   position: fixed;
@@ -265,8 +266,8 @@
 
 .modal-privacy-policy {
   border-radius: 6px;
-  max-width: 375px;
-  background-color: black;
+  width: 60vw;
+  background-color: var(--footer-background);
   color: var(--footer-logo-text);
   font-family: 'NeueMontreal';
   line-height: 1.5;
@@ -280,7 +281,9 @@
 }
 
 .privacy-policy-content {
-  height: 320px;
+  background-color: var(--footer-logo-text);
+  color: var(--content-text-color);
+  height: 50vh;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 20px 10px;
@@ -291,7 +294,7 @@
   background-color: beige;
 }
 .privacy-policy-content::-webkit-scrollbar-thumb {
-  background-color: var(--footer-background);
+  background-color: #586f1f;
 }
 .policy-title {
   margin-bottom: 20px;
