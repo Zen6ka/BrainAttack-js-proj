@@ -229,7 +229,7 @@ function renderCards(products) {
                 </div>
                     <p class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</p>
                 </div>
-                <div class="cartlist-btn"><button class="cardlist-add-cart add-to-cart-product ">
+                <div class="cartlist-btn"><button class="cardlist-add-cart" id=${product._id}>
                 <svg class="cardlist-svg" weight="18" height="18">
                 <use href="../img/icons.svg#icon-heroicons-solid_shopping-cart"></use>
                 </svg>
@@ -254,7 +254,7 @@ function renderCards(products) {
                 </div>    
                     <p class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</p>
                 </div>
-                <div class="cartlist-btn"><button class="cardlist-add-cart add-to-cart-product ">
+                <div class="cartlist-btn"><button class="cardlist-add-cart" id=${product._id}>
                 <svg class="cardlist-svg" weight="18" height="18">
                 <use href="../img/icons.svg#icon-heroicons-solid_shopping-cart"></use>
                 </svg>
@@ -269,6 +269,26 @@ function renderCards(products) {
         }
     });
     filtersResult.innerHTML = `<ul class="card-list">${listResult.join(" ")}</ul>`;
+    workShopButton(products);
+};
+
+function workShopButton(products) {
+    const allShopButton = document.querySelectorAll('.cardlist-add-cart');
+    [...allShopButton].forEach((shopButton) => {
+        shopButton.addEventListener('click', (event) => {
+            const idShopButton = event.currentTarget.getAttribute('id');
+            const ourProduct = products.find((odj) => odj._id === idShopButton);
+            const cardLS = localStorage.getItem('card');
+            if(cardLS){
+                const infoInCardLS = JSON.parse(cardLS);
+                infoInCardLS.push(ourProduct);
+                console.log(infoInCardLS);
+                localStorage.setItem('card', JSON.stringify(infoInCardLS));
+            } else{
+                localStorage.setItem('card', JSON.stringify([ourProduct]));
+            }
+        })
+    })
 };
 
 
