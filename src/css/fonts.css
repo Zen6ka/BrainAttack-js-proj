@@ -30,6 +30,17 @@
     url('https://db.onlinewebfonts.com/t/4366ceae6f7564999a0f0c3e8698a4ad.svg#Neue Montreal')
       format('svg');
 }
+
+/* neue-montreal-regular*/
+@font-face {
+	font-family: "Neue Montreal Regular";
+	src: url("https://db.onlinewebfonts.com/t/7980cc1889b6b0b264dc47cca659f7c2.eot");
+	src: url("https://db.onlinewebfonts.com/t/7980cc1889b6b0b264dc47cca659f7c2.eot?#iefix")format("embedded-opentype"),
+	url("https://db.onlinewebfonts.com/t/7980cc1889b6b0b264dc47cca659f7c2.woff2")format("woff2"),
+	url("https://db.onlinewebfonts.com/t/7980cc1889b6b0b264dc47cca659f7c2.woff")format("woff"),
+	url("https://db.onlinewebfonts.com/t/7980cc1889b6b0b264dc47cca659f7c2.ttf")format("truetype"),
+	url("https://db.onlinewebfonts.com/t/7980cc1889b6b0b264dc47cca659f7c2.svg#Neue Montreal Regular")format("svg");
+}
 /*====================================================*/
 @font-face {
   font-family: 'Quincy CF';
