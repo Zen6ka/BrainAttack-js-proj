@@ -5,7 +5,7 @@ import { RequestToTheServer } from './filters';
 const refs = {
   // ---------------for form subscription--------------
 
-  formSubscription: document.querySelector('.contact-form-input'),
+  formSubscription: document.querySelector('.footer-form'),
 
   // ----------------for modal window_____________
 
@@ -21,10 +21,32 @@ const refs = {
 
 refs.formSubscription.addEventListener('submit', onFormSubscriptSubmit);
 
+const postRequest = new RequestToTheServer();
+postRequest.endPoint = 'subscription';
+
+const user = {};
+
 function onFormSubscriptSubmit(e) {
   e.preventDefault();
-  const email = e.currentTarget.elements.email.value;
-  console.log(email);
+  user.email = e.currentTarget.elements.email.value;
+  console.log(user.email);
+
+  addUserForSubscription();
+}
+
+async function addUserForSubscription() {
+  axios.defaults.baseURL = postRequest.baseUrl;
+  const config = {
+    method: 'post',
+    url: postRequest.endPoint,
+    message: user.email,
+  };
+  try {
+    const response = await axios.request(config);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 //==============open and close modal policy and terms========

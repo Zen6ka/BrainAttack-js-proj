@@ -222,11 +222,11 @@
   }
 }
 
-/*=======media1440====================================*/
+/*=======media1280====================================*/
 
-@media (min-width: 1440px) {
+@media (min-width: 1280px) {
   .footer-container {
-    max-width: 1440px;
+    max-width: 1280px;
     padding: 0 100px;
   }
   .footer-content-wrap {
