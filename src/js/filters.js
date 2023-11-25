@@ -287,6 +287,10 @@ function workShopButton(products) {
             } else{
                 localStorage.setItem('card', JSON.stringify([ourProduct]));
             }
+            event.currentTarget.innerHTML = `<svg class="cardlist-svg" weight="18" height="18">
+            <use href="../img/icons.svg#icon-check"></use>
+            </svg>`;
+            event.currentTarget.setAttribute('disabled', 'true');
         })
     })
 };
