@@ -30,6 +30,8 @@ function onFormSubscriptSubmit(e) {
   const email = e.currentTarget.elements.email.value;
 
   addUserForSubscription(email);
+
+  e.currentTarget.reset();
 }
 
 async function addUserForSubscription(email) {
@@ -44,8 +46,9 @@ async function addUserForSubscription(email) {
   };
   try {
     const response = await axios.request(config);
-    return response.data;
+    alert(response.data.message);
   } catch (error) {
+    alert(error.response.data.message);
     console.log(error);
   }
 }
@@ -53,17 +56,29 @@ async function addUserForSubscription(email) {
 //==============open and close modal policy and terms========
 
 refs.openModalPolicy.addEventListener('click', () => {
-  onPolicyClick();
-  refs.closeModalPolicyBtn.addEventListener('click', onPolicyClick);
+  onPolicyClick(refs.policyLink);
+  changeListenerPolicy();
 });
 
-refs.openModalTerms.addEventListener('click', () => {
-  onTermsClick();
-  refs.closeModalTermsBtn.addEventListener('click', onTermsClick);
-});
+refs.openModalTerms.addEventListener('click', () => {});
 
-function onPolicyClick() {
-  refs.policyLink.classList.toggle('is-hidden-policy');
+function onPolicyClick(link) {
+  link.classList.remove('is-hidden-policy');
+  document.body.classList.add('.no-scroll');
+}
+
+function changeListenerPolicy() {
+  refs.closeModalPolicyBtn.addEventListener('click', onClosePolicyBtn);
+}
+
+function onClosePolicyBtn() {
+  refs.policyLink.classList.add('is-hidden-policy');
+  document.body.classList.remove('.no-scroll');
+  removeListener();
+}
+
+function removeListener() {
+  refs.closeModalPolicyBtn.removeEventListener('click', onCloseBtn);
 }
 function onTermsClick() {
   refs.termsLink.classList.toggle('is-hidden-policy');
