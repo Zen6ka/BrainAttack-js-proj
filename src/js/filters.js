@@ -186,24 +186,57 @@ function renderEndPoint(event){
 function renderCards(products) {
     const listResult = [];
     products.forEach((product) => {
+        if(product.is10PercentOff){
         const itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
                 <div class = "div-img">
                 <img src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" />
                 </div>
                 <h3 class="card-list-product">${product.name}</h3>
-                <ul class="cardlist-descr">
-                    <li class ="li-p-cards"><span class ="span-p-cards">Category: </span>${product.category.replace(/_/g, ' ').replace(/&/g, '/')}</li>
-                    <li class ="li-p-cards"><span class ="span-p-cards">Size: </span>${product.size}</li>
-                    <li class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</li>
-                </ul>
+                <div class="cardlist-descr">
+                <div class="two-items">
+                    <p class ="li-p-cards"><span class ="span-p-cards">Category: </span>${product.category.replace(/_/g, ' ').replace(/&/g, '/')}</p>
+                    <p class ="li-p-cards"><span class ="span-p-cards">Size: </span>${product.size}</p>
+                </div>
+                    <p class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</p>
+                </div>
                 <div class="cartlist-btn"><button class="cardlist-add-cart add-to-cart-product ">
                 <svg class="cardlist-svg" weight="18" height="18">
-                <use href="../img/icons.svg#icon-ic_baseline-search#icon-heroicons-solid_shopping-cart"></use>
+                <use href="../img/icons.svg#icon-heroicons-solid_shopping-cart"></use>
                 </svg>
                 </button>
                 </div>
+                <p class ="price-for-cards">$${product.price}</p>
+                <svg  class="discount-for-filter-cards">
+                <use href="../img/icons.svg#icon-discount-1"></use>
+                </svg>
                 </li>`;
                 listResult.push(itemResult)
+        } else {
+            const itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
+                <div class = "div-img">
+                <img src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" />
+                </div>
+                <h3 class="card-list-product">${product.name}</h3>
+                <div class="cardlist-descr">
+                <div class="two-items">
+                    <p class ="li-p-cards"><span class ="span-p-cards">Category: </span>${product.category.replace(/_/g, ' ').replace(/&/g, '/')}</p>
+                    <p class ="li-p-cards"><span class ="span-p-cards">Size: </span>${product.size}</p>
+                </div>    
+                    <p class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</p>
+                </div>
+                <div class="cartlist-btn"><button class="cardlist-add-cart add-to-cart-product ">
+                <svg class="cardlist-svg" weight="18" height="18">
+                <use href="../img/icons.svg#icon-heroicons-solid_shopping-cart"></use>
+                </svg>
+                </button>
+                </div>
+                <p class ="price-for-cards">$${product.price}</p>
+                <svg  class="visually-hidden">
+                <use href="../img/icons.svg#icon-discount-1"></use>
+                </svg>
+                </li>`;
+                listResult.push(itemResult)
+        }
     });
     filtersResult.innerHTML = `<ul class="card-list">${listResult.join(" ")}</ul>`;
 };
