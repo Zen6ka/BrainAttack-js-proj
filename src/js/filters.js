@@ -282,7 +282,6 @@ function workShopButton(products) {
             if(cardLS){
                 const infoInCardLS = JSON.parse(cardLS);
                 infoInCardLS.push(ourProduct);
-                console.log(infoInCardLS);
                 localStorage.setItem('card', JSON.stringify(infoInCardLS));
             } else{
                 localStorage.setItem('card', JSON.stringify([ourProduct]));
@@ -294,100 +293,3 @@ function workShopButton(products) {
         })
     })
 };
-
-
-// localStorage.clear()
-
-
-
-
-
-
-
-
-
-// const allValueInputLS = localStorage.getItem('all-value-input');
-
-// async function functionInputSearch(textInputFilters, allValueInputLS, nameCategory){
-    // let resultSearch = localStorage.getItem('result-search-filters');
-    // if(!textInputFilters && nameCategory === ''){
-    //     ifEmptyInput();
-    //     filtersResult.innerHTML = '';
-    // } else if(allValueInputLS){
-    //         const allValueInput = JSON.parse(allValueInputLS);
-    //         allValueInput.push(textInputFilters)
-    //         const uniqueAllValueInput = allValueInput.filter(
-    //             (value, index, array) => array.indexOf(value) === index
-    //         );
-    //         localStorage.setItem('all-value-input', JSON.stringify(uniqueAllValueInput));
-    //         // localStorage.removeItem('all-value-input');
-    //         console.log(uniqueAllValueInput);
-    //         if(allValueInput.find(value => value === textInputFilters) && resultSearch){
-    //             const massOldResult = JSON.parse(resultSearch);
-    //             inputResultSearch = massOldResult.filter(
-    //                 obj => obj.name.toLowerCase().includes(textInputFilters.toLowerCase())
-    //                 ).filter(obj => obj.category === nameCategory);
-    //             if(Object.keys(inputResultSearch).length === 0){
-    //                 await searchWithFilters(resultSearch, textInputFilters, nameCategory)
-    //             }
-    //             console.log(inputResultSearch);
-    //         } else {
-    //             searchWithFilters(resultSearch, textInputFilters, nameCategory)
-    //         }
-    //     } else {
-    //         console.log([textInputFilters]);
-    //         localStorage.setItem('all-value-input', JSON.stringify([textInputFilters]));
-    //         searchWithFilters(resultSearch, textInputFilters, nameCategory)
-    // }
-    // };
-
-
-
-
-
-
-
-
-
-
-
-// const productsFromTheLS = JSON.parse(localStorage.getItem('products-home-page-filters')).results;
-// resultSearch = localStorage.getItem('result-search-filters');
-//             const resultSearchFromTheLS = JSON.parse(resultSearch);
-//             resultSearchFromTheLS.forEach((resultObject) => {
-//                 if(!productsFromTheLS.find(newResult => newResult._id === resultObject._id)){
-//                     productsFromTheLS.push(resultObject);
-//                 }
-//             });
-
-
-
-
-
-
-// async function searchWithFilters(textInputFilters, nameCategory) {
-    
-
-
-
-//         if(fullInputResultSearch.totalPages === 0){
-//             messageForError();
-//         } else {
-//             if(resultSearch){
-//                 const resultNewResultSearch = JSON.parse(resultSearch);
-//                 const resultInputResultSearch = inputResultSearch;
-//                 resultInputResultSearch.forEach((resultObject) => {
-//                     if(!resultNewResultSearch.find(newResult => newResult._id === resultObject._id)){
-//                         resultNewResultSearch.push(resultObject);
-//                     }
-//                 });
-//                 localStorage.setItem('result-search-filters', JSON.stringify(resultNewResultSearch));
-//                 // localStorage.removeItem('result-search-filters');
-//                 console.log(resultNewResultSearch);
-//             } else {
-//                 console.log(inputResultSearch);
-//                 localStorage.setItem('result-search-filters', JSON.stringify(inputResultSearch));
-//             };
-//         }
-//         console.log(inputResultSearch)
-// }
