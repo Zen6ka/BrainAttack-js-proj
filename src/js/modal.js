@@ -23,23 +23,30 @@ const refs = {
 };
 
 // Слухачі
-refs.openModalBtn.addEventListener('click', onOpenModal);
+refs.openModalBtn.addEventListener('click', () =>
+  onOpenModal(refs.openModalBtn.dataset.productId)
+);
 refs.closeModalBtn.addEventListener('click', onCloseModal);
 refs.backdrop.addEventListener('click', onBackdropClick);
+
+const cardImages = document.querySelectorAll('.cardlist-img');
+cardImages.forEach(img => {
+  img.addEventListener('click', event => handleImageClick(event));
+});
 
 // Зовнішній URL для запитів
 const baseUrl = 'https://food-boutique.b.goit.study/api/';
 
 // Оновлюємо інтерфейс модального вікна при відкритті
-async function onOpenModal() {
-  const productId = this.dataset.productId;
-  await handleProductDetails(productId);
+async function onOpenModal(productId) {
   // Додаємо слухач
   window.addEventListener('keydown', onCloseByEsc);
   document.body.classList.add('show-modal');
 
   // Перевіряємо, чи продукт вже в корзині
+  await handleProductDetails(productId);
   checkIfProductInCart(productId);
+  toggleBodyScroll();
 }
 
 // Запит за допомогою Axios
@@ -68,13 +75,17 @@ async function handleProductDetails(productId) {
     refs.modalPrice.textContent = `$${productDetails.price.toFixed(2)}`;
 
     // Перевіряємо чи продукт в корзині
-    checkIfProductInCart(productId);
+    const isInCart = checkIfProductInCart(productId);
+    const isAdded = getCartFromStorage().includes(productId);
+
+    // Оновлюємо текст кнопки
+    updateAddToCartButton(isInCart, isAdded);
   }
 }
 
 // Міняю текст кнопки в залежності чи в корзині продукт
-function updateAddToCartButton(isInCart) {
-  const buttonText = isInCart ? 'Remove from' : 'Add to';
+function updateAddToCartButton(isInCart, isAdded) {
+  const buttonText = isInCart ? 'Remove from' : isAdded ? 'Added to' : 'Add to';
   refs.addToCart.querySelector('.modal-btn-sabmit-span').textContent =
     buttonText;
   refs.addToCart.disabled = isInCart; // кнопка не активна якщо товар в корзині
@@ -85,24 +96,22 @@ function checkIfProductInCart(productId) {
   let cart = getCartFromStorage();
   const isInCart = cart.includes(productId);
 
-  // Оновлюю текст
-  updateAddToCartButton(isInCart);
-
   // Додавання слухача для кнопки
   refs.addToCart.addEventListener('click', () => {
     if (isInCart) {
       // Видалення товару з корзини
       removeFromCart(productId);
       // Оновлюємо текст кнопки та робимо її неактивною
-      updateAddToCartButton(false);
-      refs.addToCart.removeEventListener('click', null); // Видаляємо слухача
+      updateAddToCartButton(false, false);
     } else {
       // Товару немає в кошику, додаємо
       addToCart(productId);
       // Оновлюємо текст кнопки
-      updateAddToCartButton(true);
+      updateAddToCartButton(true, true);
     }
   });
+
+  return isInCart;
 }
 
 // Функція для отримання корзини з локального сховища
@@ -110,6 +119,7 @@ function getCartFromStorage() {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   return cart;
 }
+
 // Функція для додавання продукту до корзини в локальному сховищі
 function addToCart(productId) {
   let cart = getCartFromStorage();
@@ -134,6 +144,7 @@ function onCloseModal() {
   // Зняв слухач
   window.removeEventListener('keydown', onCloseByEsc);
   document.body.classList.remove('show-modal');
+  toggleBodyScroll();
 }
 
 // Закритя модального вікна по кліку за модалку (на темний фон)
@@ -148,4 +159,12 @@ function onCloseByEsc(event) {
   if (event.code === 'Escape') {
     onCloseModal();
   }
+}
+
+function isModalOpen() {
+  return document.body.classList.contains('show-modal');
+}
+
+function toggleBodyScroll() {
+  document.body.style.overflow = isModalOpen() ? 'hidden' : '';
 }

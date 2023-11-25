@@ -1,177 +1,183 @@
-.root{
-    --cards-color:#FAFAFA;
-    --cards-text-color:#000001;
-    --cards-light-color:#010101;
-    --cards-cart-color:#6D8434;
+.card-list {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
 }
-/* .card-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    flex-basis: 100%;
-  }
-  .card-list-item{
-  background-color: var(--cards-color);
+
+.card-list-item{
+  background-color: #FAFAFA;
   border-radius: 20px;
   height: 356px;
-  padding: 14px;
+  max-width: 335px;
+  width: 100%;
+  padding: 20px;
+  transition: all 250ms cubic-bezier(0.5, -0.75, 0.7, 2);
+  position: relative;
+}
 
-  transition: all 250ms cubic-bezier(0.5, -0.75, 0.7, 2);}
-  .cardlist-img {
-    border-radius: 16px;
-    width: 295px;
-    height: 178px;
-    object-fit: cover;
-  } */
-  
-.cardlist-product {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-top: 20px;
-    margin-left: 6px;
-    margin-bottom: 14px;
-    color: var(--cards-text-color);
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    white-space: pre-wrap;
-  }
-  .cardlist-descr{
-    margin-bottom: 20px;
-    margin-left: 6px;
-    height: 54px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    white-space: pre-wrap;
-  }
+.div-img{
+  margin: auto;
+  max-width: 295px;
+  width: 100%;
+  height: 178px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #E8E8E2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .cardlist-descr-light {
-    color: var(--cards-light-color);
-    opacity: 0.3;
- 
-  }
-
-  
-  .cardlist-price {
-    margin-left: 6px;
-    color: var(--cards-text-color);
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 2;
-    letter-spacing: 0.28px;
-    text-transform: uppercase;  
-    transition: all 250ms linear;
-  }
+.cardlist-img {
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+  object-fit: cover;
+  background: url(<path-to-image>), #E8E8E2 50% / cover no-repeat;
+}
 
 
-  .cardlist-add-cart {
-    display: flex;
-    width: 48px;
-    height: 48px;
-  
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background: var(--cards-cart-color);
-    border-color: transparent;
-  
-    transition: all 250ms linear;
-  }
-  
-  .cardlist-add-cart:hover,
-  .cardlist-add-cart:focus {
-    transform: scale(1.05);
-  }
-  
-  .cardlist-svg {
-    stroke: var(--cards-color);
-    fill: var(--cards-color);
-    width: 18px;
-  }
-  
-  .cartlist-btn {
-    display: flex;
-    column-gap: 15px;
-  }
+.card-list-product {
+  margin-top: 20px;
+  color: #010101;
+  font-family: Neue Montreal;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; 
+}
+
+
+.cardlist-descr{
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.two-items{
+  display: flex;
+  gap: 8px;
+}
+
+.li-p-cards{
+  color: #010101;
+  font-family: Neue Montreal;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px; 
+}
+
+.span-p-cards{
+  color: rgba(1, 1, 1, 0.30);;
+}
+
+.cardlist-descr-light {
+  color: var(--cards-light-color);
+  opacity: 0.3;
+
+}
+
+
+.cardlist-price {
+  margin-left: 6px;
+  color: var(--cards-text-color);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 2;
+  letter-spacing: 0.28px;
+  text-transform: uppercase;  
+  transition: all 250ms linear;
+}
+
+
+.cardlist-add-cart {
+  display: flex;
+  width: 48px;
+  height: 48px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #6D8434;
+  border-color: transparent;
+  transition: all 250ms linear;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+.cardlist-add-cart:hover,
+.cardlist-add-cart:focus {
+  transform: scale(1.05);
+}
+
+.cardlist-svg {
+  stroke: #FAFAFA;
+  fill: #FAFAFA;
+  width: 18px;
+}
+
+.cartlist-btn {
+  display: flex;
+  column-gap: 15px;
+}
+
+.price-for-cards{
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  color: #010101;
+  font-family: Neue Montreal;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.discount-for-filter-cards{
+  position: absolute;
+  top: 3px;
+  right: 10px;
+  width: 60px;
+  height: 60px;
+}
   
   @media screen and (min-width: 768px) {
-    .products-section {
-      padding-bottom: 100px;
-    }
-  
-    .cardlist {
+    .card-list{
       flex-direction: row;
+      gap: 32px;
       flex-wrap: wrap;
-      row-gap: 32px;
-      justify-content: flex-start;
-  
     }
-  
-    .cardlist-item {
-      width: calc((100% - 16px) / 2);
+
+    .card-list-item{
+      width: calc((100% - 32px)/2);
       height: 360px;
-      padding-bottom: 24px;
     }
-  
-    .cardlist-img {
-      width: 296px;
-      height: 178px;
-    }
-    .cardlist:last-child {
-      display: none;
-    }
-    .cardlist-product {
-      margin-top: 24px;
-      margin-left: 10px;
-      font-size: 20px;
-    }
-    .cardlist-descr {
-      margin-bottom: 24px;
-      margin-left: 10px;
-    }
-    .cardlist-add-cart {
-      width: 56px;
-      height: 56px;
-    }
-   
-  
-    .cardlist-price {
-      font-size: 20px;
-      letter-spacing: 0.36px;
-      width: 225px;
-      height: 56px;
-      margin-left: 10px;
+
+    .discount-for-filter-cards{
+      top: -3px;
     }
   }
   @media screen and (min-width: 1280px) {
-    .cardlist {
-      row-gap: 44px;
-      column-gap: 24px;
-      height: 364px;
+    .card-list{
+      margin-top: 60px;
+      gap: 20px;
     }
-    .cardlist-img {
-        width: 256px;
-        height: 178px;
-      }
-  
-    .cardlist-item {
-     width: calc((100% - 48px) / 3);
+
+    .card-list-item{
+      height: 363px;
+      width: calc((100% - 40px)/3);
     }
-    .cardlist:last-child {
+
+    .cardlist-descr{
       display: block;
     }
-    .cardlist-item {
-      width: calc((100% - 48px) / 3);
+
+    .two-items{
+      margin-bottom: 9px;
     }
   }
   

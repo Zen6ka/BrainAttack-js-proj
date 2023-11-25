@@ -9,3 +9,5 @@ import './js/footer';
 import './js/modal';
 
 import './js/discount';
+
+import './js/app';
