@@ -24,14 +24,20 @@ const refs = {
 
 // Слухачі
 refs.openModalBtn.addEventListener('click', () =>
-  onOpenModal(refs.openModalBtn.dataset.productId)
+  onOpenModal(refs.openModalBtn.dataset.id)
 );
 refs.closeModalBtn.addEventListener('click', onCloseModal);
 refs.backdrop.addEventListener('click', onBackdropClick);
 
 const cardImages = document.querySelectorAll('.cardlist-img');
 cardImages.forEach(img => {
-  img.addEventListener('click', event => handleImageClick(event));
+  img.addEventListener('click', () => {
+    const cardListItem = img.closest('.card-list-item');
+    if (cardListItem) {
+      const productId = cardListItem.dataset.id;
+      onOpenModal(productId);
+    }
+  });
 });
 
 // Зовнішній URL для запитів
