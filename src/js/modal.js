@@ -24,27 +24,21 @@ const refs = {
 
 // Слухачі
 refs.openModalBtn.addEventListener('click', () =>
-  onOpenModal(refs.openModalBtn.dataset.id)
+  onOpenModal(refs.openModalBtn.dataset.productId)
 );
 refs.closeModalBtn.addEventListener('click', onCloseModal);
 refs.backdrop.addEventListener('click', onBackdropClick);
 
 const cardImages = document.querySelectorAll('.cardlist-img');
 cardImages.forEach(img => {
-  img.addEventListener('click', () => {
-    const cardListItem = img.closest('.card-list-item');
-    if (cardListItem) {
-      const productId = cardListItem.dataset.id;
-      onOpenModal(productId);
-    }
-  });
+  img.addEventListener('click', event => handleImageClick(event));
 });
 
 // Зовнішній URL для запитів
 const baseUrl = 'https://food-boutique.b.goit.study/api/';
 
 // Оновлюємо інтерфейс модального вікна при відкритті
-async function onOpenModal(productId) {
+export async function onOpenModal(productId) {
   // Додаємо слухач
   window.addEventListener('keydown', onCloseByEsc);
   document.body.classList.add('show-modal');
