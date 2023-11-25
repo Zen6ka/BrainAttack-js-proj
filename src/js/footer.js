@@ -58,9 +58,14 @@ async function addUserForSubscription(email) {
 refs.openModalPolicy.addEventListener('click', () => {
   onPolicyClick(refs.policyLink);
   changeListenerPolicy();
+  window.addEventListener('keydown', closeModalPolicyByEsc);
 });
 
-refs.openModalTerms.addEventListener('click', () => {});
+refs.openModalTerms.addEventListener('click', () => {
+  onPolicyClick(refs.termsLink);
+  changeListenerTerms();
+  window.addEventListener('keydown', closeModalPolicyByEsc);
+});
 
 function onPolicyClick(link) {
   link.classList.remove('is-hidden-policy');
@@ -74,14 +79,31 @@ function changeListenerPolicy() {
 function onClosePolicyBtn() {
   refs.policyLink.classList.add('is-hidden-policy');
   document.body.classList.remove('.no-scroll');
-  removeListener();
+  removeListenerPolicy();
 }
 
-function removeListener() {
-  refs.closeModalPolicyBtn.removeEventListener('click', onCloseBtn);
+function removeListenerPolicy() {
+  refs.closeModalPolicyBtn.removeEventListener('click', onClosePolicyBtn);
+  window.removeEventListener('keydown', closeModalPolicyByEsc);
 }
-function onTermsClick() {
-  refs.termsLink.classList.toggle('is-hidden-policy');
+
+function changeListenerTerms() {
+  refs.closeModalTermsBtn.addEventListener('click', onCloseTermsBtn);
 }
-// document.body.classList.add('.no-scroll');
-// document.body.classList.remove('.no-scroll');
+
+function onCloseTermsBtn() {
+  refs.termsLink.classList.add('is-hidden-policy');
+  document.body.classList.remove('.no-scroll');
+  removeListenerTerms();
+}
+function removeListenerTerms() {
+  refs.closeModalTermsBtn.removeEventListener('click', onCloseTermsBtn);
+  window.removeEventListener('keydown', closeModalPolicyByEsc);
+}
+
+function closeModalPolicyByEsc({ code }) {
+  if (code === 'Escape') {
+    onClosePolicyBtn();
+    onCloseTermsBtn();
+  }
+}
