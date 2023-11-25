@@ -42,6 +42,16 @@ let inputResultSearch = {};
 let productsCategories = {};
 let fullInputResultSearch ={};
 
+let littleMediaQuery = window.matchMedia('(min-width: 768px)').matches;
+let bigMediaQuery = window.matchMedia('(min-width: 1280px)').matches;
+if(bigMediaQuery){
+    limit = 9;
+} else if(littleMediaQuery){
+    limit = 8;
+} else{
+    limit = 6;
+}
+
 function recordsDataForSearch(keyword, category, page, limit){
     localStorage.setItem('data-for-search', JSON.stringify(
         {
@@ -57,10 +67,16 @@ recordsDataForSearch(keyword, category, page, limit);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 async function search () {
-    const letForSearch = JSON.parse(localStorage.getItem('data-for-search'));
+    try{
+        const letForSearch = JSON.parse(localStorage.getItem('data-for-search'));
     const filters = `keyword=${letForSearch.keyword}&category=${letForSearch.category}`;
         const classResultProductsWithFilters = new RequestToTheServer(products, filters, page, limit);
         fullInputResultSearch = await classResultProductsWithFilters.fetchBreeds();
+    } catch (error){
+        messageForError();
+        console.error("Error:", error.message);
+    }
+    
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,21 +99,25 @@ async function ifEmptyInput() {
     try {
         const storageDataHomePage = localStorage.getItem('products-home-page-filters');
         if (storageDataHomePage) {
-            productsHomePage = JSON.parse(storageDataHomePage);
-            // localStorage.removeItem('products-home-page-filters');
+            const preProductsHomePage = JSON.parse(storageDataHomePage);
+            if(preProductsHomePage.length >= limit){
+                productsHomePage = preProductsHomePage.slice(0, limit)
+            } else {
+                await search();
+            productsHomePage = fullInputResultSearch.results;
+            localStorage.setItem('products-home-page-filters', JSON.stringify(productsHomePage));
+            }
         } else {
             await search();
             productsHomePage = fullInputResultSearch.results;
-            console.log(fullInputResultSearch);
             localStorage.setItem('products-home-page-filters', JSON.stringify(productsHomePage));
         }
+        renderCards(productsHomePage);
     } catch (error) {
+        messageForError();
         console.error("Error:", error.message);
     }
-    console.log(productsHomePage);
-    renderCards(productsHomePage)
-    // localStorage.removeItem('products-home-page-filters');
-}
+};
 
 ifEmptyInput();
 
@@ -109,7 +129,6 @@ searchForm.addEventListener('submit', async (event) => {
     recordsDataForSearch(keyword, category, page, limit);
     await search();
     inputResultSearch = fullInputResultSearch.results;
-    console.log(inputResultSearch);
     renderCards(inputResultSearch);
     if(fullInputResultSearch.totalPages === 0){
         messageForError();
@@ -123,7 +142,6 @@ async function ifEmptyCategories() {
         const storageDataCategories = localStorage.getItem('categories-filters');
         if (storageDataCategories) {
             productsCategories = JSON.parse(storageDataCategories);
-            // localStorage.removeItem('categories-filters');
         } else {
             const filters = '';
             const firstProductsCategoriesFilters = `${products}/categories`;
@@ -131,11 +149,12 @@ async function ifEmptyCategories() {
             productsCategories = await classFirstCategoriesProducts.fetchBreeds();
             localStorage.setItem('categories-filters', JSON.stringify(productsCategories));
         }
+        renderCategories(productsCategories);
     } catch (error) {
+        messageForError();
         console.error("Error:", error.message);
     }
-    renderCategories(productsCategories);
-}
+};
 
 ifEmptyCategories();
 
@@ -145,6 +164,7 @@ function renderCategories(productsCategories){
         const itemCategories = `<li class="li-first-select-search"><button class="button-li-filters">${productsCategorie.replace(/_/g, ' ').replace(/&/g, '/')}</button></li>`;
         listCategories.push(itemCategories)
     });
+    listCategories.push(`<li class="li-first-select-search"><button class="button-li-filters">Show all</button></li>`);
     firctSelectSearch.insertAdjacentHTML('beforeend', listCategories.join(''));
     const buttonsLiFilters = document.querySelectorAll('.button-li-filters');
     addListenerLi(buttonsLiFilters)
@@ -175,10 +195,20 @@ function addListenerLi(buttonsLiFilters){
 })
 };
 
-function renderEndPoint(event){
+async function renderEndPoint(event){
     const nameCategoryForSelect = event.currentTarget.textContent;
     category = nameCategoryForSelect.replace(/ /g, '_').replace(/\//g, '&');
     spanButtonCategories.innerHTML = `${nameCategoryForSelect}`;
+    if(category === 'Show_all'){
+        category = ''
+    }
+    recordsDataForSearch(keyword, category, page, limit);
+    await search();
+    inputResultSearch = fullInputResultSearch.results;
+    renderCards(inputResultSearch);
+    if(fullInputResultSearch.totalPages === 0){
+        messageForError();
+    }
 }
 
 ///////////////////////////////////////////////////////  RENDER  CARDS  /////////////////////////////////////////////////////////////
@@ -199,7 +229,7 @@ function renderCards(products) {
                 </div>
                     <p class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</p>
                 </div>
-                <div class="cartlist-btn"><button class="cardlist-add-cart add-to-cart-product ">
+                <div class="cartlist-btn"><button class="cardlist-add-cart" id=${product._id}>
                 <svg class="cardlist-svg" weight="18" height="18">
                 <use href="../img/icons.svg#icon-heroicons-solid_shopping-cart"></use>
                 </svg>
@@ -224,7 +254,7 @@ function renderCards(products) {
                 </div>    
                     <p class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</p>
                 </div>
-                <div class="cartlist-btn"><button class="cardlist-add-cart add-to-cart-product ">
+                <div class="cartlist-btn"><button class="cardlist-add-cart" id=${product._id}>
                 <svg class="cardlist-svg" weight="18" height="18">
                 <use href="../img/icons.svg#icon-heroicons-solid_shopping-cart"></use>
                 </svg>
@@ -239,101 +269,27 @@ function renderCards(products) {
         }
     });
     filtersResult.innerHTML = `<ul class="card-list">${listResult.join(" ")}</ul>`;
+    workShopButton(products);
 };
 
-
-// localStorage.clear()
-
-
-
-
-
-
-
-
-
-// const allValueInputLS = localStorage.getItem('all-value-input');
-
-// async function functionInputSearch(textInputFilters, allValueInputLS, nameCategory){
-    // let resultSearch = localStorage.getItem('result-search-filters');
-    // if(!textInputFilters && nameCategory === ''){
-    //     ifEmptyInput();
-    //     filtersResult.innerHTML = '';
-    // } else if(allValueInputLS){
-    //         const allValueInput = JSON.parse(allValueInputLS);
-    //         allValueInput.push(textInputFilters)
-    //         const uniqueAllValueInput = allValueInput.filter(
-    //             (value, index, array) => array.indexOf(value) === index
-    //         );
-    //         localStorage.setItem('all-value-input', JSON.stringify(uniqueAllValueInput));
-    //         // localStorage.removeItem('all-value-input');
-    //         console.log(uniqueAllValueInput);
-    //         if(allValueInput.find(value => value === textInputFilters) && resultSearch){
-    //             const massOldResult = JSON.parse(resultSearch);
-    //             inputResultSearch = massOldResult.filter(
-    //                 obj => obj.name.toLowerCase().includes(textInputFilters.toLowerCase())
-    //                 ).filter(obj => obj.category === nameCategory);
-    //             if(Object.keys(inputResultSearch).length === 0){
-    //                 await searchWithFilters(resultSearch, textInputFilters, nameCategory)
-    //             }
-    //             console.log(inputResultSearch);
-    //         } else {
-    //             searchWithFilters(resultSearch, textInputFilters, nameCategory)
-    //         }
-    //     } else {
-    //         console.log([textInputFilters]);
-    //         localStorage.setItem('all-value-input', JSON.stringify([textInputFilters]));
-    //         searchWithFilters(resultSearch, textInputFilters, nameCategory)
-    // }
-    // };
-
-
-
-
-
-
-
-
-
-
-
-// const productsFromTheLS = JSON.parse(localStorage.getItem('products-home-page-filters')).results;
-// resultSearch = localStorage.getItem('result-search-filters');
-//             const resultSearchFromTheLS = JSON.parse(resultSearch);
-//             resultSearchFromTheLS.forEach((resultObject) => {
-//                 if(!productsFromTheLS.find(newResult => newResult._id === resultObject._id)){
-//                     productsFromTheLS.push(resultObject);
-//                 }
-//             });
-
-
-
-
-
-
-// async function searchWithFilters(textInputFilters, nameCategory) {
-    
-
-
-
-//         if(fullInputResultSearch.totalPages === 0){
-//             messageForError();
-//         } else {
-//             if(resultSearch){
-//                 const resultNewResultSearch = JSON.parse(resultSearch);
-//                 const resultInputResultSearch = inputResultSearch;
-//                 resultInputResultSearch.forEach((resultObject) => {
-//                     if(!resultNewResultSearch.find(newResult => newResult._id === resultObject._id)){
-//                         resultNewResultSearch.push(resultObject);
-//                     }
-//                 });
-//                 localStorage.setItem('result-search-filters', JSON.stringify(resultNewResultSearch));
-//                 // localStorage.removeItem('result-search-filters');
-//                 console.log(resultNewResultSearch);
-//             } else {
-//                 console.log(inputResultSearch);
-//                 localStorage.setItem('result-search-filters', JSON.stringify(inputResultSearch));
-//             };
-//         }
-//         console.log(inputResultSearch)
-// }
+function workShopButton(products) {
+    const allShopButton = document.querySelectorAll('.cardlist-add-cart');
+    [...allShopButton].forEach((shopButton) => {
+        shopButton.addEventListener('click', (event) => {
+            const idShopButton = event.currentTarget.getAttribute('id');
+            const ourProduct = products.find((odj) => odj._id === idShopButton);
+            const cardLS = localStorage.getItem('card');
+            if(cardLS){
+                const infoInCardLS = JSON.parse(cardLS);
+                infoInCardLS.push(ourProduct);
+                localStorage.setItem('card', JSON.stringify(infoInCardLS));
+            } else{
+                localStorage.setItem('card', JSON.stringify([ourProduct]));
+            }
+            event.currentTarget.innerHTML = `<svg class="cardlist-svg" weight="18" height="18">
+            <use href="../img/icons.svg#icon-check"></use>
+            </svg>`;
+            event.currentTarget.setAttribute('disabled', 'true');
+        })
+    })
+};
