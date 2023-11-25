@@ -36,6 +36,11 @@
     cursor: default;
   }
 
+  .pagination ul li.btn{
+    /* neu */
+    background-color: #fff; 
+  }
+  
   .pagination ul li.active,
   .pagination ul li.numb:hover,
   
