@@ -30,6 +30,8 @@ function onFormSubscriptSubmit(e) {
   const email = e.currentTarget.elements.email.value;
 
   addUserForSubscription(email);
+
+  e.currentTarget.reset();
 }
 
 async function addUserForSubscription(email) {
@@ -44,8 +46,9 @@ async function addUserForSubscription(email) {
   };
   try {
     const response = await axios.request(config);
-    return response.data;
+    alert(response.data.message);
   } catch (error) {
+    alert(error.response.data.message);
     console.log(error);
   }
 }
@@ -53,20 +56,54 @@ async function addUserForSubscription(email) {
 //==============open and close modal policy and terms========
 
 refs.openModalPolicy.addEventListener('click', () => {
-  onPolicyClick();
-  refs.closeModalPolicyBtn.addEventListener('click', onPolicyClick);
+  onPolicyClick(refs.policyLink);
+  changeListenerPolicy();
+  window.addEventListener('keydown', closeModalPolicyByEsc);
 });
 
 refs.openModalTerms.addEventListener('click', () => {
-  onTermsClick();
-  refs.closeModalTermsBtn.addEventListener('click', onTermsClick);
+  onPolicyClick(refs.termsLink);
+  changeListenerTerms();
+  window.addEventListener('keydown', closeModalPolicyByEsc);
 });
 
-function onPolicyClick() {
-  refs.policyLink.classList.toggle('is-hidden-policy');
+function onPolicyClick(link) {
+  link.classList.remove('is-hidden-policy');
+  document.body.classList.add('.no-scroll');
 }
-function onTermsClick() {
-  refs.termsLink.classList.toggle('is-hidden-policy');
+
+function changeListenerPolicy() {
+  refs.closeModalPolicyBtn.addEventListener('click', onClosePolicyBtn);
 }
-// document.body.classList.add('.no-scroll');
-// document.body.classList.remove('.no-scroll');
+
+function onClosePolicyBtn() {
+  refs.policyLink.classList.add('is-hidden-policy');
+  document.body.classList.remove('.no-scroll');
+  removeListenerPolicy();
+}
+
+function removeListenerPolicy() {
+  refs.closeModalPolicyBtn.removeEventListener('click', onClosePolicyBtn);
+  window.removeEventListener('keydown', closeModalPolicyByEsc);
+}
+
+function changeListenerTerms() {
+  refs.closeModalTermsBtn.addEventListener('click', onCloseTermsBtn);
+}
+
+function onCloseTermsBtn() {
+  refs.termsLink.classList.add('is-hidden-policy');
+  document.body.classList.remove('.no-scroll');
+  removeListenerTerms();
+}
+function removeListenerTerms() {
+  refs.closeModalTermsBtn.removeEventListener('click', onCloseTermsBtn);
+  window.removeEventListener('keydown', closeModalPolicyByEsc);
+}
+
+function closeModalPolicyByEsc({ code }) {
+  if (code === 'Escape') {
+    onClosePolicyBtn();
+    onCloseTermsBtn();
+  }
+}
