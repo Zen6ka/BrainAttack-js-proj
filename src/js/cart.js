@@ -205,6 +205,8 @@ const testObject = [ {
   }
 ] 
 
+
+
 const { id, name, img, category, price, size} = testObject;
    const markup  = selectedProductsMarkup(id, name, img, category, price, size);
   
