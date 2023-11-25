@@ -1,65 +1,9 @@
-/**
-  |============================
-  | include css partials with
-  | default @import url()
-  |============================
-*/
-@import url('./header.css');
-@import url('./footer.css');
-@import url('./modal.css');
-@import url('./reset.css');
-
-:root {
-  --primary-font: 'Neue Montreal', sans-serif;
-  --secondary-font: 'Quincy CF;', sans-serif;
-  --background-color: #e8e8e2;
-  --content-text-color: #010101;
-
-  --footer-background: #6d8434;
-  --footer-logo-text: #e8e8e2;
-}
-
-.list {
-  list-style: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-ul,
-ol {
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-left: 0;
-}
-
-img {
-  display: block;
-}
-
-button {
-  cursor: pointer;
-}
-
 .list {
   list-style: none;
 }
 
 .link {
   text-decoration: none;
-}
-
-body {
-  color: var(--content-text-color);
-  background-color: var(--background-color);
 }
 
 /* =============Components============ */
@@ -72,7 +16,7 @@ body {
 
 .section {
   padding-top: 72px;
-  margin-bottom: 74px;
+  padding-bottom: 74px;
 }
 
 /* =============Header============ */
@@ -83,10 +27,6 @@ body {
   height: 32px;
   margin-right: 8px;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.logo-wrapper:hover .header-logo-icon {
-  fill: #e8e8e2;
 }
 
 .main-nav {
@@ -119,14 +59,6 @@ body {
   align-items: center;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-/* .logo-link:hover,
-.logo-link:focus {
-  color: #e8e8e2;
-  width: 220px;
-  height: 60px;
-  background-color: #6d8434;
-} */
 
 .hero-title {
   color: #010101;
@@ -210,11 +142,7 @@ body {
     height: 28px;
   }
   .logo-link {
-    color: #010101;
-    font-family: Quincy CF;
     font-size: 18px;
-    font-style: normal;
-    font-weight: 900;
     line-height: 20px; /* 111.111% */
     letter-spacing: -0.36px;
   }
@@ -239,48 +167,30 @@ body {
   }
 
   .hero-title {
-    color: #010101;
-    text-align: center;
-    font-family: 'NeueMontreal';
     font-size: 44px;
-    font-style: normal;
-    font-weight: 500;
     line-height: 48px; /* 109.091% */
     letter-spacing: -0.88px;
     margin-bottom: 16px;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .hero-title-color {
-    color: #6d8434;
-    font-family: 'NeueMontreal';
     font-size: 44px;
-    font-style: normal;
-    font-weight: 500;
     line-height: 48px;
     letter-spacing: -0.88px;
   }
 
   .hero-text {
-    color: rgba(1, 1, 1, 0.8);
-    text-align: center;
-    font-family: 'NeueMontreal';
     font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
     line-height: 18px; /* 128.571% */
     margin-bottom: 32px;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .hero-title {
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .hero-text {
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-  }
   .hero-img {
     border-radius: 20px;
   }
@@ -301,6 +211,13 @@ body {
     height: 38px;
     border: none;
   }
+
+  .btn-basket {
+    padding: 10px;
+    width: 38px;
+    margin-right: 14px;
+  }
+
   .navig-wrapper {
     gap: 6px;
   }
