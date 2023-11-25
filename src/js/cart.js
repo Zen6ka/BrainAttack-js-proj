@@ -7,7 +7,7 @@ const cartOrderDetails = document.querySelector(".js-cart-order-details");
 const totalOrderedPrice = document.querySelector(".js-total-ordered-price");
 const form = document.querySelector(".js-email-form");
 const btnCheckout = document.querySelector(".js-email-checkout");
-const cartRemoveProductBtn = document.querySelector('.cart-remove-product-btn');
+const input = document.querySelector(".input")
 
 console.log("sdsd");
 // За замовчуванням сторінка кошика буде пустою.
@@ -31,6 +31,7 @@ function totalSumMarkup (array) {
     const sumPrice = array.reduce((acc, currentProduct)=>{
       return acc + currentProduct.price;
         }, 0).toFixed(2);
+
       totalOrderedPrice.innerHTML = `$${sumPrice}`;
   }
 
@@ -51,6 +52,10 @@ if (parsedSavedProducts) {
   }).join('');
   cartSelectedProducts.innerHTML = productsArrayMarkup;
   cartItemsQuantity.innerHTML = productsArrayMarkup.length;
+
+  document.querySelector('.cart-remove-product-btn').addEventListener('click', deleterProduct); // після відмальовки розмітки вішаю слухача на копку закриття. Але через безпосередній пошук, бо змінна не підтягується з гори.
+
+
 // Поверення одного об`єкту і відмальовування його.
 //   const productMarkup = selectedProductsMarkup(id, name, img, category, size, price);
 //   cartSelectedProducts.innerHTML = productMarkup;
@@ -63,27 +68,38 @@ if (parsedSavedProducts) {
 
 
 
-//     // Слухач на форму по сабміту а ще треба буде по кліку на кнопку
-// form.addEventListener('submit', (event) => {
-//     event.preventDefault();
-// })
-//   }
+    // Слухач на форму по сабміту а ще треба буде по кліку на кнопку
+form.addEventListener('change', (event) => {
+    event.preventDefault();
+    console.log(input.value) 
+    input.value = "";
+})
+//Слухач на кнопку Сабміту
+btnCheckout.addEventListener('click', (event) => {
+  event.preventDefault();
+  console.log('Submit successful')
+
+// потім тут прописати відкриття модалки
+
+})
 
 
 
 
 
-
+// Слухач на кнопку видалення всього
 deleteAllBtn.addEventListener('click', removeLocalStorage);
 // ФУНКЦІЯ ОЧИЩЕННЯ СХОВИЩА ВІД ВСІХ ПРОДУКТІВ
 function removeLocalStorage(event){
     event.preventDefault();
-    localStorage.removeItem('cart'); // очищую сховище
+    localStorage.removeItem('cart'); // очищую сховище (за моїм ключем)
+    // localStorage.clear(); - або все очистити 
     cartSelectedProducts.innerHTML = "";
     cartContainerHidden(); // приховую контейнер кошика
     cartEmptyShow();             // показую пустий кошик
 // cartEmptyHidden();
 // cartContainerHidden();
+cartItemsQuantity.innerHTML = 0;
 }
 
 
@@ -108,6 +124,7 @@ function selectedProductsMarkup(
 </div>
 `
 }
+
 
 
 
@@ -190,32 +207,38 @@ const testObject = [ {
 
 const { id, name, img, category, price, size} = testObject;
    const markup  = selectedProductsMarkup(id, name, img, category, price, size);
-   cartSelectedProducts.innerHTML = markup;
-
+  
    const productsArrayMarkup = testObject.map(el => {
+    
     return selectedProductsMarkup(el.id, el.name, el.img, el.category, el.size, el.price)
   }).join('');
+
   cartSelectedProducts.innerHTML = productsArrayMarkup;
 
+  cartSelectedProducts.addEventListener('click', deleterProduct);
 
-//   const summary = testObject.reduce((acc, currentProduct)=>{
-//     return acc + currentProduct.price;
-//       }, 0).toFixed(2);
-//     totalOrderedPrice.innerHTML = `$${summary}`;
 totalSumMarkup(testObject);
-
 cartItemsQuantity.innerHTML = testObject.length
-
 localStorageCheck();
 
 
-    // 2 спосіб
 
-    cartRemoveProductBtn.addEventListener('click', (event) => {
-        const clickedRemoveBtn = event.currentTarget;
+    // 2 спосіб
+    cartSelectedProducts.addEventListener('click', deleterProduct);
+    function deleterProduct (event) {
+      console.log('i`m alive');
+
+      if (event.target.closest('.cart-remove-product-btn').nodeName !== "BUTTON") { // перевіряю чи поточний елемент на який відбувється кліє не є кнопкою, якщо правда, то виходимо з функції одразу, якщо це кнопка, то йдемо далі.
+  return
+} 
+
+console.log('try2')
+
+        const clickedRemoveBtn = event.target;
         const itemId = clickedRemoveBtn.getAttribute("data-id");
         const cartArray = localStorageCheck();
-        
+        console.log(cartArray);
+
         const itemIndexToRemove = cartArray.findIndex(product => product.id === itemId);
 
         if (itemIndexToRemove !== -1) {
@@ -238,8 +261,12 @@ totalSumMarkup(cartArray);
             cartEmptyShow();       // показую пустий кошик
             cartItemsQuantity.innerHTML = 0;
         }
-    });
+    };
      
+
+
+
+
 
 
 
