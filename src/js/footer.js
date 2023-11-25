@@ -24,22 +24,23 @@ refs.formSubscription.addEventListener('submit', onFormSubscriptSubmit);
 const postRequest = new RequestToTheServer();
 postRequest.endPoint = 'subscription';
 
-const user = {};
-
 function onFormSubscriptSubmit(e) {
   e.preventDefault();
-  user.email = e.currentTarget.elements.email.value;
-  console.log(user.email);
 
-  addUserForSubscription();
+  const email = e.currentTarget.elements.email.value;
+
+  addUserForSubscription(email);
 }
 
-async function addUserForSubscription() {
+async function addUserForSubscription(email) {
   axios.defaults.baseURL = postRequest.baseUrl;
   const config = {
     method: 'post',
     url: postRequest.endPoint,
-    message: user.email,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: { email: email },
   };
   try {
     const response = await axios.request(config);
