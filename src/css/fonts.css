@@ -1,20 +1,3 @@
-/* neue-montreal - bold*/
-
-@font-face {
-  font-family: 'Neue Montreal Bold';
-  src: url('https://db.onlinewebfonts.com/t/1a991b240e707c46ca904d731893f108.eot');
-  src: url('https://db.onlinewebfonts.com/t/1a991b240e707c46ca904d731893f108.eot?#iefix')
-      format('embedded-opentype'),
-    url('https://db.onlinewebfonts.com/t/1a991b240e707c46ca904d731893f108.woff2')
-      format('woff2'),
-    url('https://db.onlinewebfonts.com/t/1a991b240e707c46ca904d731893f108.woff')
-      format('woff'),
-    url('https://db.onlinewebfonts.com/t/1a991b240e707c46ca904d731893f108.ttf')
-      format('truetype'),
-    url('https://db.onlinewebfonts.com/t/1a991b240e707c46ca904d731893f108.svg#Neue Montreal Bold')
-      format('svg');
-}
-
 /* neue-montreal*/
 @font-face {
   font-family: 'Neue Montreal';
@@ -41,6 +24,19 @@
 	url("https://db.onlinewebfonts.com/t/7980cc1889b6b0b264dc47cca659f7c2.ttf")format("truetype"),
 	url("https://db.onlinewebfonts.com/t/7980cc1889b6b0b264dc47cca659f7c2.svg#Neue Montreal Regular")format("svg");
 }
+
+/* neue-montreal - medium*/
+
+@font-face {
+	font-family: "Neue Montreal Medium";
+	src: url("https://db.onlinewebfonts.com/t/c5c9157a20810aac79a10bf84a37bdb4.eot");
+	src: url("https://db.onlinewebfonts.com/t/c5c9157a20810aac79a10bf84a37bdb4.eot?#iefix")format("embedded-opentype"),
+	url("https://db.onlinewebfonts.com/t/c5c9157a20810aac79a10bf84a37bdb4.woff2")format("woff2"),
+	url("https://db.onlinewebfonts.com/t/c5c9157a20810aac79a10bf84a37bdb4.woff")format("woff"),
+	url("https://db.onlinewebfonts.com/t/c5c9157a20810aac79a10bf84a37bdb4.ttf")format("truetype"),
+	url("https://db.onlinewebfonts.com/t/c5c9157a20810aac79a10bf84a37bdb4.svg#Neue Montreal Medium")format("svg");
+}
+
 /*====================================================*/
 @font-face {
   font-family: 'Quincy CF';
@@ -50,19 +46,4 @@
   font-weight: normal;
   font-style: normal;
 }
-@font-face {
-  font-family: 'NeueMontreal';
-  src: url(../fonts/NeueMontreal-Regular.tiff) format('ttf'),
-    url(../fonts/NeueMontreal-Regular.woff) format('woff');
 
-  font-weight: 400;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'NeueMontreal';
-  src: url(../fonts/NeueMontreal-Medium.ttf) format('ttf'),
-    url(../fonts/NeueMontreal-Medium.woff) format('woff');
-
-  font-weight: 500;
-  font-style: normal;
-}
