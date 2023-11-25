@@ -17,7 +17,7 @@ const refs = {
   termsLink: document.querySelector('.js-terms'),
 };
 
-//==============form subscription========
+//==============form subscription=========
 
 refs.formSubscription.addEventListener('submit', onFormSubscriptSubmit);
 
@@ -68,5 +68,5 @@ function onPolicyClick() {
 function onTermsClick() {
   refs.termsLink.classList.toggle('is-hidden-policy');
 }
-document.body.classList.add('.no-scroll');
-document.body.classList.remove('.no-scroll');
+// document.body.classList.add('.no-scroll');
+// document.body.classList.remove('.no-scroll');
