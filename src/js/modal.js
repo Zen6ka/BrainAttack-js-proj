@@ -34,6 +34,11 @@ cardImages.forEach(img => {
   img.addEventListener('click', event => handleImageClick(event));
 });
 
+function handleImageClick(event) {
+  const productId = event.currentTarget.closest('.card-list-item').dataset.id;
+  onOpenModal(productId);
+}
+
 // Зовнішній URL для запитів
 const baseUrl = 'https://food-boutique.b.goit.study/api/';
 
