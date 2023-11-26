@@ -29,69 +29,12 @@ function localStorageCheck() { // ****** пізніше підшаманити, 
 // savedProducts ?   : null
 
 const parsedSavedProducts = localStorageCheck(); // результат повернення передаю змінній Розпарсених даних
-console.log(parsedSavedProducts) //тест
-
-//-----------------------------------------------------------------------------------------------------------------
-// parsedSavedProducts повинен повернути ось це:
-// const exampleLS = [
-//   {category: "Fresh_Produce",
-//     img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png",
-//     is10PercentOff:    false,
-//     name:    "Ackee",
-//     popularity:    2099,
-//     price:   8.99,
-//     size:    "16 oz",
-//     _id: "640c2dd963a319ea671e383b"},
-
-//     { category: "Pantry_Items",
-//     img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e3814.png",
-//     is10PercentOff:    false,
-//     name:    "Almonds",
-//     popularity:    616,
-//     price:   8.99,
-//     size:    "16 oz bag",
-//     _id: "640c2dd963a319ea671e3814"},
-    
-//     { category: "Pantry_Items",
-//     img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png",
-//     is10PercentOff:    false,
-//     name:    "Ackee",
-//     popularity:    2099,
-//     price:   8.99,
-//     size:    "16 oz",
-//     _id: "640c2dd963a319ea671e383b"},
-//     { category: "Pantry_Items",
-//     img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e3660.png"    ,
-//     is10PercentOff:    false,
-//     name:    "Apple Cider Vinegar"   ,
-//     popularity:    435,
-//     price:   6.99    ,
-//     size:    "500 ml",
-//     _id: "640c2dd963a319ea671e3660"},
-//     { category: "Pantry_Items",
-//     img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png",
-//     is10PercentOff:    false,
-//     name:    "Ackee",
-//     popularity:    2099,
-//     price:   8.99,
-//     size:    "16 oz",
-//     _id: "640c2dd963a319ea671e383b"},
-//     { category: "Pantry_Items",
-//     img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e3660.png"    ,
-//     is10PercentOff:    false,
-//     name:    "Apple Cider Vinegar"   ,
-//     popularity:    435,
-//     price:   6.99    ,
-//     size:    "500 ml",
-//     _id: "640c2dd963a319ea671e3660"}
-//   ]
-// console.log(parsedSavedProducts);
+console.log(parsedSavedProducts) // Масив всіх об`єктів з ЛС за ключем cart
 
 
-// НЕ ВИДАЛЯТИ!!!!!!!!!!!!!!!!!!!!!!
 // // Функція перевірки об`єктів в масиві отриманого зі сховища і повернення лише унікальних значень. 
 // const seen = new Set(); // Створюємо пустий Set для відстеження унікальних значень
-// const uniqueProductsArray = parsedSavedProducts.filter(obj => {
+// const parsedSavedProducts = parsedSavedProducts.filter(obj => {
 //   const value = obj._id; // В нашому прикладі вибираємо значення "id" для порівняння унікальності
 //   if (seen.has(value)) {
 //     return false; // Значення вже було, це не унікальний об'єкт
@@ -100,62 +43,15 @@ console.log(parsedSavedProducts) //тест
 //   return true; // Об'єкт є унікальним і буде включений до результату
 // });
 
-// console.log(uniqueProductsArray);
-// Якщо треба буде перевіряти масив зі сховища, щоб дані не повторювались, тоді використаю цю функцію, 
-//а далі для роблти в решті коду буду передавати отриманий масив унікальних об`єктів (типу цей uniqueProductsArray).
-
-
-
-
-//ФУНКЦІЯ ПІДРАХУНКУ СУМИ i РЕНДЕРУ ЇЇ В HTML
-function totalSumMarkup (array) {
-    // метод редюс буде рахувати мені суму цін за всі продукти. Потім цей результат я буду передавати в Тотал під час перевірки.
-    const sumPrice = array.reduce((acc, currentProduct)=>{
-      return acc + currentProduct.price;
-        }, 0).toFixed(2);
-
-      totalOrderedPrice.innerHTML = `$${sumPrice}`;
-  }
-
-
-  
-    //  спосіб
-
-    cartSelectedProducts.addEventListener('click', deleterProduct);
-
-    function deleterProduct (event) {
-            // console.log('i`m alive');
-      
-            if (event.target.closest('.cart-remove-product-btn')) {
-
-              let cart = localStorageCheck();
-              const { _id } = cart; 
-              const refreshedArray = cart.filter(product => product._id !== _id);
- console.log(refreshedArray)
-
-              if (refreshedArray > 0) {
-                 localStorage.setItem('cart', JSON.stringify(refreshedArray));
-                 const newMarkup = localStorageCheck();
-                 const markup = selectedProductsMarkup(newMarkup);
-                 cartSelectedProducts.innerHTML = markup;
-
-                console.log('11111')
-                // const refreshedArray = cart.splice(productIndex, 1)
-                // localStorage.setItem('cart', JSON.stringify(refreshedArray))
-              }
-              console.log('2222');
-             } else { 
-
-              console.log('3333')
-              return
-             }
-
-      }
+// console.log(uniqueProductsArray); //  Масив унікальних об`єктів з ЛС за ключем cart
+// // Якщо треба буде перевіряти масив зі сховища, щоб дані не повторювались, тоді використаю цю функцію, 
+// //а далі для роблти в решті коду буду передавати отриманий масив унікальних об`єктів (типу цей uniqueProductsArray).
 
 
 
 
 
+// Основна логіка запиту
 // Всюди замість exampleLS треба використвувати оригінал, тобто parsedSavedProducts
 if (parsedSavedProducts === null || parsedSavedProducts.length < 1) {
   cartItemsQuantity.innerHTML = '0';
@@ -163,16 +59,10 @@ if (parsedSavedProducts === null || parsedSavedProducts.length < 1) {
 cartContainerHidden();
  } else {
 
-
-
-
 cartItemsQuantity.innerHTML = parsedSavedProducts.length;
-
-  // cartAmount.innerHTML = parsedSavedProducts.length;
 
   cartEmptyHidden();
   cartContainerShow();
-  console.log('sdsdsd')
 
   //-------Тут треба буде глянути що саме повертається і в якому вигляді.
   const { _id, name, img, category, size, price } = parsedSavedProducts; // повинен повертатись об`єкт за запитом до сховища. Тому одразу роблю його деструктуризацію, щоб потім відмальовувати розмітку.
@@ -180,26 +70,68 @@ cartItemsQuantity.innerHTML = parsedSavedProducts.length;
   
 // Повернення масиву об`єктів і відмальовування їх
   const productsArrayMarkup = parsedSavedProducts.map(el => {
-    return selectedProductsMarkup(el._Id, el.name, el.img, el.category, el.size, el.price) 
+    return selectedProductsMarkup(el._id, el.name, el.img, el.category, el.size, el.price) 
     // return selectedProductsMarkup(el._id, el.Productame, el.ProductImg, el.ProductCategory, el.ProductSize, el.ProductPrice) -або так
   }).join('');
   
-  console.log(productsArrayMarkup.length); // там 4435 цифра, але це всього лиш кількість символів які нам повернулись.
-  // cartItemsQuantity.innerHTML = parsedSavedProducts.length;
+  // console.log(productsArrayMarkup.length); // там 4435 цифра, але це всього лиш кількість символів які нам повернулись.
+
 
   cartSelectedProducts.innerHTML = productsArrayMarkup;
-
   cartItemsQuantity.innerHTML = parsedSavedProducts.length;
 
   totalSumMarkup(parsedSavedProducts);
 
-  // document.querySelector('.cart-remove-product-btn').addEventListener('click', deleterProduct); // після відмальовки розмітки вішаю слухача на копку закриття. Але через безпосередній пошук, бо змінна не підтягується з гори.
-  cartSelectedProducts.addEventListener('click', deleterProduct);
 
-// Поверення одного об`єкту і відмальовування його.
-//   const productMarkup = selectedProductsMarkup(id, name, img, category, size, price);
-//   cartSelectedProducts.innerHTML = productMarkup;
- }
+/// слухач на форму форму продуктів які ми отримали з ЛС
+  cartSelectedProducts.addEventListener('click', deleterProduct);
+}
+
+
+
+
+    // ФУНКЦІЯ ВИДАЛЕННЯ ПРОДУКТУ З НАШОГО ПЕРЕЛІКУ 
+    function deleterProduct (event) {
+      const currentElementId = event.target.closest('[id]');
+      const actualId = currentElementId ? currentElementId.id : null;
+      
+console.log(actualId)
+
+            if (event.target.closest('.cart-remove-product-btn')) {
+              let cart = localStorageCheck();
+
+              const refreshedArray = cart.filter(product => product._id !== actualId);
+ console.log(refreshedArray)
+
+              if (refreshedArray.length > 0) {
+                           localStorage.setItem('cart', JSON.stringify(refreshedArray));
+
+                const refreshedMarkup = localStorageCheck().map(el => {
+                  return selectedProductsMarkup(el._id, el.name, el.img, el.category, el.size, el.price) 
+                  // return selectedProductsMarkup(el._id, el.Productame, el.ProductImg, el.ProductCategory, el.ProductSize, el.ProductPrice) -або так
+                }).join('');
+                  
+                 cartSelectedProducts.innerHTML = refreshedMarkup;
+                 totalSumMarkup(refreshedArray);
+                 cartItemsQuantity.innerHTML = refreshedArray.length;
+
+              } else {
+              localStorage.removeItem('cart');
+
+              cartItemsQuantity.innerHTML = '0';
+              cartSelectedProducts.innerHTML = "";
+              cartEmptyShow();
+              cartContainerHidden();
+            }
+             } 
+            return
+           
+      }
+
+
+
+
+
 
 
 
@@ -209,20 +141,21 @@ form.addEventListener('change', (event) => {
     console.log(input.value) 
     input.value = "";
 })
+
+
 //Слухач на кнопку Сабміту
 btnCheckout.addEventListener('click', (event) => {
   event.preventDefault();
   console.log('Submit successful')
 
-  // після сабмі/замовлення можемо видалити дані зі сховища та приховати
+  // після сабміту замовлення можемо видалити дані зі сховища та приховати
   cartEmptyShow();
   cartContainerHidden();
   cartItemsQuantity.innerHTML = '0';
-  // totalOrderedPrice.innerHTML = 0;
   cartSelectedProducts.innerHTML = "";
+localStorage.removeItem('cart')
 
 // потім тут прописати відкриття модалки про успішні закупи.
-
 
 })
 
@@ -242,7 +175,19 @@ function removeLocalStorage(event){
     cartEmptyShow();             // показую пустий кошик
 // cartEmptyHidden();
 // cartContainerHidden();
-cartItemsQuantity.innerHTML = 0;
+cartItemsQuantity.innerHTML = '0';
+}
+
+
+
+//ФУНКЦІЯ ПІДРАХУНКУ СУМИ i РЕНДЕРУ ЇЇ В HTML
+function totalSumMarkup (array) {
+  // метод редюс буде рахувати мені суму цін за всі продукти. Потім цей результат я буду передавати в Тотал під час перевірки.
+  const sumPrice = array.reduce((acc, currentProduct)=>{
+    return acc + currentProduct.price;
+      }, 0).toFixed(2);
+
+    totalOrderedPrice.innerHTML = `$${sumPrice}`;
 }
 
 
@@ -297,336 +242,3 @@ function cartContainerHidden () {
 
 
 console.log("Test end");
-
-
-
-
-
-
-
-
-    
-    
-
-
-
-
-
-
-
-
-// function deleterProduct (event){
-//   console.log("11111")
-//     const clickedRemoveBtn = event.currentTarget;
-//     const itemId = clickedRemoveBtn.getAttribute("data-id");
-//     const cartArray = localStorageCheck();
-    
-//     const newCartArray = cartArray.filter(product => product._id !== itemId);
-//     localStorage.setItem('cart', JSON.stringify(newCartArray));
-    
-//     if (newCartArray.length > 0) {
-//       console.log("22222");
-//       localStorage.setItem('cart', JSON.stringify(newCartArray));
-//       cartSelectedProducts.innerHTML = localStorageCheck();
-
-
-//         return newCartArray;
-//     } else { console.log("3333")
-//         cartSelectedProducts.innerHTML = "";
-//         cartContainerHidden(); // приховую контейнер кошика
-//         cartEmptyShow();             // показую пустий кошик
-//     }
-
-
-
-//         };
-
-
-
-
-
-
-
-    
-//     function deleterProduct (event) {
-//       console.log('i`m alive');
-
-//       if (event.target.closest('.cart-remove-product-btn')) { // перевіряю чи поточний елемент на який відбувється кліє не є кнопкою, якщо правда, то виходимо з функції одразу, якщо це кнопка, то йдемо далі.
-  
-//         console.log('try2')
-
-//         const clickedRemoveBtn = event.target;
-//         const itemId = clickedRemoveBtn.getAttribute("data-id");
-//         const cartArray = localStorageCheck();
-//         console.log(cartArray);
-
-//         const itemIndexToRemove = cartArray.findIndex(product => product.id === itemId);
-
-//         if (itemIndexToRemove !== -1) {
-//             // Видаляємо елемент за індексом
-//             const newArr = cartArray.splice(itemIndexToRemove, 1);
-//             totalSumMarkup(newArr);
-    
-//             // Оновлюємо localStorage один раз після видалення всіх потрібних елементів
-//             localStorage.setItem('cart', JSON.stringify(newArr));
-//         }
-
-//         if (cartArray.length > 0) {
-// //Якщо елементи є в масиві тоді перераховуємо суму 
-// totalSumMarkup(cartArray);
-//             // Якщо є елементи у кошику
-            
-//             return cartArray;
-//         } else {
-//             cartSelectedProducts.innerHTML = "";
-//             cartContainerHidden(); // приховую контейнер кошика
-//             cartEmptyShow();       // показую пустий кошик
-//             cartItemsQuantity.innerHTML = '0';
-//         }
-
-
-
-
-// } 
-// return
-
-//     };
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 1 спосіб
-//ФУНКЦІЯ ВИДАЛЕННЯ ОДНОГО ПРОДУКТУ З КОШИКУ
-
-// cartRemoveProductBtn.addEventListener('click', (event) => {
-//     const clickedRemoveBtn = event.currentTarget;
-//     const itemId = clickedRemoveBtn.getAttribute("data-id");
-//     const cartArray = localStorageCheck();
-    
-//     const newCartArray = cartArray.filter(product => product.id !== itemId);
-//     localStorage.setItem('cart', JSON.stringify(newCartArray));
-    
-//     if (newCartArray.length > 0) {
-//         return newCartArray;
-//     } else {
-//         cartSelectedProducts.innerHTML = "";
-//         cartContainerHidden(); // приховую контейнер кошика
-//         cartEmptyShow();             // показую пустий кошик
-//     }
-//         });
-
-
-
-
-
-
-
-
-
-
-
-// // Тест----------------------------------------------------------
-// const testObject = [ { 
-//   id: '640c2dd963a319ea671e383b',
-//   name: 'Ackee', 
-//   img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
-//   category: 'Fresh_Produce',
-//   price: 8.99, 
-//   size: 16 
-// }, 
-// { 
-//     id: '640c2dd963a319ea671e383b',
-//     name: 'Ackee', 
-//     img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
-//     category: 'Fresh_Produce',
-//     price: 8.99, 
-//     size: 16 
-//   }, 
-//   { 
-//     id: '640c2dd963a319ea671e383b',
-//     name: 'Ackee', 
-//     img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
-//     category: 'Fresh_Produce',
-//     price: 8.99, 
-//     size: 16 
-//   }, 
-//   { 
-//     id: '640c2dd963a319ea671e383b',
-//     name: 'Ackee', 
-//     img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
-//     category: 'Fresh_Produce',
-//     price: 8.99, 
-//     size: 16 
-//   }, 
-//   { 
-//     id: '640c2dd963a319ea671e383b',
-//     name: 'Ackee', 
-//     img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
-//     category: 'Fresh_Produce',
-//     price: 8.99, 
-//     size: 16 
-//   }
-// ] 
-
-
-
-// const { id, name, img, category, price, size} = testObject;
-//    const markup  = selectedProductsMarkup(id, name, img, category, price, size);
-  
-//    const productsArrayMarkup = testObject.map(el => {
-    
-//     return selectedProductsMarkup(el.id, el.name, el.img, el.category, el.size, el.price)
-//   }).join('');
-
-//   cartSelectedProducts.innerHTML = productsArrayMarkup;
-
-//   cartSelectedProducts.addEventListener('click', deleterProduct);
-
-// totalSumMarkup(testObject);
-// cartItemsQuantity.innerHTML = testObject.length
-// localStorageCheck();
-
-
-
-
-
-
-
-// const localStorageResult = parsedSavedProducts ? parsedSavedProducts.length : 0; // Далі умова, якщо після парсингу дані є, то записую їх кількість в змінну, але якщо немає, тоді записую нуль. 
-//   cartItemsQuantity.innerHTML = localStorageResult; //отриманий результат передаю в HTML
-  // На разі закоментую
-  // const { name, img, category, size, price } = parsedSavedProducts; // повинен повертатись об`єкт за запитом до сховища. Тому одразу роблю його деструктуризацію, щоб потім відмальовувати розмітку.
-  // метод редюс буде рахувати мені суму цін за всі продукти. Потім цей результат я буду передавати в Тотал під час перевірки.
-//   const sumPrice = parsedSavedProducts.reduce((acc, currentProduct)=>{
-// return acc + currentPrice.price;
-//   }  , 0) 
-
-//   if (savedProducts.length === 0) {
-//     // або пустий масив/об`єкт null/undefined (потім подивитись що повертається і підкорегувати логіку)
-//     // ТОДІ виклик функції яка покаже нашу порожню розмітку пустого кошику і приховає розмітку товарів.
-// // cartEmptyShow();
-// // cartContainerHidden();
-//   } else {
-//     // Якщо масив не порожній, тоді приховуємо розмітку порожнього масиву і показужмо розмітку товарів.
-// //     cartEmptyHidden();
-// // cartContainerShow();
-
-//     //     // виклик функції з відмалюванням даних продукту i передача її результату в дівчик
-//     //     const productMarkup = selectedProductsMarkup();
-//     //     cartSelectedProducts.innerHTML = productMarkup;
-//     //Реалізую переший варіант і просто буду показувати або приховувати цей блок в залежності від результату ( і буду викликати функцію показу (треба її ще написати))
-//     // // виклик функції з відмальовуванням даних замовлення і передача її результату в дівчик
-//     // const detailsMarkup = orderDetailsMarkup ();
-//     // cartOrderDetails.innerHTML = detailsMarkup;
-
-
-// // передаємо суму цін в Тотал
-//     // totalOrderedPrice.innerHTML = `$${sumPrice}`;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function removeProductLocalStorage (productItemId) {
-//     cartSelectedProducts.innerHTML = ""; // очищення розмітки при виклику функції
-//  // Отримуємо дані про кошик з локального сховища
-
-// const cartCheck = JSON.parse(localStorage.getItem('cart')) || {};
-
-// // const itemId = cartRemoveProductBtn.getAttribute("data-id");
-// // const productIndexRemove = cartSelectedProducts.findIndex()
-
-// }
-
-// const productIndexRemove = cartSelectedProducts.findIndex()
-
-
-
-
-
-
-
-
-
-
-
-
-
-// На разі закую її просто в розмітку і буду приховувати або показувати в залежності від результату
-// // ФУНКЦІЯ ВІДМАЛЬОВУВАННЯ ДЕТАЛЕЙ ЗАМОВЛЕННЯ
-// function orderDetailsMarkup (totalPrice) { // в totalPrice буде передватись результат редьюсу який я вирахую пізніше.
-// return `
-// <h2><b>YOUR ORDER</b></h2>
-// <div>
-// <h3><b>Total</b></h3>
-// <p>Sum: <h2>$${totalPrice}</h2></p>
-// </div>
-// <input type="text" placeholder="Mail: Enter your email" pattern="[a-zA-Z0-9\-.]+">
-// <button type="submit">Checkout</button>
-// `
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// НА РАЗІ ЦЕ НЕ ПОТРІБНО БО МИ БУДЕМО ПРИХОВУВАТИ УВЕСЬ КОНТЕЙНЕР
-// // ФУНКЦІЯ ПРИХОВУВАННЯ ДЕТАЛЕЙ ЗАМОВЛЕННЯ
-// function orderDetailsHidden() {
-//   cartOrderDetails.style.display = "none";
-// }
-// // ФУНКЦІЯ ПОКАЗУ ДЕТАЛЕЙ ЗАМОВЛЕННЯ
-// function orderDetailsShow() {
-//   cartOrderDetails.style.display = "block";
-// }
