@@ -12,7 +12,7 @@
   position: relative;
 }
 .hero-title {
-  color: #010101;
+  color: var(--content-text-color);
   text-align: center;
   font-family: 'Neue Montreal Medium';
   font-size: 80px;
@@ -23,7 +23,7 @@
   margin-bottom: 20px;
 }
 .hero-title-color {
-  color: #6d8434;
+  color: var(--footer-background);
   font-family: 'Neue Montreal Medium';
   font-size: 80px;
   font-style: normal;
@@ -32,7 +32,7 @@
   letter-spacing: -1.6px;
 }
 .hero-text {
-  color: rgba(1, 1, 1, 0.8);
+  color: var(--content-text-color);
   text-align: center;
   font-family: 'Neue Montreal Medium';
   font-size: 18px;
@@ -51,10 +51,6 @@
 
 /*=======media767====================================*/
 @media (max-width: 767px) {
-  .container {
-    max-width: 767px;
-    padding: 0 20px;
-  }
   .hero-container-wrapper {
     max-width: 375px;
   }
@@ -67,13 +63,11 @@
     margin-left: auto;
     margin-right: auto;
   }
-
   .hero-title-color {
     font-size: 44px;
     line-height: 48px;
     letter-spacing: -0.88px;
   }
-
   .hero-text {
     font-size: 14px;
     line-height: 18px; /* 128.571% */
@@ -82,7 +76,6 @@
     margin-left: auto;
     margin-right: auto;
   }
-
   .hero-img {
     border-radius: 20px;
   }
@@ -122,7 +115,7 @@
 /*=======media1440====================================*/
 @media (min-width: 1440px) {
   .container {
-    max-width: 1440px;
+    max-width: 1240px;
     padding: 0 100px;
   }
   .hero-title {
