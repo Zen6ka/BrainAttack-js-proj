@@ -26,7 +26,6 @@ const refs = {
 refs.closeModalBtn.addEventListener('click', onCloseModal);
 refs.backdrop.addEventListener('click', onBackdropClick);
 
-
 const cardImages = document.querySelectorAll('.cardlist-img');
 cardImages.forEach(img => {
   img.addEventListener('click', event => handleImageClick(event));
@@ -112,6 +111,16 @@ function checkIfProductInCart(productId) {
       // Оновлюємо текст кнопки
       updateAddToCartButton(true, true);
     }
+    const buttonsShopFilter = document.querySelectorAll('.cardlist-add-cart');
+    const selectedButton = [...buttonsShopFilter].filter(
+      button => button.id === productId
+    );
+    selectedButton.forEach(
+      button =>
+        (button.innerHTML = `<svg class="cardlist-svg" weight="18" height="18"> 
+    <use href="./img/icons.svg#icon-check"></use> 
+    </svg>`)
+    );
   });
 
   return isInCart;
@@ -171,3 +180,16 @@ function isModalOpen() {
 function toggleBodyScroll() {
   document.body.style.overflow = isModalOpen() ? 'hidden' : '';
 }
+// ///////////////////////////////////////////////////////////////////////////////////////////////
+
+// const checkoutButton = document.querySelector('.js-email-checkout');
+// checkoutButton.addEventListener('click', onCheckoutButtonClick);
+
+// function onCheckoutButtonClick() {
+//   onOpenOrderedModal();
+// }
+// export async function onOpenOrderedModal() {
+//   window.addEventListener('keydown', onCloseByEsc);
+//   document.body.classList.add('show-ordered-modal');
+//   toggleBodyScroll();
+// }

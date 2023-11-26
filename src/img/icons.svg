@@ -101,5 +101,9 @@
 <path d="M5 7.5L10 12.5L15 7.5" stroke="#010101" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
 
+<symbol id="icon-Ellipse-1" viewBox="0 0 87 32">
+<path d="M77.647 16c0 3.639-15.275 6.588-34.118 6.588s-34.118-2.95-34.118-6.588c0-3.639 15.275-6.588 34.118-6.588s34.118 2.95 34.118 6.588z"></path>
+</symbol>
+
   </defs>
 </svg>
