@@ -10,4 +10,4 @@
 </div>
 <p class="underline"></p>
 `}function d(){m.style.display="flex"}function T(){m.style.display="none"}function I(){g.style.display="flex"}function u(){g.style.display="none"}console.log("Test end");a.addEventListener("click",v);function v(t){if(console.log("i`m alive"),t.target.closest(".cart-remove-product-btn").nodeName!=="BUTTON")return;console.log("try2");const n=t.target.getAttribute("data-id"),o=y();console.log(o);const e=o.findIndex(c=>c.id===n);if(e!==-1&&(o.splice(e,1),localStorage.setItem("cart",JSON.stringify(o))),o.length>0)return f(o),o;a.innerHTML="",u(),d(),i.innerHTML=0}
-//# sourceMappingURL=cart-7021ee69.js.map
+//# sourceMappingURL=cart-c2a0bee8.js.map
