@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const refs = {
-  openModalBtn: document.querySelector('[data-action="open-modal"]'),
   closeModalBtn: document.querySelector('[data-action="close-modal"]'),
   backdrop: document.querySelector('.js-backdrop'),
   addToCart: document.querySelector('.modal-btn-sabmit'),
@@ -23,18 +22,17 @@ const refs = {
 };
 
 // Слухачі
-refs.openModalBtn.addEventListener('click', () =>
-  onOpenModal(refs.openModalBtn.dataset.productId)
-);
+
 refs.closeModalBtn.addEventListener('click', onCloseModal);
 refs.backdrop.addEventListener('click', onBackdropClick);
+
 
 const cardImages = document.querySelectorAll('.cardlist-img');
 cardImages.forEach(img => {
   img.addEventListener('click', event => handleImageClick(event));
 });
 
-function handleImageClick(event) {
+export function handleImageClick(event) {
   const productId = event.currentTarget.closest('.card-list-item').dataset.id;
   onOpenModal(productId);
 }
@@ -126,10 +124,10 @@ function getCartFromStorage() {
 }
 
 // Функція для додавання продукту до корзини в локальному сховищі
-function addToCart(productId) {
+function addToCart(product) {
   let cart = getCartFromStorage();
-  if (!cart.includes(productId)) {
-    cart.push(productId);
+  if (!cart.some(item => item.id === product.id)) {
+    cart.push(product);
     localStorage.setItem('cart', JSON.stringify(cart));
   }
 }
@@ -137,7 +135,7 @@ function addToCart(productId) {
 // Функція для видалення продукту з корзини в локальному сховищі
 function removeFromCart(productId) {
   let cart = getCartFromStorage();
-  const index = cart.indexOf(productId);
+  const index = cart.findIndex(item => item.id === productId);
   if (index !== -1) {
     cart.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(cart));
