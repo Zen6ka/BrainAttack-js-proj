@@ -82,6 +82,11 @@ async function handleProductDetails(productId) {
 
     // Оновлюємо текст кнопки
     updateAddToCartButton(isInCart, isAdded);
+    if (productDetails.is10PercentOff) {
+      refs.discountProduct.classList.remove('hidden');
+    } else {
+      refs.discountProduct.classList.add('hidden');
+    }
   }
 }
 
@@ -138,6 +143,8 @@ function addToCart(product) {
   if (!cart.some(item => item.id === product.id)) {
     cart.push(product);
     localStorage.setItem('cart', JSON.stringify(cart));
+    console.log('Added to cart:', product);
+    console.log('Cart:', cart);
   }
 }
 
@@ -148,6 +155,8 @@ function removeFromCart(productId) {
   if (index !== -1) {
     cart.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(cart));
+    console.log('Removed from cart:', removedProduct);
+    console.log('Cart:', cart);
   }
 }
 
