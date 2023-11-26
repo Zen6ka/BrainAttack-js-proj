@@ -73,6 +73,7 @@
   margin-bottom: 14px;
 }
 .footer-slogan {
+  font-family: 'Neue Montreal Regular';
   color: rgba(232, 232, 226, 0.7);
   font-size: 14px;
   line-height: 1.29;
@@ -81,18 +82,16 @@
 /*=======subscription form====================================*/
 
 .subscription-wrap {
-  font-family: 'Neue Montreal Medium';
+  font-family: 'Neue Montreal Regular';
   max-width: 335px;
 }
 .suscription-text {
-  font-family: 'Neue Montreal Regular';
   margin-bottom: 20px;
   font-size: 14px;
   font-weight: 400;
   line-height: 1.29;
 }
 .contact-form-input {
-  font-family: 'Neue Montreal Regular';
   padding: 12px 18px;
   width: 100%;
   font-size: 14px;
@@ -108,6 +107,7 @@
   color: rgba(232, 232, 226, 0.6);
 }
 .footer-form-btn {
+  font-family: 'Neue Montreal Medium';
   width: 100%;
   padding-top: 12px;
   color: var(--content-text-color);
@@ -146,6 +146,7 @@
   margin-right: 8px;
 }
 .footer-privacy-policy-link {
+  cursor: pointer;
   transition: text-decoration 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .footer-privacy-policy-link:hover,
@@ -153,6 +154,7 @@
   text-decoration: underline;
 }
 .footer-terms-link {
+  cursor: pointer;
   transition: text-decoration 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .footer-terms-link:hover,
@@ -162,7 +164,7 @@
 
 /*=======media768====================================*/
 
-@media (min-width: 768px) {
+@media screen and (min-width: 768px) {
   .container.footer-container {
     max-width: 768px;
     padding: 0 32px;
@@ -225,9 +227,9 @@
   }
 }
 
-/*=======media1280====================================*/
+/*=======media1440====================================*/
 
-@media (min-width: 1280px) {
+@media screen and (min-width: 1440px) {
   .container.footer-container {
     max-width: 1280px;
     padding: 0 20px;

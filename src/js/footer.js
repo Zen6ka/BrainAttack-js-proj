@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { RequestToTheServer } from './filters';
-
+console.log('hello');
 const refs = {
   // ---------------for form subscription--------------
 
