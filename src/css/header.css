@@ -1,10 +1,10 @@
 /* =============Components============ */
-
+/* 
 .container {
   max-width: 375px;
   padding: 0 20px;
   margin: 0 auto;
-}
+} */
 
 .section {
   padding-top: 72px;
@@ -83,9 +83,9 @@
 }
 
 /*=======media767====================================*/
-@media (max-width: 767px) {
+@media screen and (max-width: 767px) {
   .container {
-    max-width: 767px;
+    width: 100%;
     padding: 0 20px;
   }
   .main-nav {
