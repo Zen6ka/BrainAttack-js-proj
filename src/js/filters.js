@@ -260,13 +260,13 @@ function renderCards(products) {
                 </div>
                 <div class="cartlist-btn"><button class="cardlist-add-cart" id=${product._id}>
                 <svg class="cardlist-svg" weight="18" height="18">
-                <use href="./img/icons.svg#${idIconShop}"></use>
+                <use href="../img/icons.svg#${idIconShop}"></use>
                 </svg>
                 </button>
                 </div>
                 <p class ="price-for-cards">$${product.price}</p>
                 <svg  class="discount-for-filter-cards">
-                <use href="./img/icons.svg#icon-discount-1"></use>
+                <use href="../img/icons.svg#icon-discount-1"></use>
                 </svg>
                 </li>`;
         } else {
@@ -284,13 +284,13 @@ function renderCards(products) {
                 </div>
                 <div class="cartlist-btn"><button class="cardlist-add-cart" id=${product._id}>
                 <svg class="cardlist-svg" weight="18" height="18">
-                <use href="./img/icons.svg#${idIconShop}"></use>
+                <use href="../img/icons.svg#${idIconShop}"></use>
                 </svg>
                 </button>
                 </div>
                 <p class ="price-for-cards">$${product.price}</p>
                 <svg  class="visually-hidden">
-                <use href="./img/icons.svg#icon-discount-1"></use>
+                <use href="../img/icons.svg#icon-discount-1"></use>
                 </svg>
                 </li>`;
         }
@@ -319,7 +319,7 @@ function workShopButton(products) {
                 localStorage.setItem('cart', JSON.stringify([ourProduct]));
             }
             event.currentTarget.innerHTML = `<svg class="cardlist-svg" weight="18" height="18">
-            <use href="./img/icons.svg#icon-check"></use>
+            <use href="../img/icons.svg#icon-check"></use>
             </svg>`;
             event.currentTarget.setAttribute('disabled', 'true');
         })
