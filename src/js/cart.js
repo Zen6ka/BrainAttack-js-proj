@@ -9,7 +9,7 @@ const form = document.querySelector(".js-email-form");
 const btnCheckout = document.querySelector(".js-email-checkout");
 const input = document.querySelector(".input")
 
-console.log("sdsd");
+console.log("Test start");
 // За замовчуванням сторінка кошика буде пустою.
 // cartEmptyHidden();
 // cartContainerHidden();
@@ -17,13 +17,89 @@ console.log("sdsd");
 // ФУНКЦІЯ ПЕРЕВІРКИ ЛОКАЛЬНОГО СХОВИЩА НА ВМІСТ ДАНИХ
 function localStorageCheck() { // ****** пізніше підшаманити, щоб просто повертати результат сховище, а логіку відпрацьовувати далі поза функцією.
   const savedProducts = localStorage.getItem("cart");
-  return  savedProducts ? JSON.parse(savedProducts) : null; //повертаю розпарсені дані з ЛС або null якщо там нічого не має
+  return   JSON.parse(savedProducts) ; //повертаю розпарсені дані з ЛС або null якщо там нічого не має
 }
+// savedProducts ?   : null
 
 const parsedSavedProducts = localStorageCheck(); // результат повернення передаю змінній Розпарсених даних
 console.log(parsedSavedProducts) //тест
 
- 
+
+
+
+//-----------------------------------------------------------------------------------------------------------------
+// parsedSavedProducts повинен повернути ось це:
+const exampleLS = [
+  {category: "Fresh_Produce",
+    img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png",
+    is10PercentOff:    false,
+    name:    "Ackee",
+    popularity:    2099,
+    price:   8.99,
+    size:    "16 oz",
+    _id: "640c2dd963a319ea671e383b"},
+
+    { category: "Pantry_Items",
+    img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e3814.png",
+    is10PercentOff:    false,
+    name:    "Almonds",
+    popularity:    616,
+    price:   8.99,
+    size:    "16 oz bag",
+    _id: "640c2dd963a319ea671e3814"},
+    
+    { category: "Pantry_Items",
+    img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png",
+    is10PercentOff:    false,
+    name:    "Ackee",
+    popularity:    2099,
+    price:   8.99,
+    size:    "16 oz",
+    _id: "640c2dd963a319ea671e383b"},
+    { category: "Pantry_Items",
+    img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e3660.png"    ,
+    is10PercentOff:    false,
+    name:    "Apple Cider Vinegar"   ,
+    popularity:    435,
+    price:   6.99    ,
+    size:    "500 ml",
+    _id: "640c2dd963a319ea671e3660"},
+    { category: "Pantry_Items",
+    img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png",
+    is10PercentOff:    false,
+    name:    "Ackee",
+    popularity:    2099,
+    price:   8.99,
+    size:    "16 oz",
+    _id: "640c2dd963a319ea671e383b"},
+    { category: "Pantry_Items",
+    img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e3660.png"    ,
+    is10PercentOff:    false,
+    name:    "Apple Cider Vinegar"   ,
+    popularity:    435,
+    price:   6.99    ,
+    size:    "500 ml",
+    _id: "640c2dd963a319ea671e3660"}
+  ]
+console.log(exampleLS);
+
+
+// НЕ ВИДАЛЯТИ!!!!!!!!!!!!!!!!!!!!!!
+// // Функція перевірки об`єктів в масиві отриманого зі сховища і повернення лише унікальних значень.
+// const seen = new Set(); // Створюємо пустий Set для відстеження унікальних значень
+// const uniqueProductsArray = exampleLS.filter(obj => {
+//   const value = obj._id; // В нашому прикладі вибираємо значення "id" для порівняння унікальності
+//   if (seen.has(value)) {
+//     return false; // Значення вже було, це не унікальний об'єкт
+//   }
+//   seen.add(value); // Додаємо значення до Set, оскільки це унікальне
+//   return true; // Об'єкт є унікальним і буде включений до результату
+// });
+
+// console.log(uniqueProductsArray);
+// Якщо треба буде перевіряти масив зі сховища, щоб дані не повторювались, тоді використаю цю функцію, а далі для роблти в решті коду буду передавати отриманий масив унікальних об`єктів.
+
+
 
 //ФУНКЦІЯ ПІДРАХУНКУ СУМИ i РЕНДЕРУ ЇЇ В HTML
 function totalSumMarkup (array) {
@@ -36,22 +112,26 @@ function totalSumMarkup (array) {
   }
 
 
-
-if (parsedSavedProducts) {
-  cartItemsQuantity.innerHTML = parsedSavedProducts.length;
+// Всюди замість exampleLS треба використвувати оригінал, тобто parsedSavedProducts
+if (exampleLS !== null || exampleLS !== undefined) {
+  cartItemsQuantity.innerHTML = exampleLS.length;
   cartEmptyHidden();
   cartContainerShow();
+  
   //-------Тут треба буде глянути що саме повертається і в якому вигляді.
-  const { id, name, img, category, size, price } = parsedSavedProducts; // повинен повертатись об`єкт за запитом до сховища. Тому одразу роблю його деструктуризацію, щоб потім відмальовувати розмітку.
+  const { _id, name, img, category, size, price } = exampleLS; // повинен повертатись об`єкт за запитом до сховища. Тому одразу роблю його деструктуризацію, щоб потім відмальовувати розмітку.
 //   const { ProductId, ProductName, ProductImg, ProductCategory, ProductSize, ProductPrice } = parsedSavedProducts; - або в такому вигляді буде повертатись.
   
 // Повернення масиву об`єктів і відмальовування їх
-  const productsArrayMarkup = parsedSavedProducts.map(el => {
-    return selectedProductsMarkup(el.ProductId, el.name, el.img, el.category, el.size, el.price)
-    // return selectedProductsMarkup(el.id, el.ProductName, el.ProductImg, el.ProductCategory, el.ProductSize, el.ProductPrice) - або так
+  const productsArrayMarkup = exampleLS.map(el => {
+    return selectedProductsMarkup(el._Id, el.name, el.img, el.category, el.size, el.price) 
+    // return selectedProductsMarkup(el._id, el.Productame, el.ProductImg, el.ProductCategory, el.ProductSize, el.ProductPrice) -або так
   }).join('');
+  // cartItemsQuantity.innerHTML = exampleLS.length;
   cartSelectedProducts.innerHTML = productsArrayMarkup;
-  cartItemsQuantity.innerHTML = productsArrayMarkup.length;
+  // cartItemsQuantity.innerHTML = exampleLS.length;
+
+  totalSumMarkup(exampleLS);
 
   document.querySelector('.cart-remove-product-btn').addEventListener('click', deleterProduct); // після відмальовки розмітки вішаю слухача на копку закриття. Але через безпосередній пошук, бо змінна не підтягується з гори.
 
@@ -79,7 +159,15 @@ btnCheckout.addEventListener('click', (event) => {
   event.preventDefault();
   console.log('Submit successful')
 
-// потім тут прописати відкриття модалки
+  // після сабмі/замовлення можемо видалити дані зі сховища та приховати
+  cartEmptyShow();
+  cartContainerHidden();
+  cartItemsQuantity.innerHTML = 0;
+  // totalOrderedPrice.innerHTML = 0;
+  cartSelectedProducts.innerHTML = "";
+
+// потім тут прописати відкриття модалки про успішні закупи.
+
 
 })
 
@@ -122,6 +210,7 @@ function selectedProductsMarkup(
         <p class="js-item-product-price">$${productPrice}</p>
     </div>
 </div>
+<p class="underline"></p>
 `
 }
 
@@ -152,76 +241,11 @@ function cartContainerHidden () {
 }
 
 
-console.log("qwewqe");
+console.log("Test end");
 
 
 
 
-
-
-
-
-
-// Тест----------------------------------------------------------
-const testObject = [ { 
-  id: '640c2dd963a319ea671e383b',
-  name: 'Ackee', 
-  img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
-  category: 'Fresh_Produce',
-  price: 8.99, 
-  size: 16 
-}, 
-{ 
-    id: '640c2dd963a319ea671e383b',
-    name: 'Ackee', 
-    img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
-    category: 'Fresh_Produce',
-    price: 8.99, 
-    size: 16 
-  }, 
-  { 
-    id: '640c2dd963a319ea671e383b',
-    name: 'Ackee', 
-    img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
-    category: 'Fresh_Produce',
-    price: 8.99, 
-    size: 16 
-  }, 
-  { 
-    id: '640c2dd963a319ea671e383b',
-    name: 'Ackee', 
-    img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
-    category: 'Fresh_Produce',
-    price: 8.99, 
-    size: 16 
-  }, 
-  { 
-    id: '640c2dd963a319ea671e383b',
-    name: 'Ackee', 
-    img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
-    category: 'Fresh_Produce',
-    price: 8.99, 
-    size: 16 
-  }
-] 
-
-
-
-const { id, name, img, category, price, size} = testObject;
-   const markup  = selectedProductsMarkup(id, name, img, category, price, size);
-  
-   const productsArrayMarkup = testObject.map(el => {
-    
-    return selectedProductsMarkup(el.id, el.name, el.img, el.category, el.size, el.price)
-  }).join('');
-
-  cartSelectedProducts.innerHTML = productsArrayMarkup;
-
-  cartSelectedProducts.addEventListener('click', deleterProduct);
-
-totalSumMarkup(testObject);
-cartItemsQuantity.innerHTML = testObject.length
-localStorageCheck();
 
 
 
@@ -246,6 +270,7 @@ console.log('try2')
         if (itemIndexToRemove !== -1) {
             // Видаляємо елемент за індексом
             cartArray.splice(itemIndexToRemove, 1);
+            // totalSumMarkup(cartArray);
     
             // Оновлюємо localStorage один раз після видалення всіх потрібних елементів
             localStorage.setItem('cart', JSON.stringify(cartArray));
@@ -295,9 +320,96 @@ totalSumMarkup(cartArray);
 
 
 
+// 1 спосіб
+//ФУНКЦІЯ ВИДАЛЕННЯ ОДНОГО ПРОДУКТУ З КОШИКУ
+
+// cartRemoveProductBtn.addEventListener('click', (event) => {
+//     const clickedRemoveBtn = event.currentTarget;
+//     const itemId = clickedRemoveBtn.getAttribute("data-id");
+//     const cartArray = localStorageCheck();
+    
+//     const newCartArray = cartArray.filter(product => product.id !== itemId);
+//     localStorage.setItem('cart', JSON.stringify(newCartArray));
+    
+//     if (newCartArray.length > 0) {
+//         return newCartArray;
+//     } else {
+//         cartSelectedProducts.innerHTML = "";
+//         cartContainerHidden(); // приховую контейнер кошика
+//         cartEmptyShow();             // показую пустий кошик
+//     }
+//         });
 
 
 
+
+
+
+
+
+
+
+
+// // Тест----------------------------------------------------------
+// const testObject = [ { 
+//   id: '640c2dd963a319ea671e383b',
+//   name: 'Ackee', 
+//   img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
+//   category: 'Fresh_Produce',
+//   price: 8.99, 
+//   size: 16 
+// }, 
+// { 
+//     id: '640c2dd963a319ea671e383b',
+//     name: 'Ackee', 
+//     img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
+//     category: 'Fresh_Produce',
+//     price: 8.99, 
+//     size: 16 
+//   }, 
+//   { 
+//     id: '640c2dd963a319ea671e383b',
+//     name: 'Ackee', 
+//     img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
+//     category: 'Fresh_Produce',
+//     price: 8.99, 
+//     size: 16 
+//   }, 
+//   { 
+//     id: '640c2dd963a319ea671e383b',
+//     name: 'Ackee', 
+//     img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
+//     category: 'Fresh_Produce',
+//     price: 8.99, 
+//     size: 16 
+//   }, 
+//   { 
+//     id: '640c2dd963a319ea671e383b',
+//     name: 'Ackee', 
+//     img: 'https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png', 
+//     category: 'Fresh_Produce',
+//     price: 8.99, 
+//     size: 16 
+//   }
+// ] 
+
+
+
+// const { id, name, img, category, price, size} = testObject;
+//    const markup  = selectedProductsMarkup(id, name, img, category, price, size);
+  
+//    const productsArrayMarkup = testObject.map(el => {
+    
+//     return selectedProductsMarkup(el.id, el.name, el.img, el.category, el.size, el.price)
+//   }).join('');
+
+//   cartSelectedProducts.innerHTML = productsArrayMarkup;
+
+//   cartSelectedProducts.addEventListener('click', deleterProduct);
+
+// totalSumMarkup(testObject);
+// cartItemsQuantity.innerHTML = testObject.length
+// localStorageCheck();
 
 
 
@@ -397,28 +509,6 @@ totalSumMarkup(cartArray);
 
 
 
-
-
-
-// 1 спосіб
-//ФУНКЦІЯ ВИДАЛЕННЯ ОДНОГО ПРОДУКТУ З КОШИКУ
-
-// cartRemoveProductBtn.addEventListener('click', (event) => {
-//     const clickedRemoveBtn = event.currentTarget;
-//     const itemId = clickedRemoveBtn.getAttribute("data-id");
-//     const cartArray = localStorageCheck();
-    
-//     const newCartArray = cartArray.filter(product => product.id !== itemId);
-//     localStorage.setItem('cart', JSON.stringify(newCartArray));
-    
-//     if (newCartArray.length > 0) {
-//         return newCartArray;
-//     } else {
-//         cartSelectedProducts.innerHTML = "";
-//         cartContainerHidden(); // приховую контейнер кошика
-//         cartEmptyShow();             // показую пустий кошик
-//     }
-//         });
 
 
 
