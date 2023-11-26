@@ -114,7 +114,7 @@ export function addToCart(productInfo) {
 
   // Оновлюємо кошик у локальному сховищі
   localStorage.setItem('cart', JSON.stringify(cart));
-  updateCart();
+
   // Оновлюємо стиль кнопок після зміни кошика
   cartButtonStyle();
 }
@@ -143,13 +143,3 @@ export function cartButtonStyle() {
     }
   });
 }
-
-// Виклик події "cartUpdated" після зміни кошика
-export function updateCart() {
-  document.dispatchEvent(new CustomEvent('cartUpdated'));
-}
-
-// Обробник події "cartUpdated"
-document.addEventListener('cartUpdated', () => {
-  cartButtonStyle();
-});
