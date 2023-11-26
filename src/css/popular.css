@@ -1,6 +1,6 @@
 .product {
   color: rgba(1, 1, 1, 0.3);
-  font-family: "Neue Montreal Regular";
+  font-family: 'Neue Montreal Regular';
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -14,7 +14,7 @@
 .size-value {
   color: #010101;
 
-  font-family: "Neue Montreal Regular";
+  font-family: 'Neue Montreal Regular';
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -23,7 +23,7 @@
 .product-name {
   color: #010101;
   margin-bottom: 12px;
-  font-family: "Neue Montreal Medium";
+  font-family: 'Neue Montreal Medium';
   font-size: 20px;
   font-style: normal;
   font-weight: 500;
@@ -65,8 +65,6 @@
 }
 .product-template {
   position: relative;
-  width: 335px;
-  height: 98px;
 
   border-radius: 10px;
   background: #fafafa;
@@ -92,7 +90,7 @@
   align-self: baseline;
   color: #010101;
   margin-bottom: 20px;
-  font-family: "Neue Montreal Medium";
+  font-family: 'Neue Montreal Medium';
   font-size: 28px;
   font-style: normal;
   font-weight: 500;
@@ -129,7 +127,6 @@
   gap: 13px;
 }
 .contain {
-  width: 335px;
   margin: auto;
 }
 /* ///////////////////////////////////// */
