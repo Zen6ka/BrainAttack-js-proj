@@ -42,7 +42,7 @@
 .card-list-product {
   margin-top: 20px;
   color: #010101;
-  font-family: Neue Montreal;
+  font-family: "Neue Montreal Medium";
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -63,7 +63,7 @@
 
 .li-p-cards{
   color: #010101;
-  font-family: Neue Montreal;
+  font-family: "Neue Montreal Regular";
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -131,7 +131,7 @@
   left: 20px;
   bottom: 20px;
   color: #010101;
-  font-family: Neue Montreal;
+  font-family: "Neue Montreal Medium";
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
