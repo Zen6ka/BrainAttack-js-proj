@@ -27,7 +27,7 @@
   </nav>
 </header>
 <section class="section">
-  <div class="hero-container container">
+  <div class="container">
     <h1 class="hero-title">
       Welcome to the <span class="hero-title-color">Food</span> Boutique!
     </h1>
@@ -35,27 +35,28 @@
       With Food Boutique, you're not just subscribing to food, you're signing up
       for a fresher, fitter, and happier you.
     </h2>
+    <div class="hero-container">
+      <picture class="hero-picture">
+        <source
+          srcset="/img/img-desktop.png 1x, /img/img-desktop@2x.png 2x"
+          media="(min-width: 1240px)"
+        />
 
-    <picture class="hero-picture">
-      <source
-        srcset="/img/img-desktop.png 1x, /img/img-desktop@2x.png 2x"
-        media="(min-width: 1240px)"
-      />
+        <source
+          srcset="/img/img-tablet.png 1x, /img/img-tablet@2x.png 2x"
+          media="(min-width: 768px)"
+        />
 
-      <source
-        srcset="/img/img-tablet.png 1x, /img/img-tablet@2x.png 2x"
-        media="(min-width: 768px)"
-      />
+        <source
+          srcset="/img/img-mobile.png 1x, /img/img-mobile@2x.png 2x"
+          media="(max-width: 767.9px)"
+        />
 
-      <source
-        srcset="/img/img-mobile.png 1x, /img/img-mobile@2x.png 2x"
-        media="(max-width: 767.9px)"
-      />
-
-      <img class="hero-img" src="/img/img-desktop.png" alt="hero-desktop" />
-    </picture>
-    <svg class="icon-organic-food" width="100" height="100">
-      <use href="/img/icons.svg#icon-organic-food"></use>
-    </svg>
+        <img class="hero-img" src="/img/img-desktop.png" alt="hero-desktop" />
+      </picture>
+      <svg class="icon-organic-food" width="100" height="100">
+        <use href="/img/icons.svg#icon-organic-food"></use>
+      </svg>
+    </div>
   </div>
 </section>
