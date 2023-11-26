@@ -1,11 +1,11 @@
 .discount-container {
-  max-width: 375px;
+  max-width: 335px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   margin-bottom: 80px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .discount-logo {
@@ -31,7 +31,7 @@
 }
 
 .discount-card {
-  width: 335px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   padding: 16px;
