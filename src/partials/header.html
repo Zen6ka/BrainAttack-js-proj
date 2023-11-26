@@ -11,15 +11,17 @@
 
     <ul class="navig-wrapper list">
       <li>
-        <a class="link-home" href="../index.html">Home</a>
+        <a class="link-home" href="#home">Home</a>
       </li>
       <li class="header-basket">
-        <button class="btn-basket" type="button" href="../cart.html">
-          <svg class="icon-basket-header" width="38" height="38">
-            <use href="/img/icons.svg#icon-basket"></use>
-          </svg>
-        </button>
-        <span class="cart-amount">Cart (3)</span>
+        <div class="header-besket-wrapper">
+          <a class="header-basket-item" href="../cart.html">
+            <svg class="icon-basket-header" width="18" height="18">
+              <use href="/img/icons.svg#icon-basket"></use>
+            </svg>
+          </a>
+          <span class="cart-amount">Cart ()</span>
+        </div>
       </li>
     </ul>
   </nav>
@@ -50,12 +52,7 @@
         media="(max-width: 767.9px)"
       />
 
-      <img
-        class="hero-img"
-        src="/img/img-desktop.png"
-        alt="hero-desktop"
-        alt="hero-desctop-img"
-      />
+      <img class="hero-img" src="/img/img-desktop.png" alt="hero-desktop" />
     </picture>
     <svg class="icon-organic-food" width="100" height="100">
       <use href="/img/icons.svg#icon-organic-food"></use>
