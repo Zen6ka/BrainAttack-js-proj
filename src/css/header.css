@@ -136,15 +136,12 @@
     max-width: 767px;
     padding: 0 20px;
   }
-
-  .my-class-container {
+  .hero-wrapper {
     max-width: 375px;
   }
-
   .main-nav {
     padding-top: 18px;
   }
-
   .header-logo-icon {
     width: 28px;
     height: 28px;
@@ -204,8 +201,8 @@
   }
   .icon-organic-food {
     position: absolute;
-    right: 8%;
-    top: 28%;
+    right: 3%;
+    top: -5%;
   }
   .icon-basket-header {
     width: 14px;
@@ -247,8 +244,8 @@
   }
   .icon-organic-food {
     position: absolute;
-    right: 6%;
-    top: 28%;
+    right: 1%;
+    top: -5%;
   }
   .navig-wrapper {
     gap: 16px;
@@ -302,7 +299,7 @@
   }
   .icon-organic-food {
     position: absolute;
-    right: 8%;
-    top: 26%;
+    right: 1%;
+    top: -14%;
   }
 }
