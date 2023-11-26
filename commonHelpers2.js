@@ -21,13 +21,13 @@ var G=Object.defineProperty;var K=(e,t,s)=>t in e?G(e,t,{enumerable:!0,configura
                 </div>
                 <div class="cartlist-btn"><button class="cardlist-add-cart" id=${o._id}>
                 <svg class="cardlist-svg" weight="18" height="18">
-                <use href="../img/icons.svg#${a}"></use>
+                <use href="./img/icons.svg#${a}"></use>
                 </svg>
                 </button>
                 </div>
                 <p class ="price-for-cards">$${o.price}</p>
                 <svg  class="discount-for-filter-cards">
-                <use href="../img/icons.svg#icon-discount-1"></use>
+                <use href="./img/icons.svg#icon-discount-1"></use>
                 </svg>
                 </li>`:c=`<li class="card-list-item id-for-del" data-id=${o._id}>
                 <div class = "div-img">
@@ -43,16 +43,16 @@ var G=Object.defineProperty;var K=(e,t,s)=>t in e?G(e,t,{enumerable:!0,configura
                 </div>
                 <div class="cartlist-btn"><button class="cardlist-add-cart" id=${o._id}>
                 <svg class="cardlist-svg" weight="18" height="18">
-                <use href="../img/icons.svg#${a}"></use>
+                <use href="./img/icons.svg#${a}"></use>
                 </svg>
                 </button>
                 </div>
                 <p class ="price-for-cards">$${o.price}</p>
                 <svg  class="visually-hidden">
-                <use href="../img/icons.svg#icon-discount-1"></use>
+                <use href="./img/icons.svg#icon-discount-1"></use>
                 </svg>
                 </li>`,t.push(c)}),R.innerHTML=`<ul class="card-list">${t.join(" ")}</ul>`,ye(e),document.querySelectorAll(".filters-img").forEach(o=>{o.addEventListener("click",c=>F(c))})}function ye(e){[...document.querySelectorAll(".cardlist-add-cart")].forEach(s=>{s.addEventListener("click",r=>{const o=r.currentTarget.getAttribute("id"),c=e.find(i=>i._id===o),a=localStorage.getItem("cart");if(a){const i=JSON.parse(a);i.push(c),localStorage.setItem("cart",JSON.stringify(i))}else localStorage.setItem("cart",JSON.stringify([c]));r.currentTarget.innerHTML=`<svg class="cardlist-svg" weight="18" height="18">
-            <use href="../img/icons.svg#icon-check"></use>
+            <use href="./img/icons.svg#icon-check"></use>
             </svg>`,r.currentTarget.setAttribute("disabled","true")})})}document.addEventListener("DOMContentLoaded",async function(){const e=new q("products/popular?limit=5");try{const t=Se();if(t)J(t);else{const s=await e.fetchBreeds();he(s),J(s)}_()}catch(t){console.error("Error:",t)}});function he(e){localStorage.setItem("popularProducts",JSON.stringify(e)),_()}function Se(){const e=localStorage.getItem("popularProducts");return e?JSON.parse(e):null}function J(e){const t=document.querySelectorAll(".product-template");t.forEach(s=>{s.querySelector(".product-image").src="",s.querySelector(".product-name").textContent="",s.querySelector(".category-value").textContent="",s.querySelector(".size-value").textContent="",s.querySelector(".popularity-value").textContent=""}),e.slice(0,t.length).forEach((s,r)=>{const o=t[r];o.style.display="flex",o.querySelector(".product-image").src=s.img,o.querySelector(".product-name").textContent=s.name,o.querySelector(".category-value").textContent=s.category.replace("_"," "),o.querySelector(".size-value").textContent=s.size,o.querySelector(".popularity-value").textContent=s.popularity;const c={_Id:s._id,name:s.name,img:s.img,category:s.category,price:s.price,size:s.size,is10PercentOff:s.is10PercentOff,popularity:s.popularity};o.querySelector(".product-image-container").addEventListener("click",function(){let g=[c];localStorage.setItem("popul",JSON.stringify(g)),z(c._Id)});const i=o.querySelector(".add-to-cart-btn");i.onclick=function(){ve(c),updateCart()},i.setAttribute("data-product-id",s._id)})}function ve(e){let t=JSON.parse(localStorage.getItem("cart"))||[];const s=t.findIndex(r=>r._Id===e._Id);s!==-1?t.splice(s,1):t.push(e),localStorage.setItem("cart",JSON.stringify(t)),_()}function _(){const e=JSON.parse(localStorage.getItem("cart"))||[];document.querySelectorAll(".cart-btn").forEach(s=>{const r=s.getAttribute("data-product-id"),o=s.querySelector(".icon-off"),c=s.querySelector(".icon-on"),a=e.some(i=>i._Id===r);o&&c&&(a?(s.classList.add("added-to-cart"),o.style.display="block",c.style.display="none"):(s.classList.remove("added-to-cart"),o.style.display="none",c.style.display="block"))})}console.log("hello");const l={formSubscription:document.querySelector(".footer-form"),openModalPolicy:document.querySelector(".js-modal-policy-open"),openModalTerms:document.querySelector(".js-modal-terms-open"),closeModalPolicyBtn:document.querySelector(".js-policy-close"),closeModalTermsBtn:document.querySelector(".js-terms-close"),policyLink:document.querySelector(".js-policy"),termsLink:document.querySelector(".js-terms")};l.formSubscription.addEventListener("submit",be);const E=new q;E.endPoint="subscription";function be(e){e.preventDefault();const t=e.currentTarget.elements.email.value;Le(t),e.currentTarget.reset()}async function Le(e){S.defaults.baseURL=E.baseUrl;const t={method:"post",url:E.endPoint,headers:{"Content-Type":"application/json"},data:{email:e}};try{const s=await S.request(t);alert(s.data.message)}catch(s){alert(s.response.data.message),console.log(s)}}l.openModalPolicy.addEventListener("click",()=>{W(l.policyLink),Ce(),window.addEventListener("keydown",I)});l.openModalTerms.addEventListener("click",()=>{W(l.termsLink),we(),window.addEventListener("keydown",I)});function W(e){e.classList.remove("is-hidden-policy"),document.body.classList.add(".no-scroll")}function Ce(){l.closeModalPolicyBtn.addEventListener("click",O)}function O(){l.policyLink.classList.add("is-hidden-policy"),document.body.classList.remove(".no-scroll"),Pe()}function Pe(){l.closeModalPolicyBtn.removeEventListener("click",O),window.removeEventListener("keydown",I)}function we(){l.closeModalTermsBtn.addEventListener("click",M)}function M(){l.termsLink.classList.add("is-hidden-policy"),document.body.classList.remove(".no-scroll"),qe()}function qe(){l.closeModalTermsBtn.removeEventListener("click",M),window.removeEventListener("keydown",I)}function I({code:e}){e==="Escape"&&(O(),M())}const Ie=document.querySelector(".discount-container");let k=[],h=[];const ke=e=>{h.find(s=>s._id===e._id)||(h.push(e),localStorage.setItem("addedProducts",JSON.stringify(h)))},$e=e=>h.some(t=>t._id===e);async function Ee(){try{let t=function(c){const{_id:a,name:i,img:g,price:y}=c;return`<div class="discount-card">
                   <div class="discount-logo">
                   <svg class="logo">
