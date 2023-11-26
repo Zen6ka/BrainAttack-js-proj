@@ -88,39 +88,39 @@ function displayProducts(products) {
     const addToCartBtn = container.querySelector('.add-to-cart-btn');
     addToCartBtn.onclick = function () {
       addToCart(productInfo);
-      updateCart();
     };
     addToCartBtn.setAttribute('data-product-id', product._id);
   });
 }
 
 // Функція для додавання продукту в кошик
-export function addToCart(productInfo) {
-  // Отримуємо масив продуктів з локального сховища
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+function addToCart(productInfo) {
+  if (productInfo && productInfo._Id) {
+    // Отримуємо масив продуктів з локального сховища
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-  // Перевіряємо, чи товар вже є в кошику
-  const existingProductIndex = cart.findIndex(
-    item => item._Id === productInfo._Id
-  );
+    // Перевіряємо, чи товар вже є в кошику
+    const existingProductIndex = cart.findIndex(
+      item => item && item._Id === productInfo._Id
+    );
 
-  if (existingProductIndex !== -1) {
-    // Якщо товар вже є в кошику, видаляємо його
-    cart.splice(existingProductIndex, 1);
-  } else {
-    // Якщо товару немає в кошику, додаємо його
-    cart.push(productInfo);
+    if (existingProductIndex !== -1) {
+      // Якщо товар вже є в кошику, видаляємо його
+      cart.splice(existingProductIndex, 1);
+    } else {
+      // Якщо товару немає в кошику, додаємо його
+      cart.push(productInfo);
+    }
+
+    // Оновлюємо кошик у локальному сховищі
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Оновлюємо стиль кнопок після зміни кошика
+    cartButtonStyle();
   }
-
-  // Оновлюємо кошик у локальному сховищі
-  localStorage.setItem('cart', JSON.stringify(cart));
-
-  // Оновлюємо стиль кнопок після зміни кошика
-  cartButtonStyle();
 }
-
 // Функція для оновлення стилю кнопок
-export function cartButtonStyle() {
+function cartButtonStyle() {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const addToCartButtons = document.querySelectorAll('.cart-btn');
 
@@ -128,7 +128,7 @@ export function cartButtonStyle() {
     const _Id = btn.getAttribute('data-product-id');
     const iconInCart = btn.querySelector('.icon-off');
     const iconAddToCart = btn.querySelector('.icon-on');
-    const isProductInCart = cart.some(item => item._Id === _Id);
+    const isProductInCart = cart.some(item => item && item._Id === _Id);
 
     if (iconInCart && iconAddToCart) {
       if (isProductInCart) {
