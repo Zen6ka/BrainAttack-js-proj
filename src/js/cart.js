@@ -1,5 +1,5 @@
 // import { onOpenModal, onCloseModal,  } from "./modal.js";
-
+// import './js/footer';
 
 const cartItemsQuantity = document.querySelector(".js-cart-items-quantity"); // Місце де буде оновлюватись кількість товарів в кошику
 const cartEmpty = document.querySelector(".js-cart-empty");
@@ -25,68 +25,59 @@ cartContainerHidden();
 function localStorageCheck() { // ****** пізніше підшаманити, щоб просто повертати результат сховище, а логіку відпрацьовувати далі поза функцією.
   const savedProducts = localStorage.getItem("cart");
   return   JSON.parse(savedProducts); //повертаю розпарсені дані з ЛС або null якщо там нічого не має
-}
-// savedProducts ?   : null
+}  // savedProducts ?   : null
 
 const parsedSavedProducts = localStorageCheck(); // результат повернення передаю змінній Розпарсених даних
 console.log(parsedSavedProducts) // Масив всіх об`єктів з ЛС за ключем cart
 
 
-// // Функція перевірки об`єктів в масиві отриманого зі сховища і повернення лише унікальних значень. 
-// const seen = new Set(); // Створюємо пустий Set для відстеження унікальних значень
-// const parsedSavedProducts = parsedSavedProducts.filter(obj => {
-//   const value = obj._id; // В нашому прикладі вибираємо значення "id" для порівняння унікальності
-//   if (seen.has(value)) {
-//     return false; // Значення вже було, це не унікальний об'єкт
-//   }
-//   seen.add(value); // Додаємо значення до Set, оскільки це унікальне
-//   return true; // Об'єкт є унікальним і буде включений до результату
-// });
-
-// console.log(uniqueProductsArray); //  Масив унікальних об`єктів з ЛС за ключем cart
-// // Якщо треба буде перевіряти масив зі сховища, щоб дані не повторювались, тоді використаю цю функцію, 
-// //а далі для роблти в решті коду буду передавати отриманий масив унікальних об`єктів (типу цей uniqueProductsArray).
-
-
-
-
-
 // Основна логіка запиту
-// Всюди замість exampleLS треба використвувати оригінал, тобто parsedSavedProducts
-if (parsedSavedProducts === null || parsedSavedProducts.length < 1) {
-  cartItemsQuantity.innerHTML = '0';
-  cartEmptyShow();
-cartContainerHidden();
- } else {
+const uniqProducts = uniqProductsArray(parsedSavedProducts); // Ортримані дані зі сховища фільтрую на унікальність і присвоюю новій змінній відфільрований масив 
+cartItemsQuantity.innerHTML = uniqProducts.length; // після чого одразу записую на сторінці кількість товарів в кошику
 
-cartItemsQuantity.innerHTML = parsedSavedProducts.length;
-
-  cartEmptyHidden();
-  cartContainerShow();
-
-  //-------Тут треба буде глянути що саме повертається і в якому вигляді.
-  const { _id, name, img, category, size, price } = parsedSavedProducts; // повинен повертатись об`єкт за запитом до сховища. Тому одразу роблю його деструктуризацію, щоб потім відмальовувати розмітку.
-//   const { ProductId, ProductName, ProductImg, ProductCategory, ProductSize, ProductPrice } = parsedSavedProducts; - або в такому вигляді буде повертатись.
+  // const { _id, name, img, category, size, price } = uniqProducts; // повинен повертатись об`єкт за запитом до сховища. Тому одразу роблю його деструктуризацію, щоб потім відмальовувати розмітку.
   
 // Повернення масиву об`єктів і відмальовування їх
-  const productsArrayMarkup = parsedSavedProducts.map(el => {
+  const productsArrayMarkup = uniqProducts.map(el => {
     return selectedProductsMarkup(el._id, el.name, el.img, el.category, el.size, el.price) 
-    // return selectedProductsMarkup(el._id, el.Productame, el.ProductImg, el.ProductCategory, el.ProductSize, el.ProductPrice) -або так
   }).join('');
-  
-  // console.log(productsArrayMarkup.length); // там 4435 цифра, але це всього лиш кількість символів які нам повернулись.
-
-
-  cartSelectedProducts.innerHTML = productsArrayMarkup;
-  cartItemsQuantity.innerHTML = parsedSavedProducts.length;
-
-  totalSumMarkup(parsedSavedProducts);
+ 
+  cartSelectedProducts.innerHTML = productsArrayMarkup;// відмальовую отриманий результат на сторінці
+   totalSumMarkup(uniqProducts); // Також одразу рахую суму та відмальовую її на сторінці (все це виконує функція, тому я просто її викликаю передаючи наш масив унікальних об`єктів)
 
 
 /// слухач на форму форму продуктів які ми отримали з ЛС
   cartSelectedProducts.addEventListener('click', deleterProduct);
-}
 
+
+  
+// Функція перевірки об`єктів в масиві отриманого зі сховища і повернення лише унікальних значень. 
+function uniqProductsArray (baseArray) {
+  if((baseArray === null || baseArray.length < 1)){
+    cartItemsQuantity.innerHTML = '0';
+    cartEmptyShow();
+  cartContainerHidden();
+  console.log('Error array')
+  return [];
+  }
+
+  cartEmptyHidden();
+  cartContainerShow();
+
+const seen = new Set(); // Створюємо пустий Set для відстеження унікальних значень
+const uniqueProductsArray = parsedSavedProducts.filter(obj => {
+  const value = obj._id; // В нашому прикладі вибираємо значення "id" для порівняння унікальності
+  if (seen.has(value)) {
+    return false; // Значення вже було, це не унікальний об'єкт
+  }
+  seen.add(value); // Додаємо значення до Set, оскільки це унікальне
+  return true; // Об'єкт є унікальним і буде включений до результату
+});
+
+console.log(uniqueProductsArray); //  Масив унікальних об`єктів з ЛС за ключем cart
+
+return uniqueProductsArray;
+}
 
 
 
@@ -132,9 +123,6 @@ console.log(actualId)
 
 
 
-
-
-
     // Слухач на форму по сабміту а ще треба буде по кліку на кнопку
 form.addEventListener('change', (event) => {
     event.preventDefault();
@@ -157,9 +145,10 @@ localStorage.removeItem('cart')
 
 // потім тут прописати відкриття модалки про успішні закупи.
 
+
+
+
 })
-
-
 
 
 
@@ -239,6 +228,5 @@ function cartContainerShow () {
 function cartContainerHidden () {
     cartContainer.style.display = 'none';
 }
-
 
 console.log("Test end");
