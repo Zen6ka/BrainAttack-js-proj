@@ -10,16 +10,7 @@ function element(totalPages, page){
    if(page > 1){
      liTag += `<li class="btn prev" onclick="element(totalPages, ${page - 1})"><span><i class="left"></i> < </span></li>`;
    }
-  // if(page > 1){
-  //   if(page < totalPages + 1)
-  //   liTag += `<li class="numb" onclick="element(totalPages, ${page})"><span>1</span></li>`;
-  //      if(page > 2){
-  //     liTag += `<li class="numb" onclick="element(totalPages, ${page})"><span>2</span></li>`;
-  //     if(page > totalPages - 8){
-  //     liTag += `<li class="dots"><span>...</span></li>`;
-  //    }
-  //   }
-  // }
+
     for (let pageLength = beforePages; pageLength <= afterPades; pageLength++){
     if(pageLength > totalPages){
       continue;
