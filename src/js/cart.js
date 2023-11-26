@@ -1,3 +1,6 @@
+// import { onOpenModal, onCloseModal,  } from "./modal.js";
+
+
 const cartItemsQuantity = document.querySelector(".js-cart-items-quantity"); // Місце де буде оновлюватись кількість товарів в кошику
 const cartEmpty = document.querySelector(".js-cart-empty");
 const cartContainer = document.querySelector(".js-cart-container");
@@ -9,13 +12,14 @@ const form = document.querySelector(".js-email-form");
 const btnCheckout = document.querySelector(".js-email-checkout");
 const input = document.querySelector(".input")
 
-const cartAmount = document.querySelector('.cart-amount')
+// const cartAmount = document.querySelector('.cart-amount')
 
 
 console.log("Test start");
 // За замовчуванням сторінка кошика буде пустою.
-// cartEmptyHidden();
-// cartContainerHidden();
+cartEmptyHidden();
+cartContainerHidden();
+
 
 // ФУНКЦІЯ ПЕРЕВІРКИ ЛОКАЛЬНОГО СХОВИЩА НА ВМІСТ ДАНИХ
 function localStorageCheck() { // ****** пізніше підшаманити, щоб просто повертати результат сховище, а логіку відпрацьовувати далі поза функцією.
@@ -26,9 +30,6 @@ function localStorageCheck() { // ****** пізніше підшаманити, 
 
 const parsedSavedProducts = localStorageCheck(); // результат повернення передаю змінній Розпарсених даних
 console.log(parsedSavedProducts) //тест
-
-
-
 
 //-----------------------------------------------------------------------------------------------------------------
 // parsedSavedProducts повинен повернути ось це:
@@ -84,11 +85,11 @@ console.log(parsedSavedProducts) //тест
 //     size:    "500 ml",
 //     _id: "640c2dd963a319ea671e3660"}
 //   ]
-// console.log(exampleLS);
+// console.log(parsedSavedProducts);
 
 
 // НЕ ВИДАЛЯТИ!!!!!!!!!!!!!!!!!!!!!!
-// // Функція перевірки об`єктів в масиві отриманого зі сховища і повернення лише унікальних значень.
+// // Функція перевірки об`єктів в масиві отриманого зі сховища і повернення лише унікальних значень. 
 // const seen = new Set(); // Створюємо пустий Set для відстеження унікальних значень
 // const uniqueProductsArray = parsedSavedProducts.filter(obj => {
 //   const value = obj._id; // В нашому прикладі вибираємо значення "id" для порівняння унікальності
@@ -100,7 +101,9 @@ console.log(parsedSavedProducts) //тест
 // });
 
 // console.log(uniqueProductsArray);
-// Якщо треба буде перевіряти масив зі сховища, щоб дані не повторювались, тоді використаю цю функцію, а далі для роблти в решті коду буду передавати отриманий масив унікальних об`єктів.
+// Якщо треба буде перевіряти масив зі сховища, щоб дані не повторювались, тоді використаю цю функцію, 
+//а далі для роблти в решті коду буду передавати отриманий масив унікальних об`єктів (типу цей uniqueProductsArray).
+
 
 
 
@@ -115,15 +118,62 @@ function totalSumMarkup (array) {
   }
 
 
-// Всюди замість exampleLS треба використвувати оригінал, тобто parsedSavedProducts
-if (parsedSavedProducts !== null) {
-  cartItemsQuantity.innerHTML = parsedSavedProducts.length;
+  
+    //  спосіб
 
-  cartAmount.innerHTML = parsedSavedProducts.length;
+    cartSelectedProducts.addEventListener('click', deleterProduct);
+
+    function deleterProduct (event) {
+            // console.log('i`m alive');
+      
+            if (event.target.closest('.cart-remove-product-btn')) {
+
+              let cart = localStorageCheck();
+              const { _id } = cart; 
+              const refreshedArray = cart.filter(product => product._id !== _id);
+ console.log(refreshedArray)
+
+              if (refreshedArray > 0) {
+                 localStorage.setItem('cart', JSON.stringify(refreshedArray));
+                 const newMarkup = localStorageCheck();
+                 const markup = selectedProductsMarkup(newMarkup);
+                 cartSelectedProducts.innerHTML = markup;
+
+                console.log('11111')
+                // const refreshedArray = cart.splice(productIndex, 1)
+                // localStorage.setItem('cart', JSON.stringify(refreshedArray))
+              }
+              console.log('2222');
+             } else { 
+
+              console.log('3333')
+              return
+             }
+
+      }
+
+
+
+
+
+// Всюди замість exampleLS треба використвувати оригінал, тобто parsedSavedProducts
+if (parsedSavedProducts === null || parsedSavedProducts.length < 1) {
+  cartItemsQuantity.innerHTML = '0';
+  cartEmptyShow();
+cartContainerHidden();
+ } else {
+
+
+
+
+cartItemsQuantity.innerHTML = parsedSavedProducts.length;
+
+  // cartAmount.innerHTML = parsedSavedProducts.length;
 
   cartEmptyHidden();
   cartContainerShow();
-  
+  console.log('sdsdsd')
+
   //-------Тут треба буде глянути що саме повертається і в якому вигляді.
   const { _id, name, img, category, size, price } = parsedSavedProducts; // повинен повертатись об`єкт за запитом до сховища. Тому одразу роблю його деструктуризацію, щоб потім відмальовувати розмітку.
 //   const { ProductId, ProductName, ProductImg, ProductCategory, ProductSize, ProductPrice } = parsedSavedProducts; - або в такому вигляді буде повертатись.
@@ -133,23 +183,22 @@ if (parsedSavedProducts !== null) {
     return selectedProductsMarkup(el._Id, el.name, el.img, el.category, el.size, el.price) 
     // return selectedProductsMarkup(el._id, el.Productame, el.ProductImg, el.ProductCategory, el.ProductSize, el.ProductPrice) -або так
   }).join('');
+  
+  console.log(productsArrayMarkup.length); // там 4435 цифра, але це всього лиш кількість символів які нам повернулись.
   // cartItemsQuantity.innerHTML = parsedSavedProducts.length;
+
   cartSelectedProducts.innerHTML = productsArrayMarkup;
+
   cartItemsQuantity.innerHTML = parsedSavedProducts.length;
 
   totalSumMarkup(parsedSavedProducts);
 
-  document.querySelector('.cart-remove-product-btn').addEventListener('click', deleterProduct); // після відмальовки розмітки вішаю слухача на копку закриття. Але через безпосередній пошук, бо змінна не підтягується з гори.
-
+  // document.querySelector('.cart-remove-product-btn').addEventListener('click', deleterProduct); // після відмальовки розмітки вішаю слухача на копку закриття. Але через безпосередній пошук, бо змінна не підтягується з гори.
+  cartSelectedProducts.addEventListener('click', deleterProduct);
 
 // Поверення одного об`єкту і відмальовування його.
 //   const productMarkup = selectedProductsMarkup(id, name, img, category, size, price);
 //   cartSelectedProducts.innerHTML = productMarkup;
-
- } else {
-  cartItemsQuantity.innerHTML = 0;
-  cartEmptyShow();
-cartContainerHidden();
  }
 
 
@@ -168,7 +217,7 @@ btnCheckout.addEventListener('click', (event) => {
   // після сабмі/замовлення можемо видалити дані зі сховища та приховати
   cartEmptyShow();
   cartContainerHidden();
-  cartItemsQuantity.innerHTML = 0;
+  cartItemsQuantity.innerHTML = '0';
   // totalOrderedPrice.innerHTML = 0;
   cartSelectedProducts.innerHTML = "";
 
@@ -255,46 +304,93 @@ console.log("Test end");
 
 
 
-    // 2 спосіб
-    cartSelectedProducts.addEventListener('click', deleterProduct);
-    function deleterProduct (event) {
-      console.log('i`m alive');
 
-      if (event.target.closest('.cart-remove-product-btn').nodeName !== "BUTTON") { // перевіряю чи поточний елемент на який відбувється кліє не є кнопкою, якщо правда, то виходимо з функції одразу, якщо це кнопка, то йдемо далі.
-  return
-} 
-
-console.log('try2')
-
-        const clickedRemoveBtn = event.target;
-        const itemId = clickedRemoveBtn.getAttribute("data-id");
-        const cartArray = localStorageCheck();
-        console.log(cartArray);
-
-        const itemIndexToRemove = cartArray.findIndex(product => product.id === itemId);
-
-        if (itemIndexToRemove !== -1) {
-            // Видаляємо елемент за індексом
-            cartArray.splice(itemIndexToRemove, 1);
-            // totalSumMarkup(cartArray);
     
-            // Оновлюємо localStorage один раз після видалення всіх потрібних елементів
-            localStorage.setItem('cart', JSON.stringify(cartArray));
-        }
+    
 
-        if (cartArray.length > 0) {
-//Якщо елементи є в масиві тоді перераховуємо суму 
-totalSumMarkup(cartArray);
-            // Якщо є елементи у кошику
+
+
+
+
+
+
+
+// function deleterProduct (event){
+//   console.log("11111")
+//     const clickedRemoveBtn = event.currentTarget;
+//     const itemId = clickedRemoveBtn.getAttribute("data-id");
+//     const cartArray = localStorageCheck();
+    
+//     const newCartArray = cartArray.filter(product => product._id !== itemId);
+//     localStorage.setItem('cart', JSON.stringify(newCartArray));
+    
+//     if (newCartArray.length > 0) {
+//       console.log("22222");
+//       localStorage.setItem('cart', JSON.stringify(newCartArray));
+//       cartSelectedProducts.innerHTML = localStorageCheck();
+
+
+//         return newCartArray;
+//     } else { console.log("3333")
+//         cartSelectedProducts.innerHTML = "";
+//         cartContainerHidden(); // приховую контейнер кошика
+//         cartEmptyShow();             // показую пустий кошик
+//     }
+
+
+
+//         };
+
+
+
+
+
+
+
+    
+//     function deleterProduct (event) {
+//       console.log('i`m alive');
+
+//       if (event.target.closest('.cart-remove-product-btn')) { // перевіряю чи поточний елемент на який відбувється кліє не є кнопкою, якщо правда, то виходимо з функції одразу, якщо це кнопка, то йдемо далі.
+  
+//         console.log('try2')
+
+//         const clickedRemoveBtn = event.target;
+//         const itemId = clickedRemoveBtn.getAttribute("data-id");
+//         const cartArray = localStorageCheck();
+//         console.log(cartArray);
+
+//         const itemIndexToRemove = cartArray.findIndex(product => product.id === itemId);
+
+//         if (itemIndexToRemove !== -1) {
+//             // Видаляємо елемент за індексом
+//             const newArr = cartArray.splice(itemIndexToRemove, 1);
+//             totalSumMarkup(newArr);
+    
+//             // Оновлюємо localStorage один раз після видалення всіх потрібних елементів
+//             localStorage.setItem('cart', JSON.stringify(newArr));
+//         }
+
+//         if (cartArray.length > 0) {
+// //Якщо елементи є в масиві тоді перераховуємо суму 
+// totalSumMarkup(cartArray);
+//             // Якщо є елементи у кошику
             
-            return cartArray;
-        } else {
-            cartSelectedProducts.innerHTML = "";
-            cartContainerHidden(); // приховую контейнер кошика
-            cartEmptyShow();       // показую пустий кошик
-            cartItemsQuantity.innerHTML = 0;
-        }
-    };
+//             return cartArray;
+//         } else {
+//             cartSelectedProducts.innerHTML = "";
+//             cartContainerHidden(); // приховую контейнер кошика
+//             cartEmptyShow();       // показую пустий кошик
+//             cartItemsQuantity.innerHTML = '0';
+//         }
+
+
+
+
+// } 
+// return
+
+//     };
      
 
 
