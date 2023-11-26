@@ -9,6 +9,9 @@ const form = document.querySelector(".js-email-form");
 const btnCheckout = document.querySelector(".js-email-checkout");
 const input = document.querySelector(".input")
 
+const cartAmount = document.querySelector('.cart-amount')
+
+
 console.log("Test start");
 // За замовчуванням сторінка кошика буде пустою.
 // cartEmptyHidden();
@@ -17,7 +20,7 @@ console.log("Test start");
 // ФУНКЦІЯ ПЕРЕВІРКИ ЛОКАЛЬНОГО СХОВИЩА НА ВМІСТ ДАНИХ
 function localStorageCheck() { // ****** пізніше підшаманити, щоб просто повертати результат сховище, а логіку відпрацьовувати далі поза функцією.
   const savedProducts = localStorage.getItem("cart");
-  return   JSON.parse(savedProducts) ; //повертаю розпарсені дані з ЛС або null якщо там нічого не має
+  return   JSON.parse(savedProducts); //повертаю розпарсені дані з ЛС або null якщо там нічого не має
 }
 // savedProducts ?   : null
 
@@ -29,65 +32,65 @@ console.log(parsedSavedProducts) //тест
 
 //-----------------------------------------------------------------------------------------------------------------
 // parsedSavedProducts повинен повернути ось це:
-const exampleLS = [
-  {category: "Fresh_Produce",
-    img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png",
-    is10PercentOff:    false,
-    name:    "Ackee",
-    popularity:    2099,
-    price:   8.99,
-    size:    "16 oz",
-    _id: "640c2dd963a319ea671e383b"},
+// const exampleLS = [
+//   {category: "Fresh_Produce",
+//     img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png",
+//     is10PercentOff:    false,
+//     name:    "Ackee",
+//     popularity:    2099,
+//     price:   8.99,
+//     size:    "16 oz",
+//     _id: "640c2dd963a319ea671e383b"},
 
-    { category: "Pantry_Items",
-    img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e3814.png",
-    is10PercentOff:    false,
-    name:    "Almonds",
-    popularity:    616,
-    price:   8.99,
-    size:    "16 oz bag",
-    _id: "640c2dd963a319ea671e3814"},
+//     { category: "Pantry_Items",
+//     img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e3814.png",
+//     is10PercentOff:    false,
+//     name:    "Almonds",
+//     popularity:    616,
+//     price:   8.99,
+//     size:    "16 oz bag",
+//     _id: "640c2dd963a319ea671e3814"},
     
-    { category: "Pantry_Items",
-    img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png",
-    is10PercentOff:    false,
-    name:    "Ackee",
-    popularity:    2099,
-    price:   8.99,
-    size:    "16 oz",
-    _id: "640c2dd963a319ea671e383b"},
-    { category: "Pantry_Items",
-    img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e3660.png"    ,
-    is10PercentOff:    false,
-    name:    "Apple Cider Vinegar"   ,
-    popularity:    435,
-    price:   6.99    ,
-    size:    "500 ml",
-    _id: "640c2dd963a319ea671e3660"},
-    { category: "Pantry_Items",
-    img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png",
-    is10PercentOff:    false,
-    name:    "Ackee",
-    popularity:    2099,
-    price:   8.99,
-    size:    "16 oz",
-    _id: "640c2dd963a319ea671e383b"},
-    { category: "Pantry_Items",
-    img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e3660.png"    ,
-    is10PercentOff:    false,
-    name:    "Apple Cider Vinegar"   ,
-    popularity:    435,
-    price:   6.99    ,
-    size:    "500 ml",
-    _id: "640c2dd963a319ea671e3660"}
-  ]
-console.log(exampleLS);
+//     { category: "Pantry_Items",
+//     img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png",
+//     is10PercentOff:    false,
+//     name:    "Ackee",
+//     popularity:    2099,
+//     price:   8.99,
+//     size:    "16 oz",
+//     _id: "640c2dd963a319ea671e383b"},
+//     { category: "Pantry_Items",
+//     img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e3660.png"    ,
+//     is10PercentOff:    false,
+//     name:    "Apple Cider Vinegar"   ,
+//     popularity:    435,
+//     price:   6.99    ,
+//     size:    "500 ml",
+//     _id: "640c2dd963a319ea671e3660"},
+//     { category: "Pantry_Items",
+//     img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e383b.png",
+//     is10PercentOff:    false,
+//     name:    "Ackee",
+//     popularity:    2099,
+//     price:   8.99,
+//     size:    "16 oz",
+//     _id: "640c2dd963a319ea671e383b"},
+//     { category: "Pantry_Items",
+//     img: "https://ftp.goit.study/img/so-yummy/ingredients/640c2dd963a319ea671e3660.png"    ,
+//     is10PercentOff:    false,
+//     name:    "Apple Cider Vinegar"   ,
+//     popularity:    435,
+//     price:   6.99    ,
+//     size:    "500 ml",
+//     _id: "640c2dd963a319ea671e3660"}
+//   ]
+// console.log(exampleLS);
 
 
 // НЕ ВИДАЛЯТИ!!!!!!!!!!!!!!!!!!!!!!
 // // Функція перевірки об`єктів в масиві отриманого зі сховища і повернення лише унікальних значень.
 // const seen = new Set(); // Створюємо пустий Set для відстеження унікальних значень
-// const uniqueProductsArray = exampleLS.filter(obj => {
+// const uniqueProductsArray = parsedSavedProducts.filter(obj => {
 //   const value = obj._id; // В нашому прикладі вибираємо значення "id" для порівняння унікальності
 //   if (seen.has(value)) {
 //     return false; // Значення вже було, це не унікальний об'єкт
@@ -113,25 +116,28 @@ function totalSumMarkup (array) {
 
 
 // Всюди замість exampleLS треба використвувати оригінал, тобто parsedSavedProducts
-if (exampleLS !== null || exampleLS !== undefined) {
-  cartItemsQuantity.innerHTML = exampleLS.length;
+if (parsedSavedProducts !== null) {
+  cartItemsQuantity.innerHTML = parsedSavedProducts.length;
+
+  cartAmount.innerHTML = parsedSavedProducts.length;
+
   cartEmptyHidden();
   cartContainerShow();
   
   //-------Тут треба буде глянути що саме повертається і в якому вигляді.
-  const { _id, name, img, category, size, price } = exampleLS; // повинен повертатись об`єкт за запитом до сховища. Тому одразу роблю його деструктуризацію, щоб потім відмальовувати розмітку.
+  const { _id, name, img, category, size, price } = parsedSavedProducts; // повинен повертатись об`єкт за запитом до сховища. Тому одразу роблю його деструктуризацію, щоб потім відмальовувати розмітку.
 //   const { ProductId, ProductName, ProductImg, ProductCategory, ProductSize, ProductPrice } = parsedSavedProducts; - або в такому вигляді буде повертатись.
   
 // Повернення масиву об`єктів і відмальовування їх
-  const productsArrayMarkup = exampleLS.map(el => {
+  const productsArrayMarkup = parsedSavedProducts.map(el => {
     return selectedProductsMarkup(el._Id, el.name, el.img, el.category, el.size, el.price) 
     // return selectedProductsMarkup(el._id, el.Productame, el.ProductImg, el.ProductCategory, el.ProductSize, el.ProductPrice) -або так
   }).join('');
-  // cartItemsQuantity.innerHTML = exampleLS.length;
+  // cartItemsQuantity.innerHTML = parsedSavedProducts.length;
   cartSelectedProducts.innerHTML = productsArrayMarkup;
-  // cartItemsQuantity.innerHTML = exampleLS.length;
+  cartItemsQuantity.innerHTML = parsedSavedProducts.length;
 
-  totalSumMarkup(exampleLS);
+  totalSumMarkup(parsedSavedProducts);
 
   document.querySelector('.cart-remove-product-btn').addEventListener('click', deleterProduct); // після відмальовки розмітки вішаю слухача на копку закриття. Але через безпосередній пошук, бо змінна не підтягується з гори.
 
@@ -143,7 +149,7 @@ if (exampleLS !== null || exampleLS !== undefined) {
  } else {
   cartItemsQuantity.innerHTML = 0;
   cartEmptyShow();
-// cartContainerHidden();
+cartContainerHidden();
  }
 
 
