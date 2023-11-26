@@ -448,7 +448,8 @@ line-height: 18px; /* 128.571% */
         line-height: 1.2;
     }
     .cart-text-empty-2 {max-width: 310px;
-        font-size: 18px;
+
+        font-size: 17px;
         font-weight: 400;
         line-height: 1.33; /* 133.333% */}
 
