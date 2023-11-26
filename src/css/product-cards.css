@@ -162,7 +162,7 @@
       top: -3px;
     }
   }
-  @media screen and (min-width: 1280px) {
+  @media screen and (min-width: 1440px) {
     .card-list{
       margin-top: 60px;
       gap: 20px;

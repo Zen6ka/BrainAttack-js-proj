@@ -1,4 +1,5 @@
 import axios, { all } from 'axios';
+import {onOpenModal, handleImageClick} from './modal';
 
 export class RequestToTheServer {
     baseUrl = 'https://food-boutique.b.goit.study/api/'
@@ -42,7 +43,7 @@ let productsCategories = {};
 let fullInputResultSearch ={};
 
 let littleMediaQuery = window.matchMedia('(min-width: 768px)').matches;
-let bigMediaQuery = window.matchMedia('(min-width: 1280px)').matches;
+let bigMediaQuery = window.matchMedia('(min-width: 1440px)').matches;
 if(bigMediaQuery){
     limit = 9;
 } else if(littleMediaQuery){
@@ -63,7 +64,7 @@ function recordsDataForSearch(keyword, category, page, limit){
 };
 
 recordsDataForSearch(keyword, category, page, limit);
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////  SEARCH  /////////////////////////////////////////////////////////////////////////////
 
 async function search () {
     try{
@@ -112,6 +113,9 @@ async function ifEmptyInput() {
             localStorage.setItem('products-home-page-filters', JSON.stringify(productsHomePage));
         }
         renderCards(productsHomePage);
+        if(fullInputResultSearch.totalPages === 0){
+            messageForError();
+        }
     } catch (error) {
         messageForError();
         console.error("Error:", error.message);
@@ -160,7 +164,12 @@ ifEmptyCategories();
 function renderCategories(productsCategories){
     const listCategories = [];
     productsCategories.forEach((productsCategorie) => {
-        const itemCategories = `<li class="li-first-select-search"><button class="button-li-filters">${productsCategorie.replace(/_/g, ' ').replace(/&/g, '/')}</button></li>`;
+        let itemCategories = ``;
+        if(productsCategorie !== 'Pantry_Items'){
+            itemCategories = `<li class="li-first-select-search"><button class="button-li-filters">${productsCategorie.replace(/_/g, ' ').replace(/&/g, '/')}</button></li>`;
+        } else{
+            itemCategories = `<li class="li-first-select-search"><button class="button-li-filters">${productsCategorie}</button></li>`;
+        }
         listCategories.push(itemCategories)
     });
     listCategories.push(`<li class="li-first-select-search"><button class="button-li-filters">Show all</button></li>`);
@@ -196,7 +205,11 @@ function addListenerLi(buttonsLiFilters){
 
 async function renderEndPoint(event){
     const nameCategoryForSelect = event.currentTarget.textContent;
-    category = nameCategoryForSelect.replace(/ /g, '_').replace(/\//g, '&');
+    if(nameCategoryForSelect !== 'Pantry Items'){
+        category = nameCategoryForSelect.replace(/ /g, '_').replace(/\//g, '&');
+    } else{
+        category = nameCategoryForSelect;
+    }
     spanButtonCategories.innerHTML = `${nameCategoryForSelect}`;
     if(category === 'Show_all'){
         category = ''
@@ -218,6 +231,12 @@ function renderCards(products) {
     products.forEach((product) => {
         let itemResult = '';
         let idIconShop = "icon-heroicons-solid_shopping-cart";
+        let nameCategory = product.category.replace(/_/g, ' ').replace(/&/g, '/');
+        if(product.category == 'Pantry_Items'){
+            nameCategory = product.category;
+        } else{
+            nameCategory = product.category.replace(/_/g, ' ').replace(/&/g, '/');
+        }
         if(infoAboutCard){
             const cardInInfoAboutCard = infoAboutCard.some((obj) => obj._id === product._id);
             if(cardInInfoAboutCard){
@@ -234,7 +253,7 @@ function renderCards(products) {
                 <h3 class="card-list-product">${product.name}</h3>
                 <div class="cardlist-descr">
                 <div class="two-items">
-                    <p class ="li-p-cards"><span class ="span-p-cards">Category: </span>${product.category.replace(/_/g, ' ').replace(/&/g, '/')}</p>
+                    <p class ="li-p-cards"><span class ="span-p-cards">Category: </span>${nameCategory}</p>
                     <p class ="li-p-cards"><span class ="span-p-cards">Size: </span>${product.size}</p>
                 </div>
                     <p class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</p>
@@ -253,12 +272,12 @@ function renderCards(products) {
         } else {
             itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
                 <div class = "div-img">
-                <img src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" />
+                <img src="${product.img}" loading="lazy" class="cardlist-img filters-img" alt="${product.name}" />
                 </div>
                 <h3 class="card-list-product">${product.name}</h3>
                 <div class="cardlist-descr">
                 <div class="two-items">
-                    <p class ="li-p-cards"><span class ="span-p-cards">Category: </span>${product.category.replace(/_/g, ' ').replace(/&/g, '/')}</p>
+                    <p class ="li-p-cards"><span class ="span-p-cards">Category: </span>${nameCategory}</p>
                     <p class ="li-p-cards"><span class ="span-p-cards">Size: </span>${product.size}</p>
                 </div>    
                     <p class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</p>
@@ -279,6 +298,10 @@ function renderCards(products) {
     });
     filtersResult.innerHTML = `<ul class="card-list">${listResult.join(" ")}</ul>`;
     workShopButton(products);
+    const cardFiltersImages = document.querySelectorAll('.filters-img');
+cardFiltersImages.forEach(img => {
+    img.addEventListener('click', event => handleImageClick(event));
+});
 };
 
 function workShopButton(products) {
