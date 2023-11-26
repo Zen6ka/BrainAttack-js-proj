@@ -1,7 +1,5 @@
 .discount-container {
   max-width: 375px;
-  padding-left: 20px;
-  padding-right: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -29,7 +27,6 @@
   /* font-family: 'Neue Montreal'; */
   font-weight: 500;
   line-height: 1.17; /* 116.667% */
-  margin-left: 20px;
   margin-bottom: 20px;
 }
 
@@ -71,11 +68,24 @@
   gap: 8px;
 }
 
+.discount-card-name {
+  display: -webkit-box;
+  width: 124px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+
 .discount-card-text {
   font-size: 18px;
   /* font-family: 'Neue Montreal'; */
   font-weight: 500;
   line-height: 1.11; /* 111.111% */
+  /* display: -webkit-box;
+  width: 124px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden; */
 }
 
 .discount-card-button {
@@ -103,7 +113,6 @@
   .discount-title {
     font-size: 28px;
     line-height: 1.14;
-    margin-left: 32px;
   }
 
   .discount-container {
@@ -111,9 +120,6 @@
     flex-direction: row;
     margin-bottom: 100px;
     gap: 32px;
-    padding-left: 32px;
-    padding-right: 32px;
-
     flex-wrap: wrap;
   }
 
@@ -130,11 +136,11 @@
 
 @media (min-width: 1440px) {
   .discount-title {
-    margin-left: 0;
+    align-self: baseline;
   }
 
   .discount-container {
-    max-width: 275px;
+    width: 275px;
     flex-direction: column;
     margin: 0;
     gap: 20px;
