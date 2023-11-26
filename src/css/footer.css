@@ -62,7 +62,7 @@
 /*=======slogan====================================*/
 
 .text-block {
-  font-family: 'NeueMontreal';
+  font-family: 'Neue Montreal Medium';
   margin-bottom: 80px;
 }
 .footer-slogan-title {
@@ -81,16 +81,18 @@
 /*=======subscription form====================================*/
 
 .subscription-wrap {
-  font-family: 'NeueMontreal';
+  font-family: 'Neue Montreal Medium';
   max-width: 335px;
 }
 .suscription-text {
+  font-family: 'Neue Montreal Regular';
   margin-bottom: 20px;
   font-size: 14px;
   font-weight: 400;
   line-height: 1.29;
 }
 .contact-form-input {
+  font-family: 'Neue Montreal Regular';
   padding: 12px 18px;
   width: 100%;
   font-size: 14px;
@@ -126,7 +128,7 @@
 /*=======policy====================================*/
 
 .footer-policy-wrap {
-  font-family: 'NeueMontreal';
+  font-family: 'Neue Montreal Regular';
   color: var(--footer-logo-text);
   font-size: 14px;
   font-weight: 400;
@@ -269,7 +271,7 @@
   width: 60vw;
   background-color: var(--footer-background);
   color: var(--footer-logo-text);
-  font-family: 'NeueMontreal';
+  font-family: 'Neue Montreal Regular';
   line-height: 1.5;
   padding: 20px 10px;
 }
