@@ -9,7 +9,7 @@ const addProductToStorage = product => {
   const existingProduct = addedProducts.find(p => p._id === product._id);
   if (!existingProduct) {
     addedProducts.push(product);
-    localStorage.setItem('addedProducts', JSON.stringify(addedProducts));
+    localStorage.setItem('cart', JSON.stringify(addedProducts));
   }
 };
 
@@ -47,7 +47,7 @@ async function getDiscountProduct() {
   
                       <button class="discount-card-button" type="button" data-id=${_id}>
                       <svg class="">
-                          <use href="../img/icons.svg#${
+                          <use href="./img/icons.svg#${
                             isProductInCart(_id)
                               ? 'icon-check'
                               : 'icon-heroicons-solid_shopping-cart'
@@ -68,7 +68,7 @@ async function getDiscountProduct() {
       discountEl.innerHTML = markup;
     }
 
-    addedProducts = JSON.parse(localStorage.getItem('addedProducts')) || [];
+    addedProducts = JSON.parse(localStorage.getItem('cart')) || [];
 
     renderProducts();
 
