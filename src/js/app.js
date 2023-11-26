@@ -67,46 +67,46 @@
 
 
 // // -----------------------------2var-----------------------
-// const ulTag = document.querySelector("btns");
-// let totalPages = 8;
+const ulTag = document.querySelector("btns");
+let totalPages = 8;
 
-// function element(totalPages, page){
-//   let liTag = '';
-//   let activeLi;
-//   let beforePages = page - 1;
-//   let afterPades = page;
-//    if(page > 1){
-//      liTag += `<li class="btn prev" onclick="element(totalPages, ${page - 1})"><span><i class="left"></i> < </span></li>`;
-//    }
-//     for (let pageLength = beforePages; pageLength <= afterPades; pageLength++){
-//     if(pageLength > totalPages){
-//       continue;
-//     }
-//     if(pageLength == 0){
-//       pageLength = pageLength + 1;
-//     }
-//     if(page == pageLength){
-//       activeLi = "active";
-//     }else{
-//       activeLi = "";
-//     }
-//     liTag += `<li class="numb ${activeLi}"onclick="element(totalPages, ${pageLength})"><span>${pageLength}</span></li>`;
-//   }
-//   if(page < totalPages){
-//     if(page < totalPages){
-//     liTag += `<li class="dots"><span>...</span></li>`;
-//     if(page < totalPages + 1){
-//       liTag += `<li class="numb" onclick="element(totalPages, ${page})"><span>7</span></li>`;  
-//     if(page <= totalPages +2){
-//       liTag += `<li class="numb" onclick="element(totalPages, ${page})"><span>8</span></li>`;
-//     }
-//   }
-//  }
-//   }
-//    if(page < totalPages){
-//      liTag += `<li class="btn next"onclick="element(totalPages, ${page +1})"><span><i class="right"></i> > </span></li>`;
-//    }
-//   ulTag.innerHTML = liTag;
-// }
+function element(totalPages, page){
+  let liTag = '';
+  let activeLi;
+  let beforePages = page - 1;
+  let afterPades = page;
+   if(page > 1){
+     liTag += `<li class="btn prev" onclick="element(totalPages, ${page - 1})"><span><i class="left"></i> < </span></li>`;
+   }
+    for (let pageLength = beforePages; pageLength <= afterPades; pageLength++){
+    if(pageLength > totalPages){
+      continue;
+    }
+    if(pageLength == 0){
+      pageLength = pageLength + 1;
+    }
+    if(page == pageLength){
+      activeLi = "active";
+    }else{
+      activeLi = "";
+    }
+    liTag += `<li class="numb ${activeLi}"onclick="element(totalPages, ${pageLength})"><span>${pageLength}</span></li>`;
+  }
+  if(page < totalPages){
+    if(page < totalPages){
+    liTag += `<li class="dots"><span>...</span></li>`;
+    if(page < totalPages + 1){
+      liTag += `<li class="numb" onclick="element(totalPages, ${page})"><span>7</span></li>`;  
+    if(page <= totalPages +2){
+      liTag += `<li class="numb" onclick="element(totalPages, ${page})"><span>8</span></li>`;
+    }
+  }
+ }
+  }
+   if(page < totalPages){
+     liTag += `<li class="btn next"onclick="element(totalPages, ${page +1})"><span><i class="right"></i> > </span></li>`;
+   }
+  ulTag.innerHTML = liTag;
+}
 
-// element(totalPages, 2);
+element(totalPages, 2);
