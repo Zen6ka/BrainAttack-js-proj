@@ -134,10 +134,10 @@
 
 /*=======media768====================================*/
 @media (min-width: 768px) {
-  .container {
+  /* .container {
     max-width: 768px;
     padding: 0 32px;
-  }
+  } */
   .header-logo-icon {
     width: 32px;
     height: 32px;
@@ -166,10 +166,10 @@
 
 /*=======media1440====================================*/
 @media (min-width: 1440px) {
-  .container {
+  /* .container {
     max-width: 1440px;
     padding: 0 100px;
-  }
+  } */
   .footer-content-wrap {
     margin-bottom: 128px;
   }

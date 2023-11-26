@@ -51,10 +51,10 @@
 
 /*=======media767====================================*/
 @media (max-width: 767px) {
-  .container {
+  /* .container {
     max-width: 767px;
     padding: 0 20px;
-  }
+  } */
   .hero-container-wrapper {
     max-width: 375px;
   }
@@ -122,7 +122,7 @@
 /*=======media1440====================================*/
 @media (min-width: 1440px) {
   .container {
-    max-width: 1440px;
+    max-width: 1240px;
     padding: 0 100px;
   }
   .hero-title {
