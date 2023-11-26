@@ -153,6 +153,7 @@ line-height: 1.28; /* 128.571% */
 /* ------------------ДОРОБИТИ СКРОЛ----------------------------- */
 .js-cart-selected-products::-webkit-scrollbar {
     width: 6px;
+    height: 0px;
   }
 /* .js-cart-selected-products::-webkit-scrollbar-thumb {
     top: 0;
@@ -169,6 +170,8 @@ line-height: 1.28; /* 128.571% */
     display: flex;
     position: relative;
     justify-content: space-between;
+
+    
 }
 
 .cart-remove-product-btn{
@@ -267,6 +270,12 @@ margin-right: 6px;
     line-height: 1.11; /* 111.111% */
 }
 
+.underline{
+    width: 100%;
+   border-color: rgba(1, 1, 1, 0.10);
+   border-style: solid; 
+   border-width: 1px;   
+}
 
 
 
