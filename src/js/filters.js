@@ -326,4 +326,4 @@ function workShopButton(products) {
     })
 };
 
-localStorage.clear()
+// localStorage.clear()
