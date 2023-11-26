@@ -24,7 +24,7 @@
 
 .discount-title {
   font-size: 24px;
-  /* font-family: 'Neue Montreal'; */
+  /* font-family: "Neue Montreal Medium"; */
   font-weight: 500;
   line-height: 1.17; /* 116.667% */
   margin-bottom: 20px;
@@ -78,7 +78,7 @@
 
 .discount-card-text {
   font-size: 18px;
-  /* font-family: 'Neue Montreal'; */
+  /* font-family: "Neue Montreal Medium"; */
   font-weight: 500;
   line-height: 1.11; /* 111.111% */
   /* display: -webkit-box;

@@ -43,7 +43,7 @@ padding-right: 20px;
     font-weight: 500;
     line-height: 1.17; /* 116.667% */
     text-transform: uppercase;
-    font-family: Neue Montreal;
+    font-family: "Neue Montreal Medium";
 
 
 }
@@ -71,7 +71,7 @@ gap: 14px;
 max-width: 279px;
 text-align: center;
 }
-.cart-text-empty-1 { font-family: Neue Montreal;
+.cart-text-empty-1 { font-family: "Neue Montreal Medium";
     margin: 0;
     font-size: 18px;
 font-style: normal;
@@ -80,7 +80,7 @@ line-height: 1.11; /* 111.111% */
 }
 .cart-text-empty-2{
     color: rgba(1, 1, 1, 0.70);
-font-family: Neue Montreal;
+		font-family: "Neue Montreal Regular";
     margin: 0;
     font-size: 14px;
     font-style: normal;
@@ -124,7 +124,7 @@ flex-direction: column;
 background-color: #E8E8E2;
 
 color: #010101;
-font-family: Neue Montreal;
+font-family: "Neue Montreal Medium";
 font-size: 14px;
 font-style: normal;
 font-weight: 500;
@@ -226,7 +226,7 @@ margin-bottom: 10px;
 
 color: #010101;
 
-font-family: Neue Montreal;
+font-family: "Neue Montreal Medium";
 font-size: 18px;
 font-style: normal;
 font-weight: 500;
@@ -242,7 +242,7 @@ overflow: hidden;
 text-overflow: ellipsis;
 
 color: rgba(1, 1, 1, 0.30);
-font-family: Neue Montreal;
+font-family: "Neue Montreal Regular";
 font-size: 12px;
 font-style: normal;
 font-weight: 400;
@@ -254,7 +254,7 @@ margin-left: 4px;
 margin-right: 6px;
     
     color: #010101;
-    font-family: Neue Montreal;
+    font-family: "Neue Montreal Regular";
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -263,7 +263,7 @@ margin-right: 6px;
 
 .js-item-product-price{
     color: #010101;
-    font-family: Neue Montreal;
+    font-family: "Neue Montreal Medium";
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
@@ -292,8 +292,8 @@ margin: 80px auto 0 auto;
 .cart-order-text{
  margin-bottom: 40px;
  color: #010101;
-margin-top: 0;
- font-family: Neue Montreal;
+ margin-top: 0;
+ font-family: "Neue Montreal Medium";
  font-size: 24px;
  font-style: normal;
  font-weight: 500;
@@ -324,7 +324,7 @@ margin-top: 0;
 .cart-total-cost-text-1{
 margin: 0;
 color: #010101;
-font-family: Neue Montreal;
+font-family: "Neue Montreal Medium";
 font-size: 18px;
 font-style: normal;
 font-weight: 500;
@@ -334,7 +334,7 @@ line-height: 1.11; /* 111.111% */
     margin: 0;
     color: rgba(1, 1, 1, 0.20);
 
-font-family: Neue Montreal;
+font-family: "Neue Montreal Regular";
 font-size: 12px;
 font-style: normal;
 font-weight: 400;
@@ -344,7 +344,7 @@ line-height: 1.17; /* 116.667% */
     margin: 0;
     color: #010101;
 
-font-family: Neue Montreal;
+font-family: "Neue Montreal Medium";
 font-size: 24px;
 font-style: normal;
 font-weight: 500;
@@ -372,7 +372,7 @@ border: 1px solid rgba(1, 1, 1, 0.30);
 
 color: #010101;
 
-font-family: Neue Montreal;
+font-family: "Neue Montreal Regular";
 font-size: 14px;
 font-style: normal;
 font-weight: 400;
@@ -390,7 +390,7 @@ background: #6D8434;
 
 color: #E8E8E2;
 
-font-family: Neue Montreal;
+font-family: "Neue Montreal Medium";
 font-size: 14px;
 font-style: normal;
 font-weight: 500;
