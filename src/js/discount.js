@@ -1,4 +1,5 @@
 import axios from 'axios';
+import sprite from '../img/icons.svg';
 
 const discountEl = document.querySelector('.discount-container');
 
@@ -31,7 +32,7 @@ async function getDiscountProduct() {
       return `<div class="discount-card">
                   <div class="discount-logo">
                   <svg class="logo">
-                      <use href="../img/icons.svg#icon-discount-1" width="60" height="60"></use>
+                      <use href="${sprite}#icon-discount-1" width="60" height="60"></use>
                   </svg>
                   </div>
                   <div class="discount-card-image">
@@ -47,11 +48,11 @@ async function getDiscountProduct() {
   
                       <button class="discount-card-button" type="button" data-id=${_id}>
                       <svg class="">
-                          <use href="./img/icons.svg#${
-                            isProductInCart(_id)
-                              ? 'icon-check'
-                              : 'icon-heroicons-solid_shopping-cart'
-                          }"></use>
+                          <use href="${sprite}#${
+        isProductInCart(_id)
+          ? 'icon-check'
+          : 'icon-heroicons-solid_shopping-cart'
+      }"></use>
                       </svg>
                       </button>
                   </div>

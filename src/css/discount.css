@@ -134,7 +134,7 @@
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1280px) {
   .discount-title {
     align-self: baseline;
   }
