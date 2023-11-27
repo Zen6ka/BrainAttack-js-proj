@@ -15,111 +15,130 @@
       referrerpolicy="no-referrer"
     /> -->
 
-    <link rel="stylesheet" href="./css/styles.css">
-    <!-- <link rel="stylesheet" href="./css/footer.css"> -->
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/footer.css" />
     <title>Cart</title>
   </head>
   <body>
+    <!-- header -->
+    <load src="./partials/header.html" 
+    />
 
+    <!-- Cart -->
+    <div class="total-cart-container">
+      <div class="cart-quantity">
+        <div class="cart-icon-wrapper">
+          <svg class="cart-basket-icon">
+            <use
+              href="./img/icons.svg#icon-heroicons-solid_shopping-cart"
+            ></use>
+          </svg>
+        </div>
 
+        <p class="cart-title">
+          CART (<span class="js-cart-items-quantity"></span>)
+        </p>
+      </div>
 
- <!-- header -->
- <load src="./partials/header.html"/>
+      <div class="js-cart-empty" id="empty-cart-second">
+        <picture class="hero-picture">
+          <source
+            srcset="
+              ./img/yellow-shopping-basket-x1.png 1x,
+              ./img/yellow-shopping-basket-x2.png 2x
+            "
+            media="(min-width: 1240px)"
+          />
 
+          <source
+            srcset="
+              ./img/yellow-shopping-basket-x1.png 1x,
+              ./img/yellow-shopping-basket-x2.png 2x
+            "
+            media="(min-width: 768px)"
+          />
 
- <!-- Cart -->
- <div class="total-cart-container">
- 
- <div class="cart-quantity">
-     <div class="cart-icon-wrapper">
-     <svg class="cart-basket-icon">
-         <use href="./img/icons.svg#icon-heroicons-solid_shopping-cart"></use>
-     </svg>
- </div>
- 
-     <p class="cart-title">CART (<span class="js-cart-items-quantity"></span>)</p>
- </div>
- 
- <div class="js-cart-empty" id="empty-cart-second">
-    <picture class="hero-picture">
-        <source
-          srcset="
-         ./img/yellow-shopping-basket-x1.png 1x,
-         ./img/yellow-shopping-basket-x2.png 2x
-        "
-        media="(min-width: 1240px)"
-        />
-  
-        <source
-          srcset="    ./img/yellow-shopping-basket-x1.png 1x,
-          ./img/yellow-shopping-basket-x2.png 2x 2x"
-          media="(min-width: 768px)"
-        />
-  
-        <source
-          srcset="    ./img/yellow-shopping-basket-x1.png 1x,
-          ./img/yellow-shopping-basket-x2.png 2x"
-          media="(max-width: 767.9px)"
-        />
-  
-        <img src="./img/yellow-shopping-basket-x1.png" alt="Yellow basket" class="cart-basket-img">
-      </picture>
+          <source
+            srcset="
+              ./img/yellow-shopping-basket-x1.png 1x,
+              ./img/yellow-shopping-basket-x2.png 2x
+            "
+            media="(max-width: 767.9px)"
+          />
 
- <div class="text-frame"> 
-     <p class="cart-text-empty-1"><b>Your basket is <a href="./index.html" style="color: #6D8434; text-decoration: none;">empty...</a></b></p>
- <p class="cart-text-empty-2">Go to the main page to select your favorite products and add them to the cart.</p>
- </div>   
- </div>
- 
- 
- <div class="js-cart-container">
-     <div class="cart-products">
-    <button class="js-delete-all-btn">Delete All<svg class="cart-delete-all-icon">
-     <use href="./img/icons.svg#icon-ion_close-sharp"></use> </svg></button>
- 
-     <div  class="js-cart-selected-products">
-     </div>
- </div>
- 
-     <div class="js-cart-order-details">
-         <p class="cart-order-text">YOUR ORDER</p>
- <div class="cart-total-cost-wrap"> 
-     <div class="cart-total-cost"> 
- <p class="cart-total-cost-text-1">Total</p>
- <p  class="cart-total-cost-text-2">Sum: <span class="js-total-ordered-price">$</span></p>
- </div></div>
- <div class="js-email-form"> 
- <input class="input" type="email" placeholder="Mail: " pattern="[a-z0-9.-]+@[a-z]+\.[a-z]{2,}$" title="Enter a valid email address">
- <button type="submit" class="js-email-checkout">Checkout</button>
-     </div>
- </div>
- 
- </div>
- 
- </div>
- 
+          <img
+            src="./img/yellow-shopping-basket-x1.png"
+            alt="Yellow basket"
+            class="cart-basket-img"
+          />
+        </picture>
 
- 
-     <!-- Footer -->
-     <load src="./partials/footer.html" />
- 
+        <div class="text-frame">
+          <p class="cart-text-empty-1">
+            <b
+              >Your basket is
+              <a
+                href="./index.html"
+                style="color: #6d8434; text-decoration: none"
+                >empty...</a
+              ></b
+            >
+          </p>
+          <p class="cart-text-empty-2">
+            Go to the main page to select your favorite products and add them to
+            the cart.
+          </p>
+        </div>
+      </div>
 
+      <div class="js-cart-container">
+        <div class="cart-products">
+          <button class="js-delete-all-btn">
+            Delete All<svg class="cart-delete-all-icon">
+              <use href="./img/icons.svg#icon-ion_close-sharp"></use>
+            </svg>
+          </button>
 
+          <div class="js-cart-selected-products"></div>
+        </div>
 
+        <div class="js-cart-order-details">
+          <p class="cart-order-text">YOUR ORDER</p>
+          <div class="cart-total-cost-wrap">
+            <div class="cart-total-cost">
+              <p class="cart-total-cost-text-1">Total</p>
+              <p class="cart-total-cost-text-2">
+                Sum: <span class="js-total-ordered-price">$</span>
+              </p>
+            </div>
+          </div>
+          <form class="js-email-form">
+            <input
+            name="mail"
+              class="input"
+              type="email"
+              placeholder="Mail: "
+              required 
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+              title="Enter a valid email address"
+            />
+            <button type="submit" class="js-email-checkout">Checkout</button>
+          </form>
+        </div>
+      </div>
+    </div>
 
+    <load src="partials/modal.html" />
 
+    <!-- Footer -->
+    <load src="./partials/footer.html" 
+    />
 
-     <script src="./js/cart.js" type="module"></script>
+    <script src="./js/cart.js" type="module"></script>
     <!-- <section>
       <a href="./index.html">Go to home</a>
       <h1>Welcome to page 2</h1>
     </section> -->
-<!-- <script src="./js/footer.js" type="module"></script> -->
-
+    <!-- <script src="./js/footer.js" type="module"></script> -->
   </body>
 </html>
-
-
-
-
-

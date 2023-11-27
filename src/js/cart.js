@@ -1,5 +1,10 @@
-// import { onOpenModal, onCloseModal,  } from "./modal.js";
-// import './js/footer';
+// import axios from 'axios';
+// import { onOpenModal, onCloseModal  } from "./modal.js";
+// import './filters.js';
+// import './footer.js';
+
+import spriteIcons from '../img/icons.svg';
+console.log(spriteIcons)
 
 const cartItemsQuantity = document.querySelector(".js-cart-items-quantity"); // Місце де буде оновлюватись кількість товарів в кошику
 const cartEmpty = document.querySelector(".js-cart-empty");
@@ -9,10 +14,8 @@ const cartSelectedProducts = document.querySelector(".js-cart-selected-products"
 const cartOrderDetails = document.querySelector(".js-cart-order-details");
 const totalOrderedPrice = document.querySelector(".js-total-ordered-price");
 const form = document.querySelector(".js-email-form");
-const btnCheckout = document.querySelector(".js-email-checkout");
+// const btnCheckout = document.querySelector(".js-email-checkout");
 const input = document.querySelector(".input")
-
-// const cartAmount = document.querySelector('.cart-amount')
 
 
 console.log("Test start");
@@ -124,17 +127,14 @@ console.log(actualId)
 
 
     // Слухач на форму по сабміту а ще треба буде по кліку на кнопку
-form.addEventListener('change', (event) => {
-    event.preventDefault();
-    console.log(input.value) 
-    input.value = "";
-})
 
-
-//Слухач на кнопку Сабміту
-btnCheckout.addEventListener('click', (event) => {
+form.addEventListener('submit', (event) => {
   event.preventDefault();
-  console.log('Submit successful')
+  const email = input.value;
+
+  console.log(`Ordered by: ${email}`)
+console.log('Submit successful')
+
 
   // після сабміту замовлення можемо видалити дані зі сховища та приховати
   cartEmptyShow();
@@ -143,12 +143,41 @@ btnCheckout.addEventListener('click', (event) => {
   cartSelectedProducts.innerHTML = "";
 localStorage.removeItem('cart')
 
-// потім тут прописати відкриття модалки про успішні закупи.
+// // потім тут прописати відкриття модалки про успішні закупи.
 
 
 
 
+
+
+  form.reset();
 })
+
+
+
+// form.addEventListener('change', (event) => {
+//     event.preventDefault();
+//     console.log(input.value) 
+//     input.value = "";
+// })
+
+
+// //Слухач на кнопку Сабміту
+// btnCheckout.addEventListener('click', (event) => {
+//   event.preventDefault();
+//   console.log('Submit successful')
+
+
+//   // після сабміту замовлення можемо видалити дані зі сховища та приховати
+//   cartEmptyShow();
+//   cartContainerHidden();
+//   cartItemsQuantity.innerHTML = '0';
+//   cartSelectedProducts.innerHTML = "";
+// localStorage.removeItem('cart')
+
+// // потім тут прописати відкриття модалки про успішні закупи.
+
+// })
 
 
 
@@ -189,9 +218,10 @@ function selectedProductsMarkup(
   productSize,
   productPrice
 ) {
+
   return `
 <div class="selected-item" id="${productId}">
-    <button class="cart-remove-product-btn"><svg class="js-delete-product-icon"><use href="./img/icons.svg#icon-ion_close-sharp"></use></svg></button>
+    <button class="cart-remove-product-btn"><svg class="js-delete-product-icon"><use href='${spriteIcons}#icon-ion_close-sharp'></use></svg></button>
     <div class="js-selected-item-img"><img class='js-product-item-img' src="${productImg}" alt="Product"></div>
     <div class="js-selected-item-descroption">
         <p class="js-item-product-name">${productName}</p>
