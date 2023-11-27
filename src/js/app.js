@@ -67,19 +67,24 @@ export function element(totalPages, page) {
   rigthArrowPagination.addEventListener('click', () => {
     element(totalPages, page + 1)
   });
-  workButtonPagination()
+  workButtonPagination(leatArrowPagination)
 }
 
 // element(totalPages, 2);
 
 
 
-function workButtonPagination() {
+function workButtonPagination(leatArrowPagination) {
   const buttonsPagination = document.querySelectorAll('.button-pagination');
   const numberStartPage = JSON.parse(localStorage.getItem('data-for-search')).page;
   // [...buttonsPagination].forEach(btn => console.log(btn.textContent));
   const btnStartPage = [...buttonsPagination].filter(btn => btn.textContent === String(numberStartPage));
-  btnStartPage.map(btn => btn.classList.add('active'));
+  btnStartPage.map((btn) => {
+    btn.classList.add('active')
+    if(btn.textContent === '1'){
+      leatArrowPagination.classList.add('visually-hidden')
+    }
+  });
   [...buttonsPagination].forEach((buttonPagination) => {
     buttonPagination.addEventListener('click', searchPagination)
   })
