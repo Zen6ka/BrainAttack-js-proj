@@ -1,7 +1,7 @@
 // import axios from 'axios';
 // import { onCloseModal, onOpenOrderedModal, onCheckoutButtonClick,  onBackdropClick,  onCloseByEsc,  isModalOpen,  toggleBodyScroll } from "./modal.js";
 // import './filters.js';
-// import './footer.js';
+import './footer.js';
 
 import spriteIcons from '../img/icons.svg';
 console.log(spriteIcons)
@@ -121,8 +121,6 @@ console.log(actualId)
             return
            
       }
-
-
 
 
 
@@ -246,7 +244,7 @@ function onCheckoutButtonClick() {
   document.body.classList.add('show-ordered-modal');
   toggleBodyScroll();
   document.querySelector('.js-backdrop-ordered').addEventListener('click', onBackdropClick);
-  
+  document.querySelector('[data-action="close-modal-cart"]').addEventListener('click', onCloseByClick)
 }
 // Закритя модального вікна по Esc
 function onCloseByEsc(event) {
@@ -254,12 +252,18 @@ function onCloseByEsc(event) {
     onCloseModalCart();
   }
 }
+// Закриття модального вікна натисканням кнопки
+function onCloseByClick () {
+      onCloseModalCart();
+ }   
 
 // Закритя модального вікна
  function onCloseModalCart() {
   // Зняв слухач
   window.removeEventListener('keydown', onCloseByEsc);
   document.body.classList.remove('show-ordered-modal');
+  document.querySelector('.js-backdrop-ordered').removeEventListener('click', onBackdropClick);
+  document.querySelector('[data-action="close-modal-cart"]').removeEventListener('click', onCloseByClick);
   toggleBodyScroll();
 
   cartEmptyShow(); // Коли закривється тоді приховую конейнер і показую пороженій кошик
@@ -267,7 +271,7 @@ function onCloseByEsc(event) {
 
   cartItemsQuantity.innerHTML = '0';
   cartSelectedProducts.innerHTML = "";
-
+ console.log('closed')
 }
 
 // Закритя модального вікна по кліку за модалку (на темний фон)
