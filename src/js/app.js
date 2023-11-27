@@ -2,6 +2,8 @@
 import { recordsDataForSearch, search, renderCards } from "./filters";
 
 const ulTag = document.querySelector('.pagination-page-list');
+let leatArrowPagination = '';
+let rigthArrowPagination = '';
 
 // export function renderPagination(totalPages) {
 //   let liTag = '';
@@ -16,6 +18,10 @@ const ulTag = document.querySelector('.pagination-page-list');
 // }
 
 export function element(totalPages, page) {
+  if(totalPages < 1){
+    ulTag.innerHTML = '';
+    return
+  }
   let liTag = '';
   let beforePages = page - 1;
   let afterPades = page;
@@ -58,8 +64,8 @@ export function element(totalPages, page) {
   }
   ulTag.innerHTML = liTag;
   
-  const leatArrowPagination = document.querySelector('.left-arrow-pagination');
-  const rigthArrowPagination = document.querySelector('.right-arrow-pagination');
+  leatArrowPagination = document.querySelector('.left-arrow-pagination');
+  rigthArrowPagination = document.querySelector('.right-arrow-pagination');
 
   leatArrowPagination.addEventListener('click', () => {
     element(totalPages, page - 1)
@@ -67,28 +73,49 @@ export function element(totalPages, page) {
   rigthArrowPagination.addEventListener('click', () => {
     element(totalPages, page + 1)
   });
-  workButtonPagination()
+  workButtonPagination(leatArrowPagination, rigthArrowPagination, totalPages)
 }
 
 // element(totalPages, 2);
 
 
 
-function workButtonPagination() {
+function workButtonPagination(leatArrowPagination, rigthArrowPagination, totalPages) {
   const buttonsPagination = document.querySelectorAll('.button-pagination');
   const numberStartPage = JSON.parse(localStorage.getItem('data-for-search')).page;
   // [...buttonsPagination].forEach(btn => console.log(btn.textContent));
   const btnStartPage = [...buttonsPagination].filter(btn => btn.textContent === String(numberStartPage));
-  btnStartPage.map(btn => btn.classList.add('active'));
+  btnStartPage.map((btn) => {
+    btn.classList.add('active')
+    if(btn.textContent === '1'){
+      leatArrowPagination.classList.add('visually-hidden')
+    }else if(btn.textContent === String(totalPages)){
+      rigthArrowPagination.classList.add('visually-hidden')
+    } 
+  });
+  
   [...buttonsPagination].forEach((buttonPagination) => {
-    buttonPagination.addEventListener('click', searchPagination)
+    buttonPagination.addEventListener('click', (event) => searchPagination(event, totalPages))
   })
 };
 
-async function searchPagination(event){
+async function searchPagination(event, totalPages){
   event.currentTarget.removeEventListener('click', searchPagination);
 
   event.currentTarget.classList.add('active');
+
+  console.log(totalPages);
+
+  if(event.currentTarget.textContent === '1'){
+    leatArrowPagination.classList.add('visually-hidden');
+    rigthArrowPagination.classList.remove('visually-hidden');
+  }else if(event.currentTarget.textContent === String(totalPages)){
+    rigthArrowPagination.classList.add('visually-hidden');
+    leatArrowPagination.classList.remove('visually-hidden');
+  }else{
+    rigthArrowPagination.classList.remove('visually-hidden');
+    leatArrowPagination.classList.remove('visually-hidden');
+  }  
   
   const dataFromLS = JSON.parse(localStorage.getItem('data-for-search'));
   let page = event.currentTarget.textContent;
