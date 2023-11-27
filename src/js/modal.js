@@ -1,4 +1,5 @@
 import axios from 'axios';
+import icons from '../img/icons.svg';
 
 const refs = {
   closeModalBtn: document.querySelector('[data-action="close-modal"]'),
@@ -26,43 +27,55 @@ const refs = {
 
 refs.closeModalBtn.addEventListener('click', onCloseModal);
 refs.backdrop.addEventListener('click', onBackdropClick);
-// 
+//
 const cardImages = document.querySelectorAll('.cardlist-img');
 cardImages.forEach(img => {
   img.addEventListener('click', event => handleImageClick(event));
 });
-
 export function handleImageClick(event) {
   const productId = event.currentTarget.closest('.card-list-item').dataset.id;
   onOpenModal(productId);
 }
-// 
+//
 const cardImagesPopular = document.querySelectorAll('.product-image');
 cardImagesPopular.forEach(img => {
   img.addEventListener('click', event => handleImageClickPopular(event));
 });
 function handleImageClickPopular(event) {
-  const productId = event.currentTarget.closest('.product-image-container')
-    .dataset.product-id;
+  const productId =
+    event.currentTarget.closest('.product-image-container').dataset.product -
+    id;
   onOpenModal(productId);
 }
-const cardImagesDiscount = document.querySelectorAll('.discount-card-image');
-cardImagesDiscount.forEach(img => {
-  img.addEventListener('click', onClickAddToCart);
+//
+// Отримуємо всі елементи .discount-card
+const discountCards = document.querySelectorAll('.discount-card');
+
+discountCards.forEach(discountCard => {
+  const discountCardImage = discountCard.querySelector(
+    '.discount-card-image img'
+  );
+
+  discountCardImage.addEventListener('click', () => {
+    const productId = discountCard.querySelector('.discount-card-button')
+      .dataset.id;
+
+    console.log('Clicked on Discount Card, Product ID:', productId);
+    console.log('Image clicked');
+    onOpenModal(productId);
+  });
 });
 
-
-// //////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+// /////////////////////////////////////////////////////////////////////////////////////////////////
 // Зовнішній URL для запитів
 const baseUrl = 'https://food-boutique.b.goit.study/api/';
-
 
 // Запит за допомогою Axios
 async function fetchProductById(productId) {
   try {
     const response = await axios.get(`${baseUrl}products/${productId}`);
+    const responseData = response.data;
+    console.log('Product Details:', responseData);
     return response.data;
   } catch (error) {
     console.error('Error:', error.message);
@@ -85,7 +98,7 @@ async function handleProductDetails(productId) {
     refs.modalPrice.textContent = `$${productDetails.price.toFixed(2)}`;
 
     // Перевіряємо чи продукт в корзині
-    const isInCart = checkIfProductInCart(productId);
+    const isInCart = checkIfProductInCart(productDetails);
     const isAdded = getCartFromStorage().includes(productId);
 
     // Оновлюємо текст кнопки
@@ -99,8 +112,8 @@ async function handleProductDetails(productId) {
     console.error('Product details not available.');
   }
 }
-// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Міняю текст кнопки в залежності чи в корзині продукт
 function updateAddToCartButton(isInCart, isAdded) {
@@ -111,14 +124,19 @@ function updateAddToCartButton(isInCart, isAdded) {
 }
 
 // Перевіряєм чи продукт вже в корзині
-function checkIfProductInCart(productId) {
+function checkIfProductInCart(productDetails) {
   let cart = getCartFromStorage();
-  const isInCart = cart.some(obj => obj._id === productId);
+  const isInCart = cart.some(obj => obj._id === productDetails._id);
 
-  // Додавання слухача для кнопки
-  refs.addToCart.addEventListener('click', () => {
-    onClickAddToCart(productId, isInCart);
-  });
+  // Видалення попереднього слухача
+  refs.addToCart.removeEventListener('click', onClickAddToCart);
+
+  if (!isInCart) {
+    // Додавання нового слухача для кнопки, якщо продукт не в кошику
+    refs.addToCart.addEventListener('click', () => {
+      onClickAddToCart(productDetails, isInCart);
+    });
+  }
 
   return isInCart;
 }
@@ -129,15 +147,16 @@ function getCartFromStorage() {
   return cart;
 }
 
-function onClickAddToCart(productId, isInCart) {
+function onClickAddToCart(productDetails, isInCart) {
+  const productId = productDetails._id;
   if (isInCart) {
     // Видалення товару з корзини
-    removeFromCart(productId);
+    removeFromCart(productDetails._id);
     // Оновлюємо текст кнопки та робимо її неактивною
     updateAddToCartButton(false, false);
   } else {
     // Товару немає в кошику, додаємо
-    addToCart(productId);
+    addToCart(productDetails);
     // Оновлюємо текст кнопки
     updateAddToCartButton(true, true);
   }
@@ -148,19 +167,19 @@ function onClickAddToCart(productId, isInCart) {
   selectedButton.forEach(
     button =>
       (button.innerHTML = `<svg class="cardlist-svg" weight="18" height="18"> 
-  <use href="./img/icons.svg#icon-check"></use> 
+  <use href="${icons}#icon-check"></use> 
   </svg>`)
   );
 }
 
 // Функція для додавання продукту до корзини в локальному сховищі
-function addToCart(product) {
+function addToCart(productDetails) {
   let cart = getCartFromStorage();
-  if (!cart.some(item => item._id === product._id)) {
-    cart.push(product);
+  if (!cart.some(obj => obj._id === productDetails._id)) {
+    cart.push(productDetails);
     localStorage.setItem('cart', JSON.stringify(cart));
   }
-  console.log('Cart:', cart);
+  // console.log('Cart:', cart);
 }
 
 // Функція для видалення продукту з корзини в локальному сховищі
@@ -172,7 +191,7 @@ function removeFromCart(productId) {
     cart.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(cart));
   }
-  console.log('Cart:', cart);
+  // console.log('Cart:', cart);
 }
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 // Оновлюємо інтерфейс модального вікна при відкритті
