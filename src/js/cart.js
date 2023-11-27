@@ -1,7 +1,9 @@
 // import axios from 'axios';
 // import { onCloseModal, onOpenOrderedModal, onCheckoutButtonClick,  onBackdropClick,  onCloseByEsc,  isModalOpen,  toggleBodyScroll } from "./modal.js";
-// import './filters.js';
+
+import {localStorageCheckCart} from './header.js'
 import './footer.js';
+import './header.js'
 
 import spriteIcons from '../img/icons.svg';
 console.log(spriteIcons)
@@ -37,7 +39,7 @@ console.log(parsedSavedProducts) // Масив всіх об`єктів з ЛС 
 // Основна логіка запиту
 const uniqProducts = uniqProductsArray(parsedSavedProducts); // Ортримані дані зі сховища фільтрую на унікальність і присвоюю новій змінній відфільрований масив 
 cartItemsQuantity.innerHTML = uniqProducts.length; // після чого одразу записую на сторінці кількість товарів в кошику
-
+localStorageCheckCart(); // Перевіряю і відмальовую кількість товарів у хедері. 
   // const { _id, name, img, category, size, price } = uniqProducts; // повинен повертатись об`єкт за запитом до сховища. Тому одразу роблю його деструктуризацію, щоб потім відмальовувати розмітку.
   
 // Повернення масиву об`єктів і відмальовування їх
