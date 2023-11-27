@@ -1,5 +1,5 @@
 // import axios from 'axios';
-// import { onOpenModal, onCloseModal  } from "./modal.js";
+// import { onCloseModal, onOpenOrderedModal, onCheckoutButtonClick,  onBackdropClick,  onCloseByEsc,  isModalOpen,  toggleBodyScroll } from "./modal.js";
 // import './filters.js';
 // import './footer.js';
 
@@ -135,49 +135,20 @@ form.addEventListener('submit', (event) => {
   console.log(`Ordered by: ${email}`)
 console.log('Submit successful')
 
+//  відкриття модалки про успішні закупи при сабміті
+onCheckoutButtonClick()
 
-  // після сабміту замовлення можемо видалити дані зі сховища та приховати
-  cartEmptyShow();
-  cartContainerHidden();
-  cartItemsQuantity.innerHTML = '0';
-  cartSelectedProducts.innerHTML = "";
-localStorage.removeItem('cart')
+  // після сабміту замовлення можемо видалити дані зі сховища та приховати ---------AЛЕ Я ЦЕ ДОДАВ У ФУНКЦІЮ ЗАКРИТТЯ, 
+  //ЩОБ ВОНО ПЕРЕМАЛЬОВУВАЛОСЬ КОЛИ МОДАЛКА ЗНИКАЄ
+  // cartEmptyShow();
+  // cartContainerHidden();
+  // cartItemsQuantity.innerHTML = '0';
+  // cartSelectedProducts.innerHTML = "";
 
-// // потім тут прописати відкриття модалки про успішні закупи.
+  localStorage.removeItem('cart'); // Видаяю ключ зі сховища
 
-
-
-
-
-
-  form.reset();
+  form.reset(); // Очищую форму
 })
-
-
-
-// form.addEventListener('change', (event) => {
-//     event.preventDefault();
-//     console.log(input.value) 
-//     input.value = "";
-// })
-
-
-// //Слухач на кнопку Сабміту
-// btnCheckout.addEventListener('click', (event) => {
-//   event.preventDefault();
-//   console.log('Submit successful')
-
-
-//   // після сабміту замовлення можемо видалити дані зі сховища та приховати
-//   cartEmptyShow();
-//   cartContainerHidden();
-//   cartItemsQuantity.innerHTML = '0';
-//   cartSelectedProducts.innerHTML = "";
-// localStorage.removeItem('cart')
-
-// // потім тут прописати відкриття модалки про успішні закупи.
-
-// })
 
 
 
@@ -260,3 +231,57 @@ function cartContainerHidden () {
 }
 
 console.log("Test end");
+
+
+
+
+// МОДАЛЬНІ ПОМІЧНИЧКИ
+
+function onCheckoutButtonClick() {
+  onOpenOrderedModal();
+}
+
+ async function onOpenOrderedModal() {
+  window.addEventListener('keydown', onCloseByEsc);
+  document.body.classList.add('show-ordered-modal');
+  toggleBodyScroll();
+  document.querySelector('.js-backdrop-ordered').addEventListener('click', onBackdropClick);
+  
+}
+// Закритя модального вікна по Esc
+function onCloseByEsc(event) {
+  if (event.code === 'Escape') {
+    onCloseModalCart();
+  }
+}
+
+// Закритя модального вікна
+ function onCloseModalCart() {
+  // Зняв слухач
+  window.removeEventListener('keydown', onCloseByEsc);
+  document.body.classList.remove('show-ordered-modal');
+  toggleBodyScroll();
+
+  cartEmptyShow(); // Коли закривється тоді приховую конейнер і показую пороженій кошик
+  cartContainerHidden();
+
+  cartItemsQuantity.innerHTML = '0';
+  cartSelectedProducts.innerHTML = "";
+
+}
+
+// Закритя модального вікна по кліку за модалку (на темний фон)
+ function onBackdropClick(event) {
+  if (event.currentTarget === event.target) {
+    onCloseModalCart();
+  }
+}
+
+
+ function isModalOpen() {
+  return document.body.classList.contains('show-modal');
+}
+
+ function toggleBodyScroll() {
+  document.body.style.overflow = isModalOpen() ? 'hidden' : '';
+}
