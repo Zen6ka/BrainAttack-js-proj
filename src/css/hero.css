@@ -34,7 +34,7 @@
 .hero-text {
   color: var(--content-text-color);
   text-align: center;
-  font-family: 'Neue Montreal Medium';
+  font-family: 'Neue Montreal Regular';
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -114,9 +114,9 @@
 
 /*=======media1440====================================*/
 @media (min-width: 1440px) {
-  .container {
-    max-width: 1240px;
-    padding: 0 100px;
+  .container.hero-container-wrapper {
+    max-width: 1280px;
+    padding: 0 20px;
   }
   .hero-title {
     max-width: 100%;
