@@ -2,16 +2,25 @@
 import { recordsDataForSearch, search, renderCards } from "./filters";
 
 const ulTag = document.querySelector('.pagination-page-list');
-let totalPages = 8;
 
-function element(totalPages, page) {
+// export function renderPagination(totalPages) {
+//   let liTag = '';
+//   if (page > 1) {
+//     liTag += `<li class="btn prev" onclick="element(totalPages, ${
+//       page - 1
+//     })"><span><i class="left"></i> < </span></li>`;
+//   }
+//   ulTag.innerHTML = liTag;
+  
+//   workButtonPagination()
+// }
+
+export function element(totalPages, page) {
   let liTag = '';
   let beforePages = page - 1;
   let afterPades = page;
   if (page > 1) {
-    liTag += `<li class="btn prev" onclick="element(totalPages, ${
-      page - 1
-    })"><span><i class="left"></i> < </span></li>`;
+    liTag += `<li><button class="btn prev left-arrow-pagination"><span><i class="left"></i> < </span></button></li>`;
   }
   // if(page > 1){
   //   if(page < totalPages + 1)
@@ -31,34 +40,46 @@ function element(totalPages, page) {
       pageLength = pageLength + 1;
     }
     
-    // onclick="element(totalPages, ${pageLength})"
-    liTag += `<li class="numb button-pagination"               ><span>${pageLength}</span></li>`;
+    liTag += `<li><button class="numb button-pagination"><span>${pageLength}</span></button></li>`;
   }
   if (page < totalPages) {
     if (page < totalPages) {
       liTag += `<li class="dots"><span>...</span></li>`;
       if (page < totalPages + 1) {
-        liTag += `<li class="numb button-pagination" onclick="element(totalPages, ${page})"><span>7</span></li>`;
+        liTag += `<li><button class="numb button-pagination"><span>${totalPages-1}</span></button></li>`;
         if (page <= totalPages + 2) {
-          liTag += `<li class="numb button-pagination" onclick="element(totalPages, ${page})"><span>8</span></li>`;
+          liTag += `<li><button class="numb button-pagination"><span>${totalPages}</span></button></li>`;
         }
       }
     }
   }
   if (page < totalPages) {
-    liTag += `<li class="btn next"onclick="element(totalPages, ${
-      page + 1
-    })"><span><i class="right"></i> > </span></li>`;
+    liTag += `<li><button class="btn next right-arrow-pagination"><span><i class="right"></i> > </span></button></li>`;
   }
   ulTag.innerHTML = liTag;
   
+  const leatArrowPagination = document.querySelector('.left-arrow-pagination');
+  const rigthArrowPagination = document.querySelector('.right-arrow-pagination');
+
+  leatArrowPagination.addEventListener('click', () => {
+    element(totalPages, page - 1)
+  });
+  rigthArrowPagination.addEventListener('click', () => {
+    element(totalPages, page + 1)
+  });
   workButtonPagination()
 }
 
-element(totalPages, 2);
+// element(totalPages, 2);
+
+
 
 function workButtonPagination() {
   const buttonsPagination = document.querySelectorAll('.button-pagination');
+  const numberStartPage = JSON.parse(localStorage.getItem('data-for-search')).page;
+  // [...buttonsPagination].forEach(btn => console.log(btn.textContent));
+  const btnStartPage = [...buttonsPagination].filter(btn => btn.textContent === String(numberStartPage));
+  btnStartPage.map(btn => btn.classList.add('active'));
   [...buttonsPagination].forEach((buttonPagination) => {
     buttonPagination.addEventListener('click', searchPagination)
   })
@@ -75,7 +96,6 @@ async function searchPagination(event){
   const resultSearch = await search();
   const searchResult = resultSearch.results;
   renderCards(searchResult);
-
   const buttonsPaginations = document.querySelectorAll('.button-pagination');
   [...buttonsPaginations].forEach((btn) => {
     const hasBtnActive = btn.classList.contains('active');

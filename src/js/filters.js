@@ -1,6 +1,7 @@
 import axios, { all } from 'axios';
 import {handleImageClick} from './modal';
 import icons from '../img/icons.svg';
+import {element} from './app';
 
 export class RequestToTheServer {
     baseUrl = 'https://food-boutique.b.goit.study/api/'
@@ -40,6 +41,7 @@ let keyword = '';
 let category = '';
 let page = 1;
 let limit = 6;
+let allPagesResult = '';
 let productsHomePage ={};
 let inputResultSearch = {};
 let productsCategories = {};
@@ -102,21 +104,28 @@ const messageForError = () => {
 async function ifEmptyInput() {
     try {
         const storageDataHomePage = localStorage.getItem('products-home-page-filters');
-        if (storageDataHomePage) {
+        const allPages = localStorage.getItem('all-pages-result');
+        if (storageDataHomePage && allPages) {
             const preProductsHomePage = JSON.parse(storageDataHomePage);
+            allPagesResult = JSON.parse(allPages);
             if(preProductsHomePage.length >= limit){
                 productsHomePage = preProductsHomePage.slice(0, limit)
             } else {
                 await search();
             productsHomePage = fullInputResultSearch.results;
+            allPagesResult = fullInputResultSearch.totalPages;
             localStorage.setItem('products-home-page-filters', JSON.stringify(productsHomePage));
+            localStorage.setItem('all-pages-result', JSON.stringify(allPagesResult));
             }
         } else {
             await search();
             productsHomePage = fullInputResultSearch.results;
+            allPagesResult = fullInputResultSearch.totalPages;
             localStorage.setItem('products-home-page-filters', JSON.stringify(productsHomePage));
+            localStorage.setItem('all-pages-result', JSON.stringify(allPagesResult));
         }
         renderCards(productsHomePage);
+        element(allPagesResult, 2);
         if(fullInputResultSearch.totalPages === 0){
             messageForError();
         }
@@ -137,7 +146,9 @@ searchForm.addEventListener('submit', async (event) => {
     recordsDataForSearch(keyword, category, page, limit);
     await search();
     inputResultSearch = fullInputResultSearch.results;
+    allPagesResult = fullInputResultSearch.totalPages;
     renderCards(inputResultSearch);
+    element(allPagesResult, 2);
     if(fullInputResultSearch.totalPages === 0){
         messageForError();
     }
@@ -222,7 +233,9 @@ async function renderEndPoint(event){
     recordsDataForSearch(keyword, category, page, limit);
     await search();
     inputResultSearch = fullInputResultSearch.results;
+    allPagesResult = fullInputResultSearch.totalPages;
     renderCards(inputResultSearch);
+    element(allPagesResult, 2);
     if(fullInputResultSearch.totalPages === 0){
         messageForError();
     }
