@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 61px;
+  margin-bottom: 80px;
+  margin-top: 40px;
 }
 
 .pagination ul {
@@ -20,7 +21,18 @@
   border-radius: 50%;
   cursor: pointer;
 }
-
+.btn.prev {
+  margin-right: 19px;
+}
+.btn.next {
+  margin-left: 15px;
+}
+.numb {
+  margin-right: 4px;
+}
+.dots {
+  margin-right: 4px;
+}
 .pagination ul li.numb {
   border-radius: 50%;
   cursor: pointer;
@@ -42,4 +54,30 @@
 .pagination ul li.btn:hover {
   background-color: #6d8434;
   color: #fff;
+}
+
+@media screen and (min-width: 768px) {
+  .pagination {
+    margin-bottom: 0;
+    margin-top: 50px;
+  }
+  .btn.prev {
+    margin-right: 80px;
+  }
+  .btn.next {
+    margin-left: 72px;
+  }
+  .numb {
+    margin-right: 8px;
+  }
+  .dots {
+    margin-right: 8px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .pagination {
+    margin-bottom: 61px;
+    margin-top: 40px;
+  }
 }
