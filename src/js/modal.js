@@ -21,11 +21,12 @@ const refs = {
   modalPrice: document.querySelector('.modal-price'),
 };
 
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Слухачі
 
 refs.closeModalBtn.addEventListener('click', onCloseModal);
 refs.backdrop.addEventListener('click', onBackdropClick);
-
+// 
 const cardImages = document.querySelectorAll('.cardlist-img');
 cardImages.forEach(img => {
   img.addEventListener('click', event => handleImageClick(event));
@@ -35,21 +36,28 @@ export function handleImageClick(event) {
   const productId = event.currentTarget.closest('.card-list-item').dataset.id;
   onOpenModal(productId);
 }
+// 
+const cardImagesPopular = document.querySelectorAll('.product-image');
+cardImagesPopular.forEach(img => {
+  img.addEventListener('click', event => handleImageClickPopular(event));
+});
+function handleImageClickPopular(event) {
+  const productId = event.currentTarget.closest('.product-image-container')
+    .dataset.product-id;
+  onOpenModal(productId);
+}
+const cardImagesDiscount = document.querySelectorAll('.discount-card-image');
+cardImagesDiscount.forEach(img => {
+  img.addEventListener('click', onClickAddToCart);
+});
+
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 // Зовнішній URL для запитів
 const baseUrl = 'https://food-boutique.b.goit.study/api/';
 
-// Оновлюємо інтерфейс модального вікна при відкритті
-export async function onOpenModal(productId) {
-  // Додаємо слухач
-  window.addEventListener('keydown', onCloseByEsc);
-  document.body.classList.add('show-modal');
-
-  // Перевіряємо, чи продукт вже в корзині
-  await handleProductDetails(productId);
-  checkIfProductInCart(productId);
-  toggleBodyScroll();
-}
 
 // Запит за допомогою Axios
 async function fetchProductById(productId) {
@@ -87,8 +95,12 @@ async function handleProductDetails(productId) {
     } else {
       refs.discountProduct.classList.add('hidden');
     }
+  } else {
+    console.error('Product details not available.');
   }
 }
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 // Міняю текст кнопки в залежності чи в корзині продукт
 function updateAddToCartButton(isInCart, isAdded) {
@@ -101,31 +113,11 @@ function updateAddToCartButton(isInCart, isAdded) {
 // Перевіряєм чи продукт вже в корзині
 function checkIfProductInCart(productId) {
   let cart = getCartFromStorage();
-  const isInCart = cart.includes(productId);
+  const isInCart = cart.some(obj => obj._id === productId);
 
   // Додавання слухача для кнопки
   refs.addToCart.addEventListener('click', () => {
-    if (isInCart) {
-      // Видалення товару з корзини
-      removeFromCart(productId);
-      // Оновлюємо текст кнопки та робимо її неактивною
-      updateAddToCartButton(false, false);
-    } else {
-      // Товару немає в кошику, додаємо
-      addToCart(productId);
-      // Оновлюємо текст кнопки
-      updateAddToCartButton(true, true);
-    }
-    const buttonsShopFilter = document.querySelectorAll('.cardlist-add-cart');
-    const selectedButton = [...buttonsShopFilter].filter(
-      button => button.id === productId
-    );
-    selectedButton.forEach(
-      button =>
-        (button.innerHTML = `<svg class="cardlist-svg" weight="18" height="18"> 
-    <use href="./img/icons.svg#icon-check"></use> 
-    </svg>`)
-    );
+    onClickAddToCart(productId, isInCart);
   });
 
   return isInCart;
@@ -137,27 +129,62 @@ function getCartFromStorage() {
   return cart;
 }
 
+function onClickAddToCart(productId, isInCart) {
+  if (isInCart) {
+    // Видалення товару з корзини
+    removeFromCart(productId);
+    // Оновлюємо текст кнопки та робимо її неактивною
+    updateAddToCartButton(false, false);
+  } else {
+    // Товару немає в кошику, додаємо
+    addToCart(productId);
+    // Оновлюємо текст кнопки
+    updateAddToCartButton(true, true);
+  }
+  const buttonsShopFilter = document.querySelectorAll('.cardlist-add-cart');
+  const selectedButton = [...buttonsShopFilter].filter(
+    button => button.id === productId
+  );
+  selectedButton.forEach(
+    button =>
+      (button.innerHTML = `<svg class="cardlist-svg" weight="18" height="18"> 
+  <use href="./img/icons.svg#icon-check"></use> 
+  </svg>`)
+  );
+}
+
 // Функція для додавання продукту до корзини в локальному сховищі
 function addToCart(product) {
   let cart = getCartFromStorage();
-  if (!cart.some(item => item.id === product.id)) {
+  if (!cart.some(item => item._id === product._id)) {
     cart.push(product);
     localStorage.setItem('cart', JSON.stringify(cart));
-    console.log('Added to cart:', product);
-    console.log('Cart:', cart);
   }
+  console.log('Cart:', cart);
 }
 
 // Функція для видалення продукту з корзини в локальному сховищі
 function removeFromCart(productId) {
   let cart = getCartFromStorage();
-  const index = cart.findIndex(item => item.id === productId);
+  const index = cart.findIndex(item => item._id === productId);
   if (index !== -1) {
+    const removedProduct = cart[index];
     cart.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(cart));
-    console.log('Removed from cart:', removedProduct);
-    console.log('Cart:', cart);
   }
+  console.log('Cart:', cart);
+}
+// ////////////////////////////////////////////////////////////////////////////////////////////////
+// Оновлюємо інтерфейс модального вікна при відкритті
+export function onOpenModal(productId) {
+  // Додаємо слухач
+  window.addEventListener('keydown', onCloseByEsc);
+  document.body.classList.add('show-modal');
+
+  // Перевіряємо, чи продукт вже в корзині
+  checkIfProductInCart(productId);
+  handleProductDetails(productId);
+  toggleBodyScroll();
 }
 
 // Закритя модального вікна
