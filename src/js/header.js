@@ -4,7 +4,7 @@ let timeID = null;
 
 localStorageCheckCart();
 
-function localStorageCheckCart() {
+export function localStorageCheckCart() {
   timeID = setInterval(() => {
     const cartProducts = localStorage.getItem('cart');
     const itemsCartObj = JSON.parse(cartProducts);
