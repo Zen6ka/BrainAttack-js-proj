@@ -1,6 +1,6 @@
 import { RequestToTheServer } from './filters';
 import { onOpenModal } from './modal';
-
+import sprite from '../img/icons.svg';
 document.addEventListener('DOMContentLoaded', function () {
   // Оновити стиль кнопок при завантаженні сторінки
   cartButtonStyle();
@@ -22,32 +22,25 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 async function fetchProductsFromServer() {
-  const request = new RequestToTheServer('products/popular?limit=5');
+  const request = new RequestToTheServer('products/popular', '', 1, 5);
 
   try {
-    // Отримати дані з сервера
     const fetchedData = await request.fetchBreeds();
 
-    // Збереження отриманих даних в локальному сховищі
     saveProductsToLocalStorage(fetchedData);
 
-    //  перші 5 продуктів
     const productsToDisplay = fetchedData.slice(0, 5);
 
-    //Додати розмітку  продуктів
     createAndAppendProductElements(productsToDisplay);
 
-    // Додати функціонал після завантаження даних та створення розмітки
     addFunctionalityToElements();
   } catch (error) {
     console.error('Error:', error);
   }
 }
-
 function addFunctionalityToElements() {
   cartButtonStyle();
 }
-
 const productsContainer = document.querySelector('.products-container');
 
 function saveProductsToLocalStorage(products) {
@@ -82,12 +75,14 @@ function createAndAppendProductElements(products) {
           </div>
       </div>
       <button class="add-to-cart-btn cart-btn" data-product-id="${product._id}">
-          <svg class="ico icon-on">
-              <use href="./img/icons.svg#icon-heroicons-solid_shopping-cart"></use>
-          </svg>
-          <svg class="ico icon-off" style="display: none;">
-              <use href="./img/icons.svg#icon-check"></use>
-          </svg>
+      <svg class="ico icon-on">
+      <use href="${sprite}#icon-heroicons-solid_shopping-cart"></use>
+  </svg>
+          
+  <svg class="ico icon-off" style="display: none;">
+  <use href="${sprite}#icon-check"></use>
+</svg>
+
       </button>
     `;
     // Налаштувати подію для кнопки "Додати в кошик І модалки"
