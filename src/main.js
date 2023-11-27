@@ -2,13 +2,13 @@ import './js/filters';
 
 import './js/popular';
 
-import './js/footer';
+import './js/discount';
 
 import './js/modal';
 
-import './js/discount';
-
 import './js/app';
+
+import './js/footer';
 
 import './js/header';
 
