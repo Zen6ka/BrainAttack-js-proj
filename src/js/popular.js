@@ -119,7 +119,7 @@ function addToCart(product) {
 }
 
 // Функція для оновлення стилю кнопок
-function cartButtonStyle() {
+export function cartButtonStyle() {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const addToCartButtons = document.querySelectorAll('.cart-btn');
 
