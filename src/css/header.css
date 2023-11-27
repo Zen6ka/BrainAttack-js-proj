@@ -1,10 +1,10 @@
 /* =============Components============ */
-/* 
+
 .container {
   max-width: 375px;
   padding: 0 20px;
   margin: 0 auto;
-} */
+}
 
 .section {
   padding-top: 72px;
@@ -83,9 +83,9 @@
 }
 
 /*=======media767====================================*/
-@media screen and (max-width: 767px) {
+@media (max-width: 767px) {
   .container {
-    width: 100%;
+    max-width: 767px;
     padding: 0 20px;
   }
   .main-nav {
@@ -104,7 +104,7 @@
     border-radius: 30px;
     background: var(--footer-background);
     padding: 10px 20px;
-    color: var(--background-color);
+    color: var(--footer-logo-text);
     font-family: 'Neue Montreal Medium';
     font-size: 14px;
     font-style: normal;
@@ -131,6 +131,10 @@
 
 /*=======media768====================================*/
 @media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding: 0 32px;
+  }
   .header-logo-icon {
     width: 32px;
     height: 32px;
@@ -139,7 +143,17 @@
     gap: 16px;
   }
   .link-home {
+    border-radius: 30px;
+    background: var(--footer-background);
     padding: 12px 28px;
+    color: var(--footer-logo-text);
+    font-family: 'Neue Montreal Medium';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px; /* 128.571% */
+    border: none;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   .link-home:hover,
   .link-home:focus {
@@ -149,6 +163,10 @@
 
 /*=======media1440====================================*/
 @media (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
+    padding: 0 100px;
+  }
   .footer-content-wrap {
     margin-bottom: 128px;
   }
