@@ -112,8 +112,8 @@
   }
 }
 
-/*=======media1440====================================*/
-@media (min-width: 1440px) {
+/*=======media1280====================================*/
+@media (min-width: 1280px) {
   .container.hero-container-wrapper {
     max-width: 1280px;
     padding: 0 20px;
