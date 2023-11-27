@@ -1,6 +1,7 @@
 import axios, { all } from 'axios';
 import {handleImageClick} from './modal';
 import icons from '../img/icons.svg';
+import {element} from './app';
 
 export class RequestToTheServer {
     baseUrl = 'https://food-boutique.b.goit.study/api/'
@@ -14,7 +15,9 @@ export class RequestToTheServer {
 
     async fetchBreeds(){
     try{
+        console.log(`${this.endPoint}?${this.filters}&page=${this.page}&limit=${this.limit}`);
         const response = await axios.get(`${this.baseUrl}${this.endPoint}?${this.filters}&page=${this.page}&limit=${this.limit}`);
+        console.log(response.data);
         return response.data
     } catch(error){
         console.error("Error:", error.message);
@@ -38,6 +41,7 @@ let keyword = '';
 let category = '';
 let page = 1;
 let limit = 6;
+let allPagesResult = '';
 let productsHomePage ={};
 let inputResultSearch = {};
 let productsCategories = {};
@@ -53,7 +57,7 @@ if(bigMediaQuery){
     limit = 6;
 }
 
-function recordsDataForSearch(keyword, category, page, limit){
+export function recordsDataForSearch(keyword, category, page, limit){
     localStorage.setItem('data-for-search', JSON.stringify(
         {
             keyword, 
@@ -67,12 +71,13 @@ function recordsDataForSearch(keyword, category, page, limit){
 recordsDataForSearch(keyword, category, page, limit);
 ///////////////////////////////////////  SEARCH  /////////////////////////////////////////////////////////////////////////////
 
-async function search () {
+export async function search() {
     try{
         const letForSearch = JSON.parse(localStorage.getItem('data-for-search'));
     const filters = `keyword=${letForSearch.keyword}&category=${letForSearch.category}`;
-        const classResultProductsWithFilters = new RequestToTheServer(products, filters, page, limit);
+        const classResultProductsWithFilters = new RequestToTheServer(products, filters, letForSearch.page, letForSearch.limit);
         fullInputResultSearch = await classResultProductsWithFilters.fetchBreeds();
+        return fullInputResultSearch
     } catch (error){
         messageForError();
         console.error("Error:", error.message);
@@ -99,21 +104,28 @@ const messageForError = () => {
 async function ifEmptyInput() {
     try {
         const storageDataHomePage = localStorage.getItem('products-home-page-filters');
-        if (storageDataHomePage) {
+        const allPages = localStorage.getItem('all-pages-result');
+        if (storageDataHomePage && allPages) {
             const preProductsHomePage = JSON.parse(storageDataHomePage);
+            allPagesResult = JSON.parse(allPages);
             if(preProductsHomePage.length >= limit){
                 productsHomePage = preProductsHomePage.slice(0, limit)
             } else {
                 await search();
             productsHomePage = fullInputResultSearch.results;
+            allPagesResult = fullInputResultSearch.totalPages;
             localStorage.setItem('products-home-page-filters', JSON.stringify(productsHomePage));
+            localStorage.setItem('all-pages-result', JSON.stringify(allPagesResult));
             }
         } else {
             await search();
             productsHomePage = fullInputResultSearch.results;
+            allPagesResult = fullInputResultSearch.totalPages;
             localStorage.setItem('products-home-page-filters', JSON.stringify(productsHomePage));
+            localStorage.setItem('all-pages-result', JSON.stringify(allPagesResult));
         }
         renderCards(productsHomePage);
+        element(allPagesResult, 2);
         if(fullInputResultSearch.totalPages === 0){
             messageForError();
         }
@@ -130,10 +142,13 @@ ifEmptyInput();
 searchForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     keyword = inputSearch.value.trim();
+    page = 1;
     recordsDataForSearch(keyword, category, page, limit);
     await search();
     inputResultSearch = fullInputResultSearch.results;
+    allPagesResult = fullInputResultSearch.totalPages;
     renderCards(inputResultSearch);
+    element(allPagesResult, 2);
     if(fullInputResultSearch.totalPages === 0){
         messageForError();
     }
@@ -218,7 +233,9 @@ async function renderEndPoint(event){
     recordsDataForSearch(keyword, category, page, limit);
     await search();
     inputResultSearch = fullInputResultSearch.results;
+    allPagesResult = fullInputResultSearch.totalPages;
     renderCards(inputResultSearch);
+    element(allPagesResult, 2);
     if(fullInputResultSearch.totalPages === 0){
         messageForError();
     }
@@ -226,7 +243,7 @@ async function renderEndPoint(event){
 
 ///////////////////////////////////////////////////////  RENDER  CARDS  /////////////////////////////////////////////////////////////
 
-function renderCards(products) {
+export function renderCards(products) {
     const listResult = [];
     const infoAboutCard = JSON.parse(localStorage.getItem('cart'));
     products.forEach((product) => {
