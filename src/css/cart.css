@@ -407,6 +407,7 @@ line-height: 18px; /* 128.571% */
 /* Cart Tablet */
 @media screen and (min-width: 768px) {
     .total-cart-container {
+        /* max-width: 768px; */
         max-width: 768px;
     margin: 0 auto;
     padding-left: 32px;
@@ -585,7 +586,7 @@ height: 54px;
 
 
 /* Cart Desktop */
-@media screen and ( min-width: 1240px){
+@media screen and ( min-width: 1440px){
     .total-cart-container {
         max-width: 1240px;
         padding-top: 81px;
