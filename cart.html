@@ -16,18 +16,16 @@
     /> -->
 
     
-    <!-- <link rel="stylesheet" href="./css/footer.css"> -->
+    
     <title>Cart</title>
     <script type="module" crossorigin src="/BrainAttack-js-proj/commonHelpers.js"></script>
-    <link rel="modulepreload" crossorigin href="/BrainAttack-js-proj/assets/styles-eb05b581.js">
-    <link rel="stylesheet" href="/BrainAttack-js-proj/assets/styles-5fd90ff6.css">
+    <link rel="modulepreload" crossorigin href="/BrainAttack-js-proj/assets/icons-bdf70574.js">
+    <link rel="stylesheet" href="/BrainAttack-js-proj/assets/icons-70689f24.css">
+    <link rel="stylesheet" href="/BrainAttack-js-proj/assets/cart-91f039e1.css">
   </head>
   <body>
-
-
-
- <!-- header -->
- <header class="page-header-container container">
+    <!-- header -->
+    <header class="page-header-container container">
   <nav class="main-nav">
     <div class="logo-wrapper">
       <a class="logo-link" href="./index.html">
@@ -60,77 +58,179 @@
 <!-- <script src="./js/header" type="module"></script> -->
 
 
+    <!-- Cart -->
+    <div class="total-cart-container">
+      <div class="cart-quantity">
+        <div class="cart-icon-wrapper">
+          <svg class="cart-basket-icon">
+            <use
+              href="/BrainAttack-js-proj/assets/icons-617986b7.svg#icon-heroicons-solid_shopping-cart"
+            ></use>
+          </svg>
+        </div>
 
- <!-- Cart -->
- <div class="total-cart-container">
- 
- <div class="cart-quantity">
-     <div class="cart-icon-wrapper">
-     <svg class="cart-basket-icon">
-         <use href="/BrainAttack-js-proj/assets/icons-617986b7.svg#icon-heroicons-solid_shopping-cart"></use>
-     </svg>
- </div>
- 
-     <p class="cart-title">CART (<span class="js-cart-items-quantity"></span>)</p>
- </div>
- 
- <div class="js-cart-empty" id="empty-cart-second">
-    <picture class="hero-picture">
-        <source
-          srcset="/BrainAttack-js-proj/assets/yellow-shopping-basket-x1-50c33d28.png 1x, /BrainAttack-js-proj/assets/yellow-shopping-basket-x2-88f54c61.png 2x"
-        media="(min-width: 1240px)"
-        />
-  
-        <source
-          srcset="/BrainAttack-js-proj/assets/yellow-shopping-basket-x1-50c33d28.png 1x, /BrainAttack-js-proj/assets/yellow-shopping-basket-x2-88f54c61.png 2x 2x"
-          media="(min-width: 768px)"
-        />
-  
-        <source
-          srcset="/BrainAttack-js-proj/assets/yellow-shopping-basket-x1-50c33d28.png 1x, /BrainAttack-js-proj/assets/yellow-shopping-basket-x2-88f54c61.png 2x"
-          media="(max-width: 767.9px)"
-        />
-  
-        <img src="/BrainAttack-js-proj/assets/yellow-shopping-basket-x1-50c33d28.png" alt="Yellow basket" class="cart-basket-img">
-      </picture>
+        <p class="cart-title">
+          CART (<span class="js-cart-items-quantity"></span>)
+        </p>
+      </div>
 
- <div class="text-frame"> 
-     <p class="cart-text-empty-1"><b>Your basket is <a href="./index.html" style="color: #6D8434; text-decoration: none;">empty...</a></b></p>
- <p class="cart-text-empty-2">Go to the main page to select your favorite products and add them to the cart.</p>
- </div>   
- </div>
- 
- 
- <div class="js-cart-container">
-     <div class="cart-products">
-    <button class="js-delete-all-btn">Delete All<svg class="cart-delete-all-icon">
-     <use href="/BrainAttack-js-proj/assets/icons-617986b7.svg#icon-ion_close-sharp"></use> </svg></button>
- 
-     <div  class="js-cart-selected-products">
-     </div>
- </div>
- 
-     <div class="js-cart-order-details">
-         <p class="cart-order-text">YOUR ORDER</p>
- <div class="cart-total-cost-wrap"> 
-     <div class="cart-total-cost"> 
- <p class="cart-total-cost-text-1">Total</p>
- <p  class="cart-total-cost-text-2">Sum: <span class="js-total-ordered-price">$</span></p>
- </div></div>
- <div class="js-email-form"> 
- <input class="input" type="email" placeholder="Mail: " pattern="[a-z0-9.-]+@[a-z]+\.[a-z]{2,}$" title="Enter a valid email address">
- <button type="submit" class="js-email-checkout">Checkout</button>
-     </div>
- </div>
- 
- </div>
- 
- </div>
- 
+      <div class="js-cart-empty" id="empty-cart-second">
+        <picture class="hero-picture">
+          <source
+            srcset="/BrainAttack-js-proj/assets/yellow-shopping-basket-x1-50c33d28.png 1x, /BrainAttack-js-proj/assets/yellow-shopping-basket-x2-88f54c61.png 2x"
+            media="(min-width: 1240px)"
+          />
 
- 
-     <!-- Footer -->
-     <footer class="footer">
+          <source
+            srcset="/BrainAttack-js-proj/assets/yellow-shopping-basket-x1-50c33d28.png 1x, /BrainAttack-js-proj/assets/yellow-shopping-basket-x2-88f54c61.png 2x"
+            media="(min-width: 768px)"
+          />
+
+          <source
+            srcset="/BrainAttack-js-proj/assets/yellow-shopping-basket-x1-50c33d28.png 1x, /BrainAttack-js-proj/assets/yellow-shopping-basket-x2-88f54c61.png 2x"
+            media="(max-width: 767.9px)"
+          />
+
+          <img
+            src="/BrainAttack-js-proj/assets/yellow-shopping-basket-x1-50c33d28.png"
+            alt="Yellow basket"
+            class="cart-basket-img"
+          />
+        </picture>
+
+        <div class="text-frame">
+          <p class="cart-text-empty-1">
+            <b
+              >Your basket is
+              <a
+                href="./index.html"
+                style="color: #6d8434; text-decoration: none"
+                >empty...</a
+              ></b
+            >
+          </p>
+          <p class="cart-text-empty-2">
+            Go to the main page to select your favorite products and add them to
+            the cart.
+          </p>
+        </div>
+      </div>
+
+      <div class="js-cart-container">
+        <div class="cart-products">
+          <button class="js-delete-all-btn">
+            Delete All<svg class="cart-delete-all-icon">
+              <use href="/BrainAttack-js-proj/assets/icons-617986b7.svg#icon-ion_close-sharp"></use>
+            </svg>
+          </button>
+
+          <div class="js-cart-selected-products"></div>
+        </div>
+
+        <div class="js-cart-order-details">
+          <p class="cart-order-text">YOUR ORDER</p>
+          <div class="cart-total-cost-wrap">
+            <div class="cart-total-cost">
+              <p class="cart-total-cost-text-1">Total</p>
+              <p class="cart-total-cost-text-2">
+                Sum: <span class="js-total-ordered-price">$</span>
+              </p>
+            </div>
+          </div>
+          <form class="js-email-form">
+            <input
+            name="mail"
+              class="input"
+              type="email"
+              placeholder="Mail: "
+              required 
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+              title="Enter a valid email address"
+            />
+            <button type="submit" class="js-email-checkout">Checkout</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    
+<!-- Перше модальне вікно  -->
+<div class="backdrop js-backdrop">
+  <div class="modal">
+    <div class="modal-header">
+      <button type="button" data-action="close-modal" class="close-modal-svg">
+        <svg width="22" height="22">
+          <use href="/BrainAttack-js-proj/assets/icons-617986b7.svg#icon-ion_close-sharp"></use>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-img">
+        <svg class="modal-discount-svg hidden" width="60" height="60">
+          <use href="/BrainAttack-js-proj/assets/icons-617986b7.svg#icon-discount-1"></use>
+        </svg>
+        <img src="" alt="" />
+      </div>
+      <div class="modal-info-cart">
+        <h3 class="modal-title"></h3>
+        <ul class="modal-list">
+          <li class="modal-item">
+            Category:<span class="modal-item-span"></span>
+          </li>
+          <li class="modal-item">Size:<span class="modal-item-span"></span></li>
+          <li class="modal-item">
+            Popularity:<span class="modal-item-span"></span>
+          </li>
+        </ul>
+        <p class="modal-info-taxt"></p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <span class="modal-price"></span>
+      <button type="button" class="modal-btn-sabmit">
+        <span class="modal-btn-sabmit-span">Add to</span>
+        <svg width="18" height="18">
+          <use href="/BrainAttack-js-proj/assets/icons-617986b7.svg#icon-heroicons-solid_shopping-cart"></use>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Друге модальне вікно  -->
+<div class="backdrop-ordered js-backdrop-ordered">
+  <div class="modal-ordered">
+    <div class="modal-header-ordered">
+      <button type="button" data-action="close-modal" class="close-modal-svg">
+        <svg width="22" height="22">
+          <use href="/BrainAttack-js-proj/assets/icons-617986b7.svg#icon-ion_close-sharp"></use>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body-ordered">
+      <div class="modal-img-ordered">
+        <img src="/BrainAttack-js-proj/assets/modal-708d1696.png" alt="Order success" />
+        <svg class="modal-svg-ordered" widht="145px" heigth="28px">
+          <use href="/BrainAttack-js-proj/assets/icons-617986b7.svg#icon-Ellipse-1"></use>
+        </svg>
+      </div>
+      <div class="modal-info-cart-ordered">
+        <h3 class="modal-title-ordered">Order success</h3>
+        <p class="modal-info-taxt-ordered">
+          Thank you for shopping at Food Boutique. Your order has been received
+          and is now being freshly prepared just for you! Get ready to indulge
+          in nourishing goodness, delivered right to your doorstep. We're
+          thrilled to be part of your journey to better health and happiness.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <script type="module" src="../js/modal.js"></script> -->
+
+
+    <!-- Footer -->
+    <footer class="footer">
   <div class="container footer-container">
     <div class="footer-content-wrap">
       <!-- =======logo and social media==================================== -->
@@ -402,24 +502,12 @@
   </div>
 </footer>
 
- 
 
-
-
-
-
-
-     
+    
     <!-- <section>
       <a href="./index.html">Go to home</a>
       <h1>Welcome to page 2</h1>
     </section> -->
-<!-- <script src="./js/footer.js" type="module"></script> -->
-
+    <!-- <script src="./js/footer.js" type="module"></script> -->
   </body>
 </html>
-
-
-
-
-
