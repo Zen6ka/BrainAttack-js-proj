@@ -1,134 +1,138 @@
 import { RequestToTheServer } from './filters';
 import { onOpenModal } from './modal';
-document.addEventListener('DOMContentLoaded', async function () {
-  const request = new RequestToTheServer('products/popular?limit=5');
 
-  try {
-    //  отримати дані з локального сховища
-    const productsData = getProductsFromLocalStorage();
+document.addEventListener('DOMContentLoaded', function () {
+  // Оновити стиль кнопок при завантаженні сторінки
+  cartButtonStyle();
 
-    if (!productsData) {
-      // Якщо дані відсутні в локальному сховищі, отримуйте їх з сервера
-      const fetchedData = await request.fetchBreeds();
+  const savedProducts = JSON.parse(localStorage.getItem('popularProducts'));
+  let localProducts;
 
-      // Збереження  в локальному сховищі
-      saveProductsToLocalStorage(fetchedData);
-
-      // отримані дані для відображення продуктів
-      displayProducts(fetchedData);
-    } else {
-      // дані з локального сховища для відображення продуктів
-      displayProducts(productsData);
-    }
-    cartButtonStyle();
-  } catch (error) {
-    console.error('Error:', error);
+  if (savedProducts && savedProducts.length >= 5) {
+    localProducts = savedProducts.slice(0, 5);
+  } else {
+    localProducts = [];
+  }
+  if (localProducts.length > 0) {
+    createAndAppendProductElements(localProducts);
+    addFunctionalityToElements();
+  } else {
+    fetchProductsFromServer();
   }
 });
 
-function saveProductsToLocalStorage(products) {
-  //  Збереження продуктів в локальне сховище
-  localStorage.setItem('popularProducts', JSON.stringify(products));
+async function fetchProductsFromServer() {
+  const request = new RequestToTheServer('products/popular?limit=5');
+
+  try {
+    // Отримати дані з сервера
+    const fetchedData = await request.fetchBreeds();
+
+    // Збереження отриманих даних в локальному сховищі
+    saveProductsToLocalStorage(fetchedData);
+
+    //  перші 5 продуктів
+    const productsToDisplay = fetchedData.slice(0, 5);
+
+    //Додати розмітку  продуктів
+    createAndAppendProductElements(productsToDisplay);
+
+    // Додати функціонал після завантаження даних та створення розмітки
+    addFunctionalityToElements();
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+function addFunctionalityToElements() {
   cartButtonStyle();
 }
 
-function getProductsFromLocalStorage() {
-  //  Отримання  продуктів з локального сховища
-  const storedData = localStorage.getItem('popularProducts');
-  return storedData ? JSON.parse(storedData) : null;
+const productsContainer = document.querySelector('.products-container');
+
+function saveProductsToLocalStorage(products) {
+  // Збереження продуктів в локальне сховище
+  localStorage.setItem('popularProducts', JSON.stringify(products));
 }
 
-function displayProducts(products) {
-  const productContainers = document.querySelectorAll('.product-template');
+function createAndAppendProductElements(products) {
+  products.forEach(product => {
+    // Створити контейнер для продукту
+    const productTemplate = document.createElement('div');
+    productTemplate.classList.add('product-template');
 
-  // Очистити вміст всіх блоків "product-template"
-  productContainers.forEach(container => {
-    container.querySelector('.product-image').src = '';
-    container.querySelector('.product-name').textContent = '';
-    container.querySelector('.category-value').textContent = '';
-    container.querySelector('.size-value').textContent = '';
-    container.querySelector('.popularity-value').textContent = '';
-  });
-
-  products.slice(0, productContainers.length).forEach((product, index) => {
-    const container = productContainers[index];
-    container.style.display = 'flex';
-
-    // Заповнити дані блоку з даними з сервера
-    container.querySelector('.product-image').src = product.img;
-    container.querySelector('.product-name').textContent = product.name;
-    container.querySelector('.category-value').textContent =
-      product.category.replace('_', ' ');
-    container.querySelector('.size-value').textContent = product.size;
-    container.querySelector('.popularity-value').textContent =
-      product.popularity;
-    const productInfo = {
-      _Id: product._id,
-      name: product.name,
-      img: product.img,
-      category: product.category,
-      price: product.price,
-      size: product.size,
-      is10PercentOff: product.is10PercentOff,
-      popularity: product.popularity,
-    };
-
-    const addIdImg = container.querySelector('.product-image-container');
-    addIdImg.addEventListener('click', function () {
-      // Створюємо масив з одного елемента - нової інформації про продукт
-      let populArray = [productInfo];
-
-      // Зберігаємо оновлений масив у локальне сховище
-      localStorage.setItem('popul', JSON.stringify(populArray));
-
-      // Викликаємо onOpenModal з ID продукту
-      onOpenModal(productInfo._Id);
-    });
-    // Налаштування слухача подій для кліку на кнопку "Додати в кошик"
-    const addToCartBtn = container.querySelector('.add-to-cart-btn');
-    addToCartBtn.onclick = function () {
-      addToCart(productInfo);
-    };
-    addToCartBtn.setAttribute('data-product-id', product._id);
-  });
-}
-
-// Функція для додавання продукту в кошик
-function addToCart(productInfo) {
-  if (productInfo && productInfo._Id) {
-    // Отримуємо масив продуктів з локального сховища
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    // Перевіряємо, чи товар вже є в кошику
-    const existingProductIndex = cart.findIndex(
-      item => item && item._Id === productInfo._Id
+    // Створити розмітку продукту
+    productTemplate.innerHTML = `
+      <div class="popular-con">
+          <div class="product-image-container" data-product-id="${
+            product._id
+          }"> <img src="${product.img}" alt="" class="product-image"></div>
+          <div class="product-text">
+              <h3 class="product-name">${product.name}</h3>
+              <p class="product margin">
+                  Category: <span class="category-value">${product.category.replace(
+                    '_',
+                    ' '
+                  )}</span><br>
+                  Size: <span class="size-value">${product.size}</span><br>
+                  Popularity: <span class="popularity-value">${
+                    product.popularity
+                  }</span>
+              </p>
+          </div>
+      </div>
+      <button class="add-to-cart-btn cart-btn" data-product-id="${product._id}">
+          <svg class="ico icon-on">
+              <use href="./img/icons.svg#icon-heroicons-solid_shopping-cart"></use>
+          </svg>
+          <svg class="ico icon-off" style="display: none;">
+              <use href="./img/icons.svg#icon-check"></use>
+          </svg>
+      </button>
+    `;
+    // Налаштувати подію для кнопки "Додати в кошик І модалки"
+    productsContainer.appendChild(productTemplate);
+    const addToCartImg = productTemplate.querySelector(
+      '.product-image-container'
     );
+    addToCartImg.addEventListener('click', function () {
+      onOpenModal(product._id);
+    });
 
-    if (existingProductIndex !== -1) {
-      // Якщо товар вже є в кошику, видаляємо його
-      cart.splice(existingProductIndex, 1);
-    } else {
-      // Якщо товару немає в кошику, додаємо його
-      cart.push(productInfo);
-    }
-
-    // Оновлюємо кошик у локальному сховищі
-    localStorage.setItem('cart', JSON.stringify(cart));
-
-    // Оновлюємо стиль кнопок після зміни кошика
-    cartButtonStyle();
-  }
+    const addToCartBtn = productTemplate.querySelector('.add-to-cart-btn');
+    addToCartBtn.onclick = function () {
+      addToCart(product);
+    };
+  });
 }
+
+// Функція для додавання або видалення товару з кошика
+function addToCart(product) {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  const existingProductIndex = cart.findIndex(
+    item => item && item._id === product._id
+  );
+  if (existingProductIndex !== -1) {
+  } else {
+    cart.push(product);
+  }
+
+  localStorage.setItem('cart', JSON.stringify(cart));
+
+  cartButtonStyle();
+}
+
 // Функція для оновлення стилю кнопок
 function cartButtonStyle() {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const addToCartButtons = document.querySelectorAll('.cart-btn');
 
   addToCartButtons.forEach(btn => {
-    const _Id = btn.getAttribute('data-product-id');
+    const productId = btn.getAttribute('data-product-id');
     const iconInCart = btn.querySelector('.icon-off');
     const iconAddToCart = btn.querySelector('.icon-on');
-    const isProductInCart = cart.some(item => item && item._Id === _Id);
+    const isProductInCart = cart.some(item => item && item._id === productId);
 
     if (iconInCart && iconAddToCart) {
       if (isProductInCart) {

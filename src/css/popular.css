@@ -65,7 +65,7 @@
 }
 .product-template {
   position: relative;
-
+  height: 98px;
   border-radius: 10px;
   background: #fafafa;
 }
@@ -121,6 +121,7 @@
   height: 74px;
 }
 .products-container {
+  margin-bottom: 80px;
   display: inline-flex;
   flex-direction: column;
   align-items: flex-end;
