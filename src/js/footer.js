@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-import { RequestToTheServer } from './filters';
-console.log('hello');
 const refs = {
   // ---------------for form subscription--------------
 
@@ -21,9 +19,6 @@ const refs = {
 
 refs.formSubscription.addEventListener('submit', onFormSubscriptSubmit);
 
-const postRequest = new RequestToTheServer();
-postRequest.endPoint = 'subscription';
-
 function onFormSubscriptSubmit(e) {
   e.preventDefault();
 
@@ -35,10 +30,10 @@ function onFormSubscriptSubmit(e) {
 }
 
 async function addUserForSubscription(email) {
-  axios.defaults.baseURL = postRequest.baseUrl;
+  axios.defaults.baseURL = 'https://food-boutique.b.goit.study/api/';
   const config = {
     method: 'post',
-    url: postRequest.endPoint,
+    url: 'subscription',
     headers: {
       'Content-Type': 'application/json',
     },
