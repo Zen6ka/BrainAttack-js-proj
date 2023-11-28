@@ -73,9 +73,11 @@ export function element(totalPages, page) {
     
     const numbActiveBtn = Number(activeBtn.textContent);
     if(numbActiveBtn == 2){
-      leatArrowPagination.classList.add('visually-hidden');
+      leatArrowPagination.classList.add('inactive-button');
+      leatArrowPagination.disabled = true;
     } else if(numbActiveBtn != totalPages - 1){
-      rigthArrowPagination.classList.remove('visually-hidden');
+      rigthArrowPagination.classList.remove('inactive-button');
+      rigthArrowPagination.disabled = false;
     }
     
     activeBtn.classList.remove('active');
@@ -104,9 +106,11 @@ export function element(totalPages, page) {
     
     const numbActiveBtn = Number(activeBtn.textContent);
     if(numbActiveBtn == totalPages - 1){
-      rigthArrowPagination.classList.add('visually-hidden');
+      rigthArrowPagination.classList.add('inactive-button');
+      rigthArrowPagination.disabled = true;
     } else if(numbActiveBtn != 2){
-      leatArrowPagination.classList.remove('visually-hidden');
+      leatArrowPagination.classList.remove('inactive-button');
+      leatArrowPagination.disabled = false;
     }
     activeBtn.classList.remove('active');
     activeBtn.disabled = false;
@@ -144,12 +148,16 @@ function workButtonPagination(leatArrowPagination, rigthArrowPagination, massifB
     btn.disabled = true;
     
     if(btn.textContent === '1' && btn.textContent === String(totalPages)){
-      leatArrowPagination.classList.add('visually-hidden');
-      rigthArrowPagination.classList.add('visually-hidden');
+      leatArrowPagination.classList.add('inactive-button');
+      rigthArrowPagination.classList.add('inactive-button');
+      leatArrowPagination.disabled = true;
+      rigthArrowPagination.disabled = true;
     }else if(btn.textContent === '1'){
-      leatArrowPagination.classList.add('visually-hidden');
+      leatArrowPagination.classList.add('inactive-button');
+      leatArrowPagination.disabled = true;
     }else if(btn.textContent === String(totalPages)){
-      rigthArrowPagination.classList.add('visually-hidden');
+      rigthArrowPagination.classList.add('inactive-button');
+      rigthArrowPagination.disabled = true;
     } 
   });
 };
@@ -160,17 +168,25 @@ async function searchPagination(event, totalPages){
   event.currentTarget.classList.add('active');
 
   if(event.currentTarget.textContent === '1' && event.currentTarget.textContent === String(totalPages)){
-    leatArrowPagination.classList.add('visually-hidden');
-    rigthArrowPagination.classList.add('visually-hidden');
+    leatArrowPagination.classList.add('inactive-button');
+    rigthArrowPagination.classList.add('inactive-button');
+    leatArrowPagination.disabled = true;
+    rigthArrowPagination.disabled = true;
   }else if(event.currentTarget.textContent === '1'){
-    leatArrowPagination.classList.add('visually-hidden');
-    rigthArrowPagination.classList.remove('visually-hidden');
+    leatArrowPagination.classList.add('inactive-button');
+    rigthArrowPagination.classList.remove('inactive-button');
+    leatArrowPagination.disabled = true;
+    rigthArrowPagination.disabled = false;
   }else if(event.currentTarget.textContent === String(totalPages)){
-    rigthArrowPagination.classList.add('visually-hidden');
-    leatArrowPagination.classList.remove('visually-hidden');
+    rigthArrowPagination.classList.add('inactive-button');
+    leatArrowPagination.classList.remove('inactive-button');
+    leatArrowPagination.disabled = false;
+    rigthArrowPagination.disabled = true;
   }else{
-    rigthArrowPagination.classList.remove('visually-hidden');
-    leatArrowPagination.classList.remove('visually-hidden');
+    rigthArrowPagination.classList.remove('inactive-button');
+    leatArrowPagination.classList.remove('inactive-button');
+    leatArrowPagination.disabled = false;
+    rigthArrowPagination.disabled = false;
   }  
   
   
