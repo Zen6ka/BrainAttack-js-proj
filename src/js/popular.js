@@ -142,3 +142,41 @@ export function cartButtonStyle() {
     }
   });
 }
+///////////////////////
+const scrollUpButton = document.getElementById('scroll-up');
+
+function checkScroll() {
+  const totalPageHeight = document.documentElement.scrollHeight;
+  const viewportHeight = window.innerHeight;
+  const scrollRemaining = totalPageHeight - window.scrollY - viewportHeight;
+  if (scrollRemaining < 100) {
+    scrollUpButton.style.display = 'block';
+  } else {
+    scrollUpButton.style.display = 'none';
+  }
+}
+window.addEventListener('scroll', checkScroll);
+
+scrollUpButton.addEventListener('click', function () {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
+});
+//Кнопка scroll-up   <a href="#" class="top" id="scroll-up" style="display: none;">Back to Top &#8593;</a>
+// .top {
+//   background-color: #000000;
+//   color: white;
+//   padding: 10px 20px;
+//   border: none;
+//   border-radius: 50px;
+//   cursor: pointer;
+//   font-size: 16px;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+//   transition: background-color 0.3s;
+//   opacity: 0.7;
+// }
+// .top:hover {
+//   opacity: 0.9;
+//   background-color: #000000;
+// }
