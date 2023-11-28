@@ -253,7 +253,11 @@ export function renderCards() {
     const infoAboutCard = JSON.parse(localStorage.getItem('cart'));
     products.forEach((product) => {
         let itemResult = '';
-        let idIconShop = "icon-heroicons-solid_shopping-cart";
+        let iconShop = `<button class="cardlist-add-cart cardlist-add-cart-for-active" id=${product._id}>
+        <svg class="cardlist-svg" weight="18" height="18">
+        <use href="${icons}#icon-heroicons-solid_shopping-cart"></use>
+        </svg>
+        </button>`;
         let nameCategory = product.category.replace(/_/g, ' ').replace(/&/g, '/');
         if(product.category == 'Pantry_Items'){
             nameCategory = product.category;
@@ -263,9 +267,18 @@ export function renderCards() {
         if(infoAboutCard){
             const cardInInfoAboutCard = infoAboutCard.some((obj) => obj._id === product._id);
             if(cardInInfoAboutCard){
-                idIconShop = "icon-check";
+                iconShop = `<button class="cardlist-add-cart" id=${product._id}>
+                <svg class="cardlist-svg" weight="18" height="18">
+                <use href="${icons}#icon-check"></use>
+                </svg>
+                </button>`;
             } else{
-                idIconShop = "icon-heroicons-solid_shopping-cart";
+                iconShop = `<button class="cardlist-add-cart cardlist-add-cart-for-active" id=${product._id}>
+                <svg class="cardlist-svg" weight="18" height="18">
+                <use href="${icons}#icon-heroicons-solid_shopping-cart"></use>
+                </svg>
+                </button>`;
+                
             }
         };
         if(product.is10PercentOff){
@@ -281,11 +294,8 @@ export function renderCards() {
                 </div>
                     <p class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</p>
                 </div>
-                <div class="cartlist-btn"><button class="cardlist-add-cart" id=${product._id}>
-                <svg class="cardlist-svg" weight="18" height="18">
-                <use href="${icons}#${idIconShop}"></use>
-                </svg>
-                </button>
+                <div class="cartlist-btn">
+                ${iconShop}
                 </div>
                 <p class ="price-for-cards">$${product.price}</p>
                 <svg  class="discount-for-filter-cards">
@@ -305,11 +315,8 @@ export function renderCards() {
                 </div>    
                     <p class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</p>
                 </div>
-                <div class="cartlist-btn"><button class="cardlist-add-cart" id=${product._id}>
-                <svg class="cardlist-svg" weight="18" height="18">
-                <use href="${icons}#${idIconShop}"></use>
-                </svg>
-                </button>
+                <div class="cartlist-btn">
+                ${iconShop}
                 </div>
                 <p class ="price-for-cards">$${product.price}</p>
                 <svg  class="visually-hidden">
@@ -345,6 +352,7 @@ function workShopButton(products) {
             <use href="${icons}#icon-check"></use>
             </svg>`;
             event.currentTarget.setAttribute('disabled', 'true');
+            event.currentTarget.classList.remove('cardlist-add-cart-for-active');
             cartButtonStyle();
         })
     })
