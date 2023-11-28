@@ -5,17 +5,6 @@ const ulTag = document.querySelector('.pagination-page-list');
 let leatArrowPagination = '';
 let rigthArrowPagination = '';
 
-// export function renderPagination(totalPages) {
-//   let liTag = '';
-//   if (page > 1) {
-//     liTag += `<li class="btn prev" onclick="element(totalPages, ${
-//       page - 1
-//     })"><span><i class="left"></i> < </span></li>`;
-//   }
-//   ulTag.innerHTML = liTag;
-  
-//   workButtonPagination()
-// }
 
 export function element(totalPages, page) {
   if(totalPages < 1){
@@ -26,7 +15,11 @@ export function element(totalPages, page) {
   let beforePages = page - 1;
   let afterPades = page;
   
-  liTag += `<li><button class="btn prev left-arrow-pagination"><span><i class="left"></i> < </span></button></li>`;
+  
+
+  
+    if (totalPages > 5) {
+      liTag += `<li><button class="btn prev left-arrow-pagination"><span><i class="left"></i> < </span></button></li>`;
   
   for (let pageLength = beforePages; pageLength <= afterPades; pageLength++) {
     if (pageLength > totalPages) {
@@ -38,8 +31,6 @@ export function element(totalPages, page) {
     
     liTag += `<li><button class="numb button-pagination"><span>${pageLength}</span></button></li>`;
   }
-  if (5 < totalPages) {
-    if (page < totalPages) {
       liTag += `<li class="dots dots-pagination"><span>...</span></li>`;
       if (page < totalPages + 1) {
         liTag += `<li><button class="numb button-pagination"><span>${totalPages-1}</span></button></li>`;
@@ -47,10 +38,19 @@ export function element(totalPages, page) {
           liTag += `<li><button class="numb button-pagination"><span>${totalPages}</span></button></li>`;
         }
       }
-    }
-  }
+      liTag += `<li><button class="btn next right-arrow-pagination"><span><i class="right"></i> > </span></button></li>`;
+    } else {
+        liTag += `<li><button class="btn prev left-arrow-pagination"><span><i class="left"></i> < </span></button></li>`
+        for(let i = 1; i<=totalPages; i++){
+          liTag += `<li><button class="numb button-pagination"><span>${i}</span></button></li>`;
+        }
+        
+        liTag += `<li class="dots dots-pagination"><span>...</span></li>
+        <li><button class="btn next right-arrow-pagination"><span><i class="right"></i> > </span></button></li>`;
+    } 
   
-  liTag += `<li><button class="btn next right-arrow-pagination"><span><i class="right"></i> > </span></button></li>`;
+  
+  
   
   ulTag.innerHTML = liTag;
   
@@ -59,53 +59,75 @@ export function element(totalPages, page) {
   const buttonsPagination = document.querySelectorAll('.button-pagination');
   const threeDots = document.querySelector('.dots-pagination');
 
-  const massifButtonsPagination = [...buttonsPagination];
+  if(totalPages <= 3){
+    threeDots.classList.add('visually-hidden');
+  };
 
-  leatArrowPagination.addEventListener('click', () => {
-    // element(totalPages, page - 1);
+  const massifButtonsPagination = [...buttonsPagination];
+  massifButtonsPagination.forEach((buttonPagination) => {
+    buttonPagination.addEventListener('click', (event) => searchPagination(event, totalPages))
+  });
+
+  leatArrowPagination.addEventListener('click', async () => {
     const activeBtn = massifButtonsPagination.find(btn => btn.classList.contains('active'));
     
     const numbActiveBtn = Number(activeBtn.textContent);
+    if(numbActiveBtn == 2){
+      leatArrowPagination.classList.add('visually-hidden');
+    } else if(numbActiveBtn != totalPages - 1){
+      rigthArrowPagination.classList.remove('visually-hidden');
+    }
+    
     activeBtn.classList.remove('active');
+    activeBtn.disabled = false;
     const preActiveBth = massifButtonsPagination.find(btn => btn.textContent === String(numbActiveBtn - 1));
     if(preActiveBth){
       preActiveBth.classList.add('active');
+      preActiveBth.disabled = true;
     } else{
       const newLi = document.createElement('li');
       const newBtn = document.createElement('button');
       newBtn.classList.add('numb', 'active', 'button-pagination');
+      newBtn.disabled = true;
       newBtn.innerHTML = `<span>${numbActiveBtn - 1}</span>`;
       newLi.appendChild(newBtn);
       threeDots.insertAdjacentElement('afterend', newLi);
       massifButtonsPagination.push(newBtn);
-      console.log(massifButtonsPagination);
+      newBtn.addEventListener('click', (event) => searchPagination(event, totalPages));
     }
-    
-    console.log(massifButtonsPagination.find(btn => btn.classList.contains('active')));
-  });
+    const activePage = massifButtonsPagination.find(btn => btn.classList.contains('active')).textContent;
+    await searchForPagination(activePage);
+    });
 
-  rigthArrowPagination.addEventListener('click', () => {
-    // element(totalPages, page + 1);
+  rigthArrowPagination.addEventListener('click', async () => {
     const activeBtn = massifButtonsPagination.find(btn => btn.classList.contains('active'));
     
     const numbActiveBtn = Number(activeBtn.textContent);
+    if(numbActiveBtn == totalPages - 1){
+      rigthArrowPagination.classList.add('visually-hidden');
+    } else if(numbActiveBtn != 2){
+      leatArrowPagination.classList.remove('visually-hidden');
+    }
     activeBtn.classList.remove('active');
+    activeBtn.disabled = false;
     const preActiveBth = massifButtonsPagination.find(btn => btn.textContent === String(numbActiveBtn + 1));
     if(preActiveBth){
       preActiveBth.classList.add('active');
+      preActiveBth.disabled = true;
     } else{
       const newLi = document.createElement('li');
       const newBtn = document.createElement('button');
       newBtn.classList.add('numb', 'active', 'button-pagination');
+      newBtn.disabled = true;
       newBtn.innerHTML = `<span>${numbActiveBtn + 1}</span>`;
       newLi.appendChild(newBtn);
       threeDots.insertAdjacentElement('beforebegin', newLi);
       massifButtonsPagination.push(newBtn);
-      console.log(massifButtonsPagination);
+      newBtn.addEventListener('click', (event) => searchPagination(event, totalPages));
     }
-    
-    console.log(massifButtonsPagination.find(btn => btn.classList.contains('active')));
-  });
+    const activePage = massifButtonsPagination.find(btn => btn.classList.contains('active')).textContent;
+    await searchForPagination(activePage);
+    });
   workButtonPagination(leatArrowPagination, rigthArrowPagination, massifButtonsPagination, totalPages)
 }
 
@@ -118,7 +140,8 @@ function workButtonPagination(leatArrowPagination, rigthArrowPagination, massifB
   const numberStartPage = JSON.parse(localStorage.getItem('data-for-search')).page;
   const btnStartPage = massifButtonsPagination.filter(btn => btn.textContent === String(numberStartPage));
   btnStartPage.map((btn) => {
-    btn.classList.add('active')
+    btn.classList.add('active');
+    btn.disabled = true;
     
     if(btn.textContent === '1' && btn.textContent === String(totalPages)){
       leatArrowPagination.classList.add('visually-hidden');
@@ -129,18 +152,12 @@ function workButtonPagination(leatArrowPagination, rigthArrowPagination, massifB
       rigthArrowPagination.classList.add('visually-hidden');
     } 
   });
-  
-  massifButtonsPagination.forEach((buttonPagination) => {
-    buttonPagination.addEventListener('click', (event) => searchPagination(event, totalPages))
-  })
 };
 
 async function searchPagination(event, totalPages){
   event.currentTarget.removeEventListener('click', searchPagination);
-
+  event.currentTarget.disabled = true;
   event.currentTarget.classList.add('active');
-
-  console.log(totalPages);
 
   if(event.currentTarget.textContent === '1' && event.currentTarget.textContent === String(totalPages)){
     leatArrowPagination.classList.add('visually-hidden');
@@ -156,22 +173,28 @@ async function searchPagination(event, totalPages){
     leatArrowPagination.classList.remove('visually-hidden');
   }  
   
-  const dataFromLS = JSON.parse(localStorage.getItem('data-for-search'));
+  
   let page = event.currentTarget.textContent;
-  recordsDataForSearch(dataFromLS.keyword, dataFromLS.category, page, dataFromLS.limit);
-  const resultSearch = await search();
-  const searchResult = resultSearch.results;
-  localStorage.setItem('resultProductsFilrers', JSON.stringify(searchResult));
-  renderCards();
+  await searchForPagination(page);
   const buttonsPaginations = document.querySelectorAll('.button-pagination');
   [...buttonsPaginations].forEach((btn) => {
     const hasBtnActive = btn.classList.contains('active');
     if(hasBtnActive && btn.textContent !== page){
       btn.classList.remove('active');
+      btn.disabled = false;
       btn.addEventListener('click', searchPagination)
     }else if(!hasBtnActive){
       btn.addEventListener('click', searchPagination)
     }
   });
+}
+
+async function searchForPagination(page){
+  const dataFromLS = JSON.parse(localStorage.getItem('data-for-search'));
+  recordsDataForSearch(dataFromLS.keyword, dataFromLS.category, page, dataFromLS.limit);
+  const resultSearch = await search();
+  const searchResult = resultSearch.results;
+  localStorage.setItem('resultProductsFilrers', JSON.stringify(searchResult));
+  renderCards();
 }
 
