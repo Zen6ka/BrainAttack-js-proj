@@ -59,9 +59,9 @@ export function element(totalPages, page) {
       }
     }
   }
-  if (page < totalPages) {
-    liTag += `<li><button class="btn next right-arrow-pagination"><span><i class="right"></i> > </span></button></li>`;
-  }
+  
+  liTag += `<li><button class="btn next right-arrow-pagination"><span><i class="right"></i> > </span></button></li>`;
+  
   ulTag.innerHTML = liTag;
   
   leatArrowPagination = document.querySelector('.left-arrow-pagination');
