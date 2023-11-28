@@ -25,19 +25,9 @@ export function element(totalPages, page) {
   let liTag = '';
   let beforePages = page - 1;
   let afterPades = page;
-  if (page > 1) {
-    liTag += `<li><button class="btn prev left-arrow-pagination"><span><i class="left"></i> < </span></button></li>`;
-  }
-  // if(page > 1){
-  //   if(page < totalPages + 1)
-  //   liTag += `<li class="numb" onclick="element(totalPages, ${page})"><span>1</span></li>`;
-  //      if(page > 2){
-  //     liTag += `<li class="numb" onclick="element(totalPages, ${page})"><span>2</span></li>`;
-  //     if(page > totalPages - 8){
-  //     liTag += `<li class="dots"><span>...</span></li>`;
-  //    }
-  //   }
-  // }
+  
+  liTag += `<li><button class="btn prev left-arrow-pagination"><span><i class="left"></i> < </span></button></li>`;
+  
   for (let pageLength = beforePages; pageLength <= afterPades; pageLength++) {
     if (pageLength > totalPages) {
       continue;
@@ -48,9 +38,9 @@ export function element(totalPages, page) {
     
     liTag += `<li><button class="numb button-pagination"><span>${pageLength}</span></button></li>`;
   }
-  if (page < totalPages) {
+  if (5 < totalPages) {
     if (page < totalPages) {
-      liTag += `<li class="dots"><span>...</span></li>`;
+      liTag += `<li class="dots dots-pagination"><span>...</span></li>`;
       if (page < totalPages + 1) {
         liTag += `<li><button class="numb button-pagination"><span>${totalPages-1}</span></button></li>`;
         if (page <= totalPages + 2) {
@@ -66,35 +56,81 @@ export function element(totalPages, page) {
   
   leatArrowPagination = document.querySelector('.left-arrow-pagination');
   rigthArrowPagination = document.querySelector('.right-arrow-pagination');
+  const buttonsPagination = document.querySelectorAll('.button-pagination');
+  const threeDots = document.querySelector('.dots-pagination');
+
+  const massifButtonsPagination = [...buttonsPagination];
 
   leatArrowPagination.addEventListener('click', () => {
-    element(totalPages, page - 1)
+    // element(totalPages, page - 1);
+    const activeBtn = massifButtonsPagination.find(btn => btn.classList.contains('active'));
+    
+    const numbActiveBtn = Number(activeBtn.textContent);
+    activeBtn.classList.remove('active');
+    const preActiveBth = massifButtonsPagination.find(btn => btn.textContent === String(numbActiveBtn - 1));
+    if(preActiveBth){
+      preActiveBth.classList.add('active');
+    } else{
+      const newLi = document.createElement('li');
+      const newBtn = document.createElement('button');
+      newBtn.classList.add('numb', 'active', 'button-pagination');
+      newBtn.innerHTML = `<span>${numbActiveBtn - 1}</span>`;
+      newLi.appendChild(newBtn);
+      threeDots.insertAdjacentElement('afterend', newLi);
+      massifButtonsPagination.push(newBtn);
+      console.log(massifButtonsPagination);
+    }
+    
+    console.log(massifButtonsPagination.find(btn => btn.classList.contains('active')));
   });
+
   rigthArrowPagination.addEventListener('click', () => {
-    element(totalPages, page + 1)
+    // element(totalPages, page + 1);
+    const activeBtn = massifButtonsPagination.find(btn => btn.classList.contains('active'));
+    
+    const numbActiveBtn = Number(activeBtn.textContent);
+    activeBtn.classList.remove('active');
+    const preActiveBth = massifButtonsPagination.find(btn => btn.textContent === String(numbActiveBtn + 1));
+    if(preActiveBth){
+      preActiveBth.classList.add('active');
+    } else{
+      const newLi = document.createElement('li');
+      const newBtn = document.createElement('button');
+      newBtn.classList.add('numb', 'active', 'button-pagination');
+      newBtn.innerHTML = `<span>${numbActiveBtn + 1}</span>`;
+      newLi.appendChild(newBtn);
+      threeDots.insertAdjacentElement('beforebegin', newLi);
+      massifButtonsPagination.push(newBtn);
+      console.log(massifButtonsPagination);
+    }
+    
+    console.log(massifButtonsPagination.find(btn => btn.classList.contains('active')));
   });
-  workButtonPagination(leatArrowPagination, rigthArrowPagination, totalPages)
+  workButtonPagination(leatArrowPagination, rigthArrowPagination, massifButtonsPagination, totalPages)
 }
 
 // element(totalPages, 2);
 
 
 
-function workButtonPagination(leatArrowPagination, rigthArrowPagination, totalPages) {
-  const buttonsPagination = document.querySelectorAll('.button-pagination');
+function workButtonPagination(leatArrowPagination, rigthArrowPagination, massifButtonsPagination, totalPages) {
+  
   const numberStartPage = JSON.parse(localStorage.getItem('data-for-search')).page;
-  // [...buttonsPagination].forEach(btn => console.log(btn.textContent));
-  const btnStartPage = [...buttonsPagination].filter(btn => btn.textContent === String(numberStartPage));
+  const btnStartPage = massifButtonsPagination.filter(btn => btn.textContent === String(numberStartPage));
   btnStartPage.map((btn) => {
     btn.classList.add('active')
-    if(btn.textContent === '1'){
-      leatArrowPagination.classList.add('visually-hidden')
+    
+    if(btn.textContent === '1' && btn.textContent === String(totalPages)){
+      leatArrowPagination.classList.add('visually-hidden');
+      rigthArrowPagination.classList.add('visually-hidden');
+    }else if(btn.textContent === '1'){
+      leatArrowPagination.classList.add('visually-hidden');
     }else if(btn.textContent === String(totalPages)){
-      rigthArrowPagination.classList.add('visually-hidden')
+      rigthArrowPagination.classList.add('visually-hidden');
     } 
   });
   
-  [...buttonsPagination].forEach((buttonPagination) => {
+  massifButtonsPagination.forEach((buttonPagination) => {
     buttonPagination.addEventListener('click', (event) => searchPagination(event, totalPages))
   })
 };
@@ -106,7 +142,10 @@ async function searchPagination(event, totalPages){
 
   console.log(totalPages);
 
-  if(event.currentTarget.textContent === '1'){
+  if(event.currentTarget.textContent === '1' && event.currentTarget.textContent === String(totalPages)){
+    leatArrowPagination.classList.add('visually-hidden');
+    rigthArrowPagination.classList.add('visually-hidden');
+  }else if(event.currentTarget.textContent === '1'){
     leatArrowPagination.classList.add('visually-hidden');
     rigthArrowPagination.classList.remove('visually-hidden');
   }else if(event.currentTarget.textContent === String(totalPages)){
@@ -122,7 +161,8 @@ async function searchPagination(event, totalPages){
   recordsDataForSearch(dataFromLS.keyword, dataFromLS.category, page, dataFromLS.limit);
   const resultSearch = await search();
   const searchResult = resultSearch.results;
-  renderCards(searchResult);
+  localStorage.setItem('resultProductsFilrers', JSON.stringify(searchResult));
+  renderCards();
   const buttonsPaginations = document.querySelectorAll('.button-pagination');
   [...buttonsPaginations].forEach((btn) => {
     const hasBtnActive = btn.classList.contains('active');
@@ -134,3 +174,4 @@ async function searchPagination(event, totalPages){
     }
   });
 }
+
