@@ -102,6 +102,7 @@
   background-color: transparent;
   color: var(--footer-logo-text);
   margin-bottom: 14px;
+  outline: none;
 }
 .contact-form-input::placeholder {
   color: rgba(232, 232, 226, 0.6);
