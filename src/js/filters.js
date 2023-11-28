@@ -2,6 +2,7 @@ import axios, { all } from 'axios';
 import {handleImageClick} from './modal';
 import icons from '../img/icons.svg';
 import {element} from './app';
+import {cartButtonStyle} from './popular'
 
 export class RequestToTheServer {
     baseUrl = 'https://food-boutique.b.goit.study/api/'
@@ -124,7 +125,8 @@ async function ifEmptyInput() {
             localStorage.setItem('products-home-page-filters', JSON.stringify(productsHomePage));
             localStorage.setItem('all-pages-result', JSON.stringify(allPagesResult));
         }
-        renderCards(productsHomePage);
+        localStorage.setItem('resultProductsFilrers', JSON.stringify(productsHomePage));
+        renderCards();
         element(allPagesResult, 2);
         if(fullInputResultSearch.totalPages === 0){
             messageForError();
@@ -147,7 +149,8 @@ searchForm.addEventListener('submit', async (event) => {
     await search();
     inputResultSearch = fullInputResultSearch.results;
     allPagesResult = fullInputResultSearch.totalPages;
-    renderCards(inputResultSearch);
+    localStorage.setItem('resultProductsFilrers', JSON.stringify(inputResultSearch));
+    renderCards();
     element(allPagesResult, 2);
     if(fullInputResultSearch.totalPages === 0){
         messageForError();
@@ -194,7 +197,7 @@ function renderCategories(productsCategories){
     addListenerLi(buttonsLiFilters)
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////  CARD  SEARCH  //////////////////////////////////////////////////////////////////////////////////
 
 buttonCategories.addEventListener('click', () => addListenerButton(buttonCategories, firctSelectSearch));
 
@@ -234,7 +237,8 @@ async function renderEndPoint(event){
     await search();
     inputResultSearch = fullInputResultSearch.results;
     allPagesResult = fullInputResultSearch.totalPages;
-    renderCards(inputResultSearch);
+    localStorage.setItem('resultProductsFilrers', JSON.stringify(inputResultSearch));
+    renderCards();
     element(allPagesResult, 2);
     if(fullInputResultSearch.totalPages === 0){
         messageForError();
@@ -243,7 +247,8 @@ async function renderEndPoint(event){
 
 ///////////////////////////////////////////////////////  RENDER  CARDS  /////////////////////////////////////////////////////////////
 
-export function renderCards(products) {
+export function renderCards() {
+    const products = JSON.parse(localStorage.getItem('resultProductsFilrers'));
     const listResult = [];
     const infoAboutCard = JSON.parse(localStorage.getItem('cart'));
     products.forEach((product) => {
@@ -340,6 +345,7 @@ function workShopButton(products) {
             <use href="${icons}#icon-check"></use>
             </svg>`;
             event.currentTarget.setAttribute('disabled', 'true');
+            cartButtonStyle();
         })
     })
 };
