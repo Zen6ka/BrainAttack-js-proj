@@ -179,3 +179,24 @@
     align-items: flex-end;
   }
 }
+html {
+  scroll-behavior: smooth;
+}
+.top {
+  position: absolute;
+  right: 5px;
+  /* background-color: #000000; */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+  opacity: 0.9;
+}
+.top:hover {
+  opacity: 0.9;
+  background-color: #000000;
+}
