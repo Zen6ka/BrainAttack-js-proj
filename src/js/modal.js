@@ -1,5 +1,6 @@
 import axios from 'axios';
 import icons from '../img/icons.svg';
+import { cartButtonStyle } from './popular';
 
 const refs = {
   closeModalBtn: document.querySelector('[data-action="close-modal"]'),
@@ -99,10 +100,10 @@ async function handleProductDetails(productId) {
 
     // Перевіряємо чи продукт в корзині
     const isInCart = checkIfProductInCart(productDetails);
-    const isAdded = getCartFromStorage().includes(productId);
 
     // Оновлюємо текст кнопки
-    updateAddToCartButton(isInCart, isAdded);
+    updateAddToCartButton(isInCart, productDetails);
+
     if (productDetails.is10PercentOff) {
       refs.discountProduct.classList.remove('hidden');
     } else {
@@ -116,27 +117,27 @@ async function handleProductDetails(productId) {
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Міняю текст кнопки в залежності чи в корзині продукт
-function updateAddToCartButton(isInCart, isAdded) {
-  const buttonText = isInCart ? 'Remove from' : isAdded ? 'Added to' : 'Add to';
+function updateAddToCartButton(isInCart, productDetails) {
+  const buttonText = isInCart ? 'Remove from' : 'Add to';
   refs.addToCart.querySelector('.modal-btn-sabmit-span').textContent =
     buttonText;
-  refs.addToCart.disabled = isInCart; // кнопка не активна якщо товар в корзині
+  refs.addToCart.disabled = false;
+
+  // Видалення попереднього слухача
+  refs.addToCart.removeEventListener('click', () => {
+    onClickAddToCart(productDetails, isInCart);
+  });
+
+  // Додавання нового слухача для кнопки
+  refs.addToCart.addEventListener('click', () => {
+    onClickAddToCart(productDetails, isInCart);
+  });
 }
 
 // Перевіряєм чи продукт вже в корзині
 function checkIfProductInCart(productDetails) {
   let cart = getCartFromStorage();
   const isInCart = cart.some(obj => obj._id === productDetails._id);
-
-  // Видалення попереднього слухача
-  refs.addToCart.removeEventListener('click', onClickAddToCart);
-
-  if (!isInCart) {
-    // Додавання нового слухача для кнопки, якщо продукт не в кошику
-    refs.addToCart.addEventListener('click', () => {
-      onClickAddToCart(productDetails, isInCart);
-    });
-  }
 
   return isInCart;
 }
@@ -153,12 +154,13 @@ function onClickAddToCart(productDetails, isInCart) {
     // Видалення товару з корзини
     removeFromCart(productDetails._id);
     // Оновлюємо текст кнопки та робимо її неактивною
-    updateAddToCartButton(false, false);
+    updateAddToCartButton(false, productDetails);
   } else {
     // Товару немає в кошику, додаємо
     addToCart(productDetails);
     // Оновлюємо текст кнопки
-    updateAddToCartButton(true, true);
+    cartButtonStyle();
+    updateAddToCartButton(true, productDetails);
   }
   const buttonsShopFilter = document.querySelectorAll('.cardlist-add-cart');
   const selectedButton = [...buttonsShopFilter].filter(
@@ -179,7 +181,6 @@ function addToCart(productDetails) {
     cart.push(productDetails);
     localStorage.setItem('cart', JSON.stringify(cart));
   }
-  // console.log('Cart:', cart);
 }
 
 // Функція для видалення продукту з корзини в локальному сховищі
@@ -191,7 +192,6 @@ function removeFromCart(productId) {
     cart.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(cart));
   }
-  // console.log('Cart:', cart);
 }
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 // Оновлюємо інтерфейс модального вікна при відкритті
