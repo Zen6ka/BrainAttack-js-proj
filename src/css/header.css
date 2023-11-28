@@ -48,29 +48,30 @@
   align-items: center;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
-.icon-basket-header {
-  width: 18px;
-  height: 18px;
-}
+
 .header-besket-wrapper {
   gap: 14px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.header-basket-item {
-  border-radius: 50%;
-  background: var(--footer-background);
-  padding: 10px;
-  border: none;
+
+.icon-basket-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+  background: var(--footer-background);
+  padding: 10px;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
-.header-basket-item:hover,
-.header-basket-item:focus {
+.icon-basket-wrap:hover,
+.icon-basket-wrap:focus {
   background: #586f1f;
+}
+.icon-basket-header {
+  width: 14px;
+  height: 14px;
 }
 .cart-amount {
   color: var(--content-text-color);
@@ -78,8 +79,14 @@
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 133.333% */
+  line-height: 1.33;
   text-transform: uppercase;
+  padding-right: 5px;
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.cart-amount:hover,
+.cart-amount:focus {
+  color: var(--footer-background);
 }
 
 /*=======media767====================================*/
@@ -97,7 +104,7 @@
   }
   .logo-link {
     font-size: 18px;
-    line-height: 20px; /* 111.111% */
+    line-height: 1.11;
     letter-spacing: -0.36px;
   }
   .link-home {
@@ -109,7 +116,7 @@
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
-    line-height: 18px; /* 128.571% */
+    line-height: 1.29;
     border: none;
     transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -151,13 +158,19 @@
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
-    line-height: 18px; /* 128.571% */
+    line-height: 1.29;
     border: none;
     transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   .link-home:hover,
   .link-home:focus {
     background: #586f1f;
+  }
+  .header-basket-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
   }
 }
 
@@ -166,11 +179,5 @@
   .container.page-header-container {
     max-width: 1280px;
     padding: 0 20px;
-  }
-  .footer-content-wrap {
-    margin-bottom: 128px;
-  }
-  .footer-main-info-wrap {
-    display: flex;
   }
 }
