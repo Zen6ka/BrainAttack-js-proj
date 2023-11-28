@@ -17,7 +17,7 @@ const cartOrderDetails = document.querySelector(".js-cart-order-details");
 const totalOrderedPrice = document.querySelector(".js-total-ordered-price");
 const form = document.querySelector(".js-email-form");
 // const btnCheckout = document.querySelector(".js-email-checkout");
-const input = document.querySelector(".input")
+const input = document.querySelector(".cart-input")
 
 
 console.log("Test start");
