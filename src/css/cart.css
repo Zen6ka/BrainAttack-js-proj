@@ -5,6 +5,7 @@ body {
     background-color: #E8E8E2;
     font-family: inherit;
     margin: 0;
+    
 }
 
 
@@ -384,11 +385,11 @@ line-height: 1.28; /* 128.571% */
 
 }
 
-.input{
+.cart-input{
     padding-left: 58px;
     /* width: 97.5%; */
     height: 42px;
-    width: 85%;
+    width: 81%;
 color: #010101;
     border-radius: 30px;
 border: 1px solid rgba(1, 1, 1, 0.30);
@@ -400,15 +401,15 @@ font-weight: 400;
 line-height: 18px; /* 128.571% */
 }
 
-.input-field::placeholder {
+/* .cart-input-field::placeholder {
     color: #010101;
     font-family: Neue Montreal;
 font-size: 14px;
 font-style: normal;
 font-weight: 400;
-line-height: 18px; /* 128.571% */
+line-height: 1.28; 
 
-  }
+  } */
 
 .js-email-checkout {
     width: 100%;
@@ -598,16 +599,17 @@ line-height: 1.0; /* 100% */
             flex-direction: row;
             margin: 0;
             justify-content: space-between;
-            font-size: 18px;
+            font-size: 28px;
 line-height: 1.33; /* 133.333% */
 }
 
-.input{width: 359px;
+.cart-input{
+
 height: 54px;
 
 padding-left: 54px;
 /* width: 97.5%; */
-height: 42px;
+
 width: 85%;
 color: #010101;
 border-radius: 30px;
@@ -636,14 +638,14 @@ font-weight: 400;
 line-height: 1.28; /* 128.571% */
 }
 
-.input-field::placeholder {
+/* .cart-input-field::placeholder {
     color: #010101;
     font-family: Neue Montreal;
 font-size: 18px;
 font-style: normal;
 font-weight: 400;
-line-height: 1.33; /* 128.571% */
-  }
+line-height: 1.33;
+  } */
 
 .js-email-checkout {
     width: 215px;
@@ -660,8 +662,8 @@ line-height: 1.33; /* 128.571% */
     .total-cart-container {
         max-width: 1280px;
         padding-top: 81px;
-        padding-left: 100px;
-    padding-right: 100px;
+        padding-left: 20px;
+    padding-right: 20px;
     padding-bottom: 100px;
     }
 
