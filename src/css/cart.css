@@ -388,7 +388,7 @@ line-height: 1.28; /* 128.571% */
     padding-left: 58px;
     /* width: 97.5%; */
     height: 42px;
-    width: 85%;
+    width: 81%;
 color: #010101;
     border-radius: 30px;
 border: 1px solid rgba(1, 1, 1, 0.30);
@@ -422,7 +422,7 @@ font-family: "Neue Montreal Medium";
 font-size: 14px;
 font-style: normal;
 font-weight: 500;
-line-height: 18px; /* 128.571% */
+line-height: 1.28; /* 128.571% */
 
 }
 
@@ -601,13 +601,13 @@ line-height: 1.0; /* 100% */
 line-height: 1.33; /* 133.333% */
 }
 
-.cart-input{width: 359px;
+.cart-input{width: 305px;
 height: 54px;
 
 padding-left: 54px;
 /* width: 97.5%; */
-height: 42px;
-width: 85%;
+
+/* width: 85%; */
 color: #010101;
 border-radius: 30px;
 border: 1px solid rgba(1, 1, 1, 0.30);
