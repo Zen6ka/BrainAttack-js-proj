@@ -400,15 +400,14 @@ font-weight: 400;
 line-height: 18px; /* 128.571% */
 }
 
-.cart-input-field::placeholder {
+/* .cart-input-field::placeholder {
     color: #010101;
     font-family: Neue Montreal;
 font-size: 14px;
 font-style: normal;
 font-weight: 400;
-line-height: 18px; /* 128.571% */
-
-  }
+line-height: 1.28;
+  } */
 
 .js-email-checkout {
     width: 100%;
@@ -636,14 +635,14 @@ font-weight: 400;
 line-height: 1.28; /* 128.571% */
 }
 
-.cart-input-field::placeholder {
+/* .cart-input-field::placeholder {
     color: #010101;
     font-family: Neue Montreal;
 font-size: 18px;
 font-style: normal;
 font-weight: 400;
-line-height: 1.33; /* 128.571% */
-  }
+line-height: 1.28; 
+  } */
 
 .js-email-checkout {
     width: 215px;
