@@ -110,8 +110,8 @@
   bottom: 20px;
 }
 
-.cardlist-add-cart:hover,
-.cardlist-add-cart:focus {
+.cardlist-add-cart-for-active:hover,
+.cardlist-add-cart-for-active:focus {
   transform: scale(1.05);
   background: #586F1F;
 }

@@ -20,7 +20,8 @@ export function element(totalPages, page) {
   
     if (totalPages > 5) {
       liTag += `<li><button class="btn prev left-arrow-pagination"><span><i class="left"></i> < </span></button></li>`;
-  
+      liTag += `<li class="dots dots-before"><span>...</span></li>`;
+
   for (let pageLength = beforePages; pageLength <= afterPades; pageLength++) {
     if (pageLength > totalPages) {
       continue;
@@ -29,20 +30,21 @@ export function element(totalPages, page) {
       pageLength = pageLength + 1;
     }
     
-    liTag += `<li><button class="numb button-pagination"><span>${pageLength}</span></button></li>`;
+    liTag += `<li id="${pageLength}"><button class="numb button-pagination"><span>${pageLength}</span></button></li>`;
   }
       liTag += `<li class="dots dots-pagination"><span>...</span></li>`;
       if (page < totalPages + 1) {
-        liTag += `<li><button class="numb button-pagination"><span>${totalPages-1}</span></button></li>`;
+        liTag += `<li id="${totalPages-1}"><button class="numb button-pagination"><span>${totalPages-1}</span></button></li>`;
         if (page <= totalPages + 2) {
-          liTag += `<li><button class="numb button-pagination"><span>${totalPages}</span></button></li>`;
+          liTag += `<li id="${totalPages}"><button class="numb button-pagination"><span>${totalPages}</span></button></li>`;
         }
       }
+      liTag += `<li class="dots dots-after"><span>...</span></li>`;
       liTag += `<li><button class="btn next right-arrow-pagination"><span><i class="right"></i> > </span></button></li>`;
     } else {
         liTag += `<li><button class="btn prev left-arrow-pagination"><span><i class="left"></i> < </span></button></li>`
         for(let i = 1; i<=totalPages; i++){
-          liTag += `<li><button class="numb button-pagination"><span>${i}</span></button></li>`;
+          liTag += `<li id="${i}"><button class="numb button-pagination"><span>${i}</span></button></li>`;
         }
         
         liTag += `<li class="dots dots-pagination"><span>...</span></li>
@@ -58,12 +60,17 @@ export function element(totalPages, page) {
   rigthArrowPagination = document.querySelector('.right-arrow-pagination');
   const buttonsPagination = document.querySelectorAll('.button-pagination');
   const threeDots = document.querySelector('.dots-pagination');
+  const dotsBefore = document.querySelector('.dots-before');
+  const dotsAfter = document.querySelector('.dots-after');
+
+  dotsBefore.classList.add('visually-hidden');
+  dotsAfter.classList.add('visually-hidden');
 
   if(totalPages <= 3){
     threeDots.classList.add('visually-hidden');
   };
 
-  const massifButtonsPagination = [...buttonsPagination];
+  let massifButtonsPagination = [...buttonsPagination];
   massifButtonsPagination.forEach((buttonPagination) => {
     buttonPagination.addEventListener('click', (event) => searchPagination(event, totalPages))
   });
@@ -88,17 +95,33 @@ export function element(totalPages, page) {
       preActiveBth.disabled = true;
     } else{
       const newLi = document.createElement('li');
+      newLi.setAttribute('id', `${numbActiveBtn - 1}`);
       const newBtn = document.createElement('button');
       newBtn.classList.add('numb', 'active', 'button-pagination');
       newBtn.disabled = true;
       newBtn.innerHTML = `<span>${numbActiveBtn - 1}</span>`;
       newLi.appendChild(newBtn);
       threeDots.insertAdjacentElement('afterend', newLi);
-      massifButtonsPagination.push(newBtn);
+      massifButtonsPagination.unshift(newBtn);
       newBtn.addEventListener('click', (event) => searchPagination(event, totalPages));
     }
     const activePage = massifButtonsPagination.find(btn => btn.classList.contains('active')).textContent;
     await searchForPagination(activePage);
+    
+    if(massifButtonsPagination.length > 4){
+      let numberBtnForDelete = massifButtonsPagination[0];
+    for (let i = 0; i < massifButtonsPagination.length; i++){
+      if(massifButtonsPagination[i].textContent > numberBtnForDelete.textContent){
+        numberBtnForDelete = massifButtonsPagination[i];
+      }
+    }
+    
+      const buttonForDelete = document.getElementById(`${numberBtnForDelete.textContent}`);
+      ulTag.removeChild(buttonForDelete);
+      massifButtonsPagination = massifButtonsPagination.filter(obj => obj.textContent !== numberBtnForDelete.textContent);
+      dotsAfter.classList.remove('visually-hidden');
+
+    };
     });
 
   rigthArrowPagination.addEventListener('click', async () => {
