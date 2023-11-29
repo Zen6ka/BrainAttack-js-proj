@@ -49,21 +49,17 @@ function handleImageClickPopular(event) {
   onOpenModal(productId);
 }
 //
-// Отримуємо всі елементи .discount-card
-const discountCards = document.querySelectorAll('.discount-card');
 
-discountCards.forEach(discountCard => {
-  const discountCardImage = discountCard.querySelector(
-    '.discount-card-image img'
-  );
+const discountCardImages = document.querySelectorAll('.discount-card-image');
 
-  discountCardImage.addEventListener('click', () => {
-    const productId = discountCard.querySelector('.discount-card-button')
-      .dataset.id;
-
-    console.log('Clicked on Discount Card, Product ID:', productId);
-    console.log('Image clicked');
-    onOpenModal(productId);
+discountCardImages.forEach(image => {
+  image.addEventListener('click', event => {
+    const discountCard = event.currentTarget.closest('.discount-card');
+    
+    if (discountCard) {
+      const dataId = discountCard.querySelector('.discount-card-button').dataset.id;
+      onOpenModal(dataId);
+    }
   });
 });
 
@@ -117,21 +113,24 @@ async function handleProductDetails(productId) {
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Міняю текст кнопки в залежності чи в корзині продукт
+let lastClickListener = null;
+
 function updateAddToCartButton(isInCart, productDetails) {
   const buttonText = isInCart ? 'Remove from' : 'Add to';
   refs.addToCart.querySelector('.modal-btn-sabmit-span').textContent =
     buttonText;
   refs.addToCart.disabled = false;
 
-  // Видалення попереднього слухача
-  refs.addToCart.removeEventListener('click', () => {
-    onClickAddToCart(productDetails, isInCart);
-  });
+  if (lastClickListener) {
+    refs.addToCart.removeEventListener('click', lastClickListener);
+  }
 
-  // Додавання нового слухача для кнопки
-  refs.addToCart.addEventListener('click', () => {
+  const clickListener = () => {
     onClickAddToCart(productDetails, isInCart);
-  });
+  };
+
+  refs.addToCart.addEventListener('click', clickListener);
+  lastClickListener = clickListener;
 }
 
 // Перевіряєм чи продукт вже в корзині
@@ -173,25 +172,28 @@ function onClickAddToCart(productDetails, isInCart) {
   </svg>`)
   );
 }
-
+// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Функція для додавання продукту до корзини в локальному сховищі
 function addToCart(productDetails) {
   let cart = getCartFromStorage();
-  if (!cart.some(obj => obj._id === productDetails._id)) {
-    cart.push(productDetails);
-    localStorage.setItem('cart', JSON.stringify(cart));
+  const index = cart.findIndex(obj => obj._id === productDetails._id);
+
+  if (index !== -1) {
+    // Продукт вже є в кошику, оновлюємо його
+    cart[index] = { ...productDetails };
+  } else {
+    // Продукта немає в кошику, додаємо його
+    cart.push({ ...productDetails });
   }
+
+  localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 // Функція для видалення продукту з корзини в локальному сховищі
 function removeFromCart(productId) {
   let cart = getCartFromStorage();
-  const index = cart.findIndex(item => item._id === productId);
-  if (index !== -1) {
-    const removedProduct = cart[index];
-    cart.splice(index, 1);
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }
+  const updatedCart = cart.filter(item => item._id !== productId);
+  localStorage.setItem('cart', JSON.stringify(updatedCart));
 }
 // ////////////////////////////////////////////////////////////////////////////////////////////////
 // Оновлюємо інтерфейс модального вікна при відкритті
@@ -202,8 +204,20 @@ export function onOpenModal(productId) {
 
   // Перевіряємо, чи продукт вже в корзині
   checkIfProductInCart(productId);
+  clearModal();
   handleProductDetails(productId);
   toggleBodyScroll();
+}
+function clearModal() {
+  refs.modalImg.src = '';
+  refs.modalImg.alt = '';
+  refs.modalTitle.textContent = '';
+  refs.modalCategory.textContent = '';
+  refs.modalSize.textContent = '';
+  refs.modalPopularity.textContent = '';
+  refs.modalDesc.textContent = '';
+  refs.modalPrice.textContent = '';
+  refs.discountProduct.classList.add('hidden');
 }
 
 // Закритя модального вікна
