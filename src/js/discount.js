@@ -2,6 +2,7 @@
 import axios from 'axios';
 import sprite from '../img/icons.svg';
 import { renderCards } from './filters';
+import { localStorageCheckCart } from './header';
 
 const discountEl = document.querySelector('.discount-container');
 const CART_KEY = 'cart';
@@ -66,11 +67,12 @@ function productTemplate(product) {
           </div>`;
 }
 
-function handleButtonClick(ev) {
+export function handleButtonClick(ev) {
   const productId = ev.currentTarget.dataset.id;
   const selectedProduct = products.find(p => p._id === productId);
   addToCart(selectedProduct);
   renderCards();
+  localStorageCheckCart();
 }
 
 function attachButtonClickHandlers() {
