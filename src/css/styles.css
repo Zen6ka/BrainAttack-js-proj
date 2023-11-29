@@ -33,13 +33,13 @@
 .flex-container {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  /* gap: 40px; */
 }
 
 @media screen and (min-width: 768px) {
   .flex-container {
     max-width: 768px;
-    gap: 100px;
+    /* gap: 100px; */
   }
 }
 

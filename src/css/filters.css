@@ -1,245 +1,236 @@
 .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    border: 0;
-    padding: 0;
-    white-space: nowrap;
-    clip-path: inset(100%);
-    clip: rect(0 0 0 0);
-    overflow: hidden;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
 }
 
 h1,
 h2,
 h3,
 h4,
-p{
-    cursor:default;
+p {
+  cursor: default;
 }
 
-
-
-.filters{
-    margin: 0 auto;
-    padding: 0;
+.filters {
+  padding: 0;
 }
 
-.search-form{
-    width: 100%;
+.search-form {
+  width: 100%;
 }
 
-.intup-button-search{
-    position: relative;
-    margin-top: 8px;
+.intup-button-search {
+  position: relative;
+  margin-top: 8px;
 }
 
-.label-filters{
-    color: rgba(1, 1, 1, 0.30);
-    font-family: "Neue Montreal Regular";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 18px;
+.label-filters {
+  color: rgba(1, 1, 1, 0.3);
+  font-family: 'Neue Montreal Regular';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
 }
 
-.input-search{
-    width: 100%;
-    height: 48px;
-    border-radius: 30px;
-    border: 1px solid rgba(1, 1, 1, 0.30);
-    color: #010101;
-    background-color: transparent;
-    font-family: "Neue Montreal Regular";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 18px; 
-    padding-left: 20px;
-    padding-right: 45px;
+.input-search {
+  width: 100%;
+  height: 48px;
+  border-radius: 30px;
+  border: 1px solid rgba(1, 1, 1, 0.3);
+  color: #010101;
+  background-color: transparent;
+  font-family: 'Neue Montreal Regular';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  padding-left: 20px;
+  padding-right: 45px;
 }
 
 .input-search:focus,
-.input-search:hover{
-    border: 1px solid rgba(1, 1, 1, 0.30);
-    outline: none;
+.input-search:hover {
+  border: 1px solid rgba(1, 1, 1, 0.3);
+  outline: none;
 }
 
-.input-search::placeholder{
-    color: #010101;
-    font-family: "Neue Montreal Regular";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 18px;
+.input-search::placeholder {
+  color: #010101;
+  font-family: 'Neue Montreal Regular';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
 }
 
-.button-search{
-    padding: 0;
-    border: 0px transparent;
-    background-color: transparent;
-    position: absolute;
-    right: calc(20px - (40px - 20px)/2);
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
+.button-search {
+  padding: 0;
+  border: 0px transparent;
+  background-color: transparent;
+  position: absolute;
+  right: calc(20px - (40px - 20px) / 2);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
 }
 
-.search{
-    width: 20px;
-    height: 20px;
+.search {
+  width: 20px;
+  height: 20px;
 }
 
+.button-categories {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
-.button-categories{
-    position: relative;
+.search-arrow {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.first-select-search-not-focus {
+  width: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  transform: translateY(-100%);
+  background-color: #fff;
+  z-index: 2;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  transition: transform 250ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.first-select-search {
+  margin: 0;
+  white-space: normal;
+  clip: auto;
+  overflow: visible;
+  transform: translateY(0);
+  top: 56px;
+  display: flex;
+  width: 335px;
+  padding: 14px 0 14px 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 11.2125px 0px rgba(0, 0, 0, 0.04),
+    0px 20px 69px 0px rgba(0, 0, 0, 0.07);
+}
+
+.li-first-select-search {
+  width: 100%;
+}
+
+.button-li-filters {
+  color: rgba(1, 1, 1, 0.5);
+  font-family: 'Neue Montreal Regular';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  border: 0px transparent solid;
+  background-color: transparent;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.error {
+  margin: 100px 0 180px;
+}
+
+.title-error {
+  margin: 0 auto;
+  max-width: 261px;
+  width: 100%;
+  color: #010101;
+  text-align: center;
+  font-family: 'Neue Montreal Medium';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.a-title-error {
+  color: #6d8434;
+}
+
+.p-error {
+  margin: 14px auto 0;
+  max-width: 279px;
+  width: 100%;
+  color: rgba(1, 1, 1, 0.7);
+  text-align: center;
+  font-family: 'Neue Montreal Regular';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+@media (min-width: 768px) {
+  .form-div {
     display: flex;
-    align-items: center;
-}
-
-.search-arrow{
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.first-select-search-not-focus{
-    width: 1px;
-    margin: -1px;
-    border: 0;
-    padding: 0;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    transform: translateY(-100%);
-    background-color: #fff;
-    z-index: 2;
-    white-space: nowrap;
-    clip: rect(0 0 0 0);
-    overflow: hidden;
-    transition: transform 250ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-}
-
-.first-select-search{
-    margin: 0;
-    white-space: normal;
-    clip: auto;
-    overflow: visible;
-    transform: translateY(0);
-    top: 56px;
-    display: flex;
-    width: 335px;
-    padding: 14px 0 14px 20px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+    align-items: self-end;
     gap: 8px;
-    border-radius: 15px;
-    box-shadow: 0px 4px 11.2125px 0px rgba(0, 0, 0, 0.04), 0px 20px 69px 0px rgba(0, 0, 0, 0.07);
-}
+  }
 
-.li-first-select-search{
-    width: 100%;
-}
+  .search-form {
+    max-width: 269px;
+  }
 
-.button-li-filters{
-    color: rgba(1, 1, 1, 0.50);
-    font-family: "Neue Montreal Regular";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 18px; 
-    border: 0px transparent solid;
-    background-color: transparent;
-    width: 100%;
-    display: flex;
-    align-items: center;
-}
+  .input-search {
+    height: 52px;
+    min-width: 189px;
+  }
 
-.error{
-    margin: 100px 0 180px;
-}
+  .error {
+    margin: 150px 0 300px;
+  }
 
-.title-error{
-    margin: 0 auto;
-    max-width: 261px;
-    width: 100%;
-    color: #010101;
+  .title-error {
+    max-width: 367px;
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .p-error {
+    max-width: 371px;
     text-align: center;
-    font-family: "Neue Montreal Medium";
     font-size: 18px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 20px;
+    line-height: 24px;
+  }
 }
 
-.a-title-error{
-    color: #6D8434;
-}
-
-.p-error{
-    margin: 14px auto 0;
-    max-width: 279px;
+@media (min-width: 1440px) {
+  .filters {
+    max-width: 925px;
     width: 100%;
-    color: rgba(1, 1, 1, 0.70);
-    text-align: center;
-    font-family: "Neue Montreal Regular";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 18px;
-}
+  }
 
-
-
-
-
-
-
-@media (min-width: 768px){
-    .form-div{
-        display: flex;
-        align-items: self-end;
-        gap: 8px;
-    }
-
-    .search-form{
-        max-width: 269px;
-    }
-
-    .input-search{
-        height: 52px;
-        min-width: 189px;
-    }
-
-    .error{
-        margin: 150px 0 300px;
-    }
-
-    .title-error{
-        max-width: 367px;
-        font-size: 20px;
-        line-height: 24px;
-    }
-    
-    .p-error{
-        max-width: 371px;
-        text-align: center;
-        font-size: 18px;
-        line-height: 24px;
-    }
-}
-
-@media (min-width: 1440px){
-    .filters{
-        max-width: 925px;
-        width: 100%;
-    }
-
-    .error{
-        margin: 200px 0 0;
-    }
+  .error {
+    margin: 200px 0 0;
+  }
 }

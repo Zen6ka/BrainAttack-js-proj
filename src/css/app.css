@@ -24,6 +24,7 @@
   background-color: #dedbdb;
 }
 .left-arrow-pagination {
+  margin-right: 19px;
   background-color: #fafafa;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -31,6 +32,7 @@
   background-color: #6d8434;
 }
 .right-arrow-pagination {
+  margin-left: 19px;
   background-color: #fafafa;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
