@@ -3,6 +3,7 @@ import {handleImageClick} from './modal';
 import icons from '../img/icons.svg';
 import {element} from './app';
 import {cartButtonStyle} from './popular'
+import {localStorageCheckCart} from './header';
 
 export class RequestToTheServer {
     baseUrl = 'https://food-boutique.b.goit.study/api/'
@@ -354,6 +355,7 @@ function workShopButton(products) {
             event.currentTarget.setAttribute('disabled', 'true');
             event.currentTarget.classList.remove('cardlist-add-cart-for-active');
             cartButtonStyle();
+            localStorageCheckCart();
         })
     })
 };

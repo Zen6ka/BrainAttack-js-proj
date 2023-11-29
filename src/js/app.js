@@ -2,7 +2,7 @@
 import { recordsDataForSearch, search, renderCards } from "./filters";
 
 const ulTag = document.querySelector('.pagination-page-list');
-let leatArrowPagination = '';
+let leftArrowPagination = '';
 let rigthArrowPagination = '';
 
 
@@ -20,7 +20,7 @@ export function element(totalPages, page) {
   
     if (totalPages > 5) {
       liTag += `<li><button class="btn prev left-arrow-pagination"><span><i class="left"></i> < </span></button></li>`;
-      liTag += `<li class="dots dots-before"><span>...</span></li>`;
+      liTag += `<li class="dots dots-before visually-hidden"><span>...</span></li>`;
 
   for (let pageLength = beforePages; pageLength <= afterPades; pageLength++) {
     if (pageLength > totalPages) {
@@ -39,16 +39,19 @@ export function element(totalPages, page) {
           liTag += `<li id="${totalPages}"><button class="numb button-pagination"><span>${totalPages}</span></button></li>`;
         }
       }
-      liTag += `<li class="dots dots-after"><span>...</span></li>`;
+      liTag += `<li class="dots dots-after visually-hidden"><span>...</span></li>`;
       liTag += `<li><button class="btn next right-arrow-pagination"><span><i class="right"></i> > </span></button></li>`;
     } else {
         liTag += `<li><button class="btn prev left-arrow-pagination"><span><i class="left"></i> < </span></button></li>`
+        liTag += `<li class="dots dots-before visually-hidden"><span>...</span></li>`;
+        liTag += `<li class="dots dots-pagination visually-hidden"><span>...</span></li>`;
+
         for(let i = 1; i<=totalPages; i++){
           liTag += `<li id="${i}"><button class="numb button-pagination"><span>${i}</span></button></li>`;
         }
-        
-        liTag += `<li class="dots dots-pagination"><span>...</span></li>
-        <li><button class="btn next right-arrow-pagination"><span><i class="right"></i> > </span></button></li>`;
+
+        liTag += `<li class="dots dots-after visually-hidden"><span>...</span></li>`;
+        liTag += `<li><button class="btn prev right-arrow-pagination"><span><i class="left"></i> > </span></button></li>`;
     } 
   
   
@@ -56,32 +59,59 @@ export function element(totalPages, page) {
   
   ulTag.innerHTML = liTag;
   
-  leatArrowPagination = document.querySelector('.left-arrow-pagination');
+  leftArrowPagination = document.querySelector('.left-arrow-pagination');
   rigthArrowPagination = document.querySelector('.right-arrow-pagination');
   const buttonsPagination = document.querySelectorAll('.button-pagination');
   const threeDots = document.querySelector('.dots-pagination');
   const dotsBefore = document.querySelector('.dots-before');
   const dotsAfter = document.querySelector('.dots-after');
 
-  dotsBefore.classList.add('visually-hidden');
-  dotsAfter.classList.add('visually-hidden');
-
-  if(totalPages <= 3){
-    threeDots.classList.add('visually-hidden');
-  };
+  // if(totalPages <= 3){
+  //   threeDots.classList.add('visually-hidden');
+  // };
 
   let massifButtonsPagination = [...buttonsPagination];
+
+  let littleNumber = massifButtonsPagination[0];
+  let littleNumberPlusOne = '';
+
+  for (let i = 0; i < massifButtonsPagination.length; i++){
+    if(Number(massifButtonsPagination[i].textContent) < Number(littleNumber.textContent)){
+      littleNumber = massifButtonsPagination[i];
+    } else if(Number(massifButtonsPagination[i].textContent) - 1 === Number(littleNumber.textContent)){
+      littleNumberPlusOne = massifButtonsPagination[i];
+    }};
+    
+    let littleNumberMass = [littleNumber, littleNumberPlusOne];
+
+    let bigNumber = massifButtonsPagination[0];
+    let bigNumberMinusOne = '';
+
+    for (let i = 0; i < massifButtonsPagination.length; i++){
+      if(Number(massifButtonsPagination[i].textContent) > Number(bigNumber.textContent)){
+        bigNumber = massifButtonsPagination[i];
+      }};
+
+    for (let i = 0; i < massifButtonsPagination.length; i++){
+      if(Number(massifButtonsPagination[i].textContent) + 1 === Number(bigNumber.textContent)){
+        bigNumberMinusOne = massifButtonsPagination[i];
+      }};
+
+    let bigNumberMass = [bigNumberMinusOne, bigNumber];
+
   massifButtonsPagination.forEach((buttonPagination) => {
     buttonPagination.addEventListener('click', (event) => searchPagination(event, totalPages))
   });
 
-  leatArrowPagination.addEventListener('click', async () => {
+  ///////////////////////////////  LEFT BUTTON ///////////////////////////////////////////////////////////////////////////////////////
+
+  leftArrowPagination.addEventListener('click', async () => {
     const activeBtn = massifButtonsPagination.find(btn => btn.classList.contains('active'));
     
     const numbActiveBtn = Number(activeBtn.textContent);
     if(numbActiveBtn == 2){
-      leatArrowPagination.classList.add('inactive-button');
-      leatArrowPagination.disabled = true;
+      leftArrowPagination.classList.add('inactive-button');
+      leftArrowPagination.disabled = true;
     } else if(numbActiveBtn != totalPages - 1){
       rigthArrowPagination.classList.remove('inactive-button');
       rigthArrowPagination.disabled = false;
@@ -93,7 +123,11 @@ export function element(totalPages, page) {
     if(preActiveBth){
       preActiveBth.classList.add('active');
       preActiveBth.disabled = true;
+      if(!dotsAfter.classList.contains('visually-hidden')){
+        threeDots.classList.add('visually-hidden');
+      };
     } else{
+      threeDots.classList.remove('visually-hidden');
       const newLi = document.createElement('li');
       newLi.setAttribute('id', `${numbActiveBtn - 1}`);
       const newBtn = document.createElement('button');
@@ -101,28 +135,68 @@ export function element(totalPages, page) {
       newBtn.disabled = true;
       newBtn.innerHTML = `<span>${numbActiveBtn - 1}</span>`;
       newLi.appendChild(newBtn);
-      threeDots.insertAdjacentElement('afterend', newLi);
+      
+      if(!dotsBefore.classList.contains('visually-hidden') && littleNumberMass.some(obj => Number(obj.textContent) === numbActiveBtn)){
+        dotsBefore.insertAdjacentElement('afterend', newLi);
+      } else if(!dotsBefore.classList.contains('visually-hidden') && !littleNumberMass.some(obj => Number(obj.textContent) === numbActiveBtn)){
+        threeDots.insertAdjacentElement('afterend', newLi);
+      } else if(dotsBefore.classList.contains('visually-hidden') && !littleNumberMass.some(obj => Number(obj.textContent) === numbActiveBtn)){
+        threeDots.insertAdjacentElement('afterend', newLi);
+      } else{
+        threeDots.insertAdjacentElement('beforebegin', newLi);
+      }
       massifButtonsPagination.unshift(newBtn);
+
+      if(littleNumberMass.some(obj => Number(obj.textContent) === numbActiveBtn)){
+        littleNumberMass.unshift(newBtn);
+      } else{
+        bigNumberMass.unshift(newBtn);
+      };
       newBtn.addEventListener('click', (event) => searchPagination(event, totalPages));
     }
     const activePage = massifButtonsPagination.find(btn => btn.classList.contains('active')).textContent;
     await searchForPagination(activePage);
-    
-    if(massifButtonsPagination.length > 4){
-      let numberBtnForDelete = massifButtonsPagination[0];
-    for (let i = 0; i < massifButtonsPagination.length; i++){
-      if(massifButtonsPagination[i].textContent > numberBtnForDelete.textContent){
-        numberBtnForDelete = massifButtonsPagination[i];
-      }
-    }
-    
-      const buttonForDelete = document.getElementById(`${numberBtnForDelete.textContent}`);
-      ulTag.removeChild(buttonForDelete);
-      massifButtonsPagination = massifButtonsPagination.filter(obj => obj.textContent !== numberBtnForDelete.textContent);
-      dotsAfter.classList.remove('visually-hidden');
 
+    if(littleNumberMass.some(obj => Number(obj.textContent) === Number(activePage))){
+      
+      if(massifButtonsPagination.length > 4){
+        let numberBtnForDelete = massifButtonsPagination[0];
+      for (let i = 0; i < littleNumberMass.length; i++){
+        if(Number(littleNumberMass[i].textContent) > Number(numberBtnForDelete.textContent)){
+          numberBtnForDelete = littleNumberMass[i];
+        }};
+
+        const buttonForDelete = document.getElementById(`${numberBtnForDelete.textContent}`);
+        ulTag.removeChild(buttonForDelete);
+        massifButtonsPagination = massifButtonsPagination.filter(obj => obj.textContent !== numberBtnForDelete.textContent);
+        
+        littleNumberMass = littleNumberMass.filter(obj => obj.textContent !== numberBtnForDelete.textContent);
+      };
+    } else{
+      if(massifButtonsPagination.length > 4){
+        let numberBtnForDelete = massifButtonsPagination[0];
+      for (let i = 0; i < bigNumberMass.length; i++){
+        if(Number(bigNumberMass[i].textContent) > Number(numberBtnForDelete.textContent)){
+          numberBtnForDelete = bigNumberMass[i];
+        }};
+      
+      
+        const buttonForDelete = document.getElementById(`${numberBtnForDelete.textContent}`);
+        ulTag.removeChild(buttonForDelete);
+        massifButtonsPagination = massifButtonsPagination.filter(obj => obj.textContent !== numberBtnForDelete.textContent);
+        
+        bigNumberMass = bigNumberMass.filter(obj => obj.textContent !== numberBtnForDelete.textContent);
+        
+        dotsAfter.classList.remove('visually-hidden');
+      };
+    };
+
+    if(massifButtonsPagination.some(obj => Number(obj.textContent) === 1)){
+      dotsBefore.classList.add('visually-hidden');
     };
     });
+
+  //////////////////////////////////  RIGTH BUTTON  ////////////////////////////////////////////////////////////////////////////////  
 
   rigthArrowPagination.addEventListener('click', async () => {
     const activeBtn = massifButtonsPagination.find(btn => btn.classList.contains('active'));
@@ -132,8 +206,8 @@ export function element(totalPages, page) {
       rigthArrowPagination.classList.add('inactive-button');
       rigthArrowPagination.disabled = true;
     } else if(numbActiveBtn != 2){
-      leatArrowPagination.classList.remove('inactive-button');
-      leatArrowPagination.disabled = false;
+      leftArrowPagination.classList.remove('inactive-button');
+      leftArrowPagination.disabled = false;
     }
     activeBtn.classList.remove('active');
     activeBtn.disabled = false;
@@ -141,28 +215,86 @@ export function element(totalPages, page) {
     if(preActiveBth){
       preActiveBth.classList.add('active');
       preActiveBth.disabled = true;
+      if(!dotsBefore.classList.contains('visually-hidden')){
+        threeDots.classList.add('visually-hidden');
+      };
     } else{
+      threeDots.classList.remove('visually-hidden');
       const newLi = document.createElement('li');
+      newLi.setAttribute('id', `${numbActiveBtn + 1}`);
       const newBtn = document.createElement('button');
       newBtn.classList.add('numb', 'active', 'button-pagination');
       newBtn.disabled = true;
       newBtn.innerHTML = `<span>${numbActiveBtn + 1}</span>`;
       newLi.appendChild(newBtn);
-      threeDots.insertAdjacentElement('beforebegin', newLi);
+      if(!dotsAfter.classList.contains('visually-hidden') && littleNumberMass.some(obj => Number(obj.textContent) === numbActiveBtn)){
+        threeDots.insertAdjacentElement('beforebegin', newLi);
+      } else if(!dotsAfter.classList.contains('visually-hidden') && !littleNumberMass.some(obj => Number(obj.textContent) === numbActiveBtn)){
+        dotsAfter.insertAdjacentElement('beforebegin', newLi);
+      } else if(dotsAfter.classList.contains('visually-hidden') && littleNumberMass.some(obj => Number(obj.textContent) === numbActiveBtn)){
+        threeDots.insertAdjacentElement('beforebegin', newLi);
+      } else{
+        dotsAfter.insertAdjacentElement('beforebegin', newLi);
+      };
       massifButtonsPagination.push(newBtn);
+
+      if(littleNumberMass.some(obj => Number(obj.textContent) === numbActiveBtn)){
+        littleNumberMass.push(newBtn);
+      } else{
+        bigNumberMass.push(newBtn);
+      };
+
       newBtn.addEventListener('click', (event) => searchPagination(event, totalPages));
     }
     const activePage = massifButtonsPagination.find(btn => btn.classList.contains('active')).textContent;
     await searchForPagination(activePage);
+
+    if(littleNumberMass.some(obj => Number(obj.textContent) === Number(activePage))){
+      
+      if(massifButtonsPagination.length > 4){
+        let numberBtnForDelete = massifButtonsPagination[0];
+      for (let i = 0; i < littleNumberMass.length; i++){
+        if(Number(littleNumberMass[i].textContent) < Number(numberBtnForDelete.textContent)){
+          numberBtnForDelete = littleNumberMass[i];
+        }};
+
+        const buttonForDelete = document.getElementById(`${numberBtnForDelete.textContent}`);
+        ulTag.removeChild(buttonForDelete);
+        massifButtonsPagination = massifButtonsPagination.filter(obj => obj.textContent !== numberBtnForDelete.textContent);
+        
+        littleNumberMass = littleNumberMass.filter(obj => obj.textContent !== numberBtnForDelete.textContent);
+        
+        dotsBefore.classList.remove('visually-hidden');
+      };
+    } else{
+      if(massifButtonsPagination.length > 4){
+        let numberBtnForDelete = bigNumberMass[0];
+
+      for (let i = 0; i < bigNumberMass.length; i++){
+        if(Number(bigNumberMass[i].textContent) < Number(numberBtnForDelete.textContent)){
+          numberBtnForDelete = bigNumberMass[i];
+        }
+      };
+  
+        const buttonForDelete = document.getElementById(`${numberBtnForDelete.textContent}`);
+        ulTag.removeChild(buttonForDelete);
+        massifButtonsPagination = massifButtonsPagination.filter(obj => obj.textContent !== numberBtnForDelete.textContent);
+        bigNumberMass = bigNumberMass.filter(obj => obj.textContent !== numberBtnForDelete.textContent);
+      };
+    }
+
+    if(massifButtonsPagination.some(obj => Number(obj.textContent) === totalPages)){
+      dotsAfter.classList.add('visually-hidden');
+    };
     });
-  workButtonPagination(leatArrowPagination, rigthArrowPagination, massifButtonsPagination, totalPages)
+  workButtonPagination(leftArrowPagination, rigthArrowPagination, massifButtonsPagination, totalPages)
 }
 
 // element(totalPages, 2);
 
 
 
-function workButtonPagination(leatArrowPagination, rigthArrowPagination, massifButtonsPagination, totalPages) {
+function workButtonPagination(leftArrowPagination, rigthArrowPagination, massifButtonsPagination, totalPages) {
   
   const numberStartPage = JSON.parse(localStorage.getItem('data-for-search')).page;
   const btnStartPage = massifButtonsPagination.filter(btn => btn.textContent === String(numberStartPage));
@@ -171,13 +303,13 @@ function workButtonPagination(leatArrowPagination, rigthArrowPagination, massifB
     btn.disabled = true;
     
     if(btn.textContent === '1' && btn.textContent === String(totalPages)){
-      leatArrowPagination.classList.add('inactive-button');
+      leftArrowPagination.classList.add('inactive-button');
       rigthArrowPagination.classList.add('inactive-button');
-      leatArrowPagination.disabled = true;
+      leftArrowPagination.disabled = true;
       rigthArrowPagination.disabled = true;
     }else if(btn.textContent === '1'){
-      leatArrowPagination.classList.add('inactive-button');
-      leatArrowPagination.disabled = true;
+      leftArrowPagination.classList.add('inactive-button');
+      leftArrowPagination.disabled = true;
     }else if(btn.textContent === String(totalPages)){
       rigthArrowPagination.classList.add('inactive-button');
       rigthArrowPagination.disabled = true;
@@ -191,24 +323,24 @@ async function searchPagination(event, totalPages){
   event.currentTarget.classList.add('active');
 
   if(event.currentTarget.textContent === '1' && event.currentTarget.textContent === String(totalPages)){
-    leatArrowPagination.classList.add('inactive-button');
+    leftArrowPagination.classList.add('inactive-button');
     rigthArrowPagination.classList.add('inactive-button');
-    leatArrowPagination.disabled = true;
+    leftArrowPagination.disabled = true;
     rigthArrowPagination.disabled = true;
   }else if(event.currentTarget.textContent === '1'){
-    leatArrowPagination.classList.add('inactive-button');
+    leftArrowPagination.classList.add('inactive-button');
     rigthArrowPagination.classList.remove('inactive-button');
-    leatArrowPagination.disabled = true;
+    leftArrowPagination.disabled = true;
     rigthArrowPagination.disabled = false;
   }else if(event.currentTarget.textContent === String(totalPages)){
     rigthArrowPagination.classList.add('inactive-button');
-    leatArrowPagination.classList.remove('inactive-button');
-    leatArrowPagination.disabled = false;
+    leftArrowPagination.classList.remove('inactive-button');
+    leftArrowPagination.disabled = false;
     rigthArrowPagination.disabled = true;
   }else{
     rigthArrowPagination.classList.remove('inactive-button');
-    leatArrowPagination.classList.remove('inactive-button');
-    leatArrowPagination.disabled = false;
+    leftArrowPagination.classList.remove('inactive-button');
+    leftArrowPagination.disabled = false;
     rigthArrowPagination.disabled = false;
   }  
   
@@ -235,5 +367,5 @@ async function searchForPagination(page){
   const searchResult = resultSearch.results;
   localStorage.setItem('resultProductsFilrers', JSON.stringify(searchResult));
   renderCards();
-}
+};
 
