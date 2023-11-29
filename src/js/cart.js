@@ -20,6 +20,8 @@ const form = document.querySelector(".js-email-form");
 const input = document.querySelector(".cart-input")
 
 
+let conterProduct = 1;
+
 console.log("Test start");
 // За замовчуванням сторінка кошика буде пустою.
 cartEmptyHidden();
@@ -107,7 +109,10 @@ console.log(actualId)
                   // return selectedProductsMarkup(el._id, el.Productame, el.ProductImg, el.ProductCategory, el.ProductSize, el.ProductPrice) -або так
                 }).join('');
                   
+
                  cartSelectedProducts.innerHTML = refreshedMarkup;
+
+
                  totalSumMarkup(refreshedArray);
                  cartItemsQuantity.innerHTML = refreshedArray.length;
 
@@ -169,15 +174,37 @@ cartItemsQuantity.innerHTML = '0';
 
 
 
-//ФУНКЦІЯ ПІДРАХУНКУ СУМИ i РЕНДЕРУ ЇЇ В HTML
-function totalSumMarkup (array) {
-  // метод редюс буде рахувати мені суму цін за всі продукти. Потім цей результат я буду передавати в Тотал під час перевірки.
-  const sumPrice = array.reduce((acc, currentProduct)=>{
-    return acc + currentProduct.price;
-      }, 0).toFixed(2);
 
-    totalOrderedPrice.innerHTML = `$${sumPrice}`;
+// //ФУНКЦІЯ ПІДРАХУНКУ СУМИ i РЕНДЕРУ ЇЇ В HTML (Використовується і в додатковому функціоналі також)
+function totalSumMarkup (array) {
+  // Для додаткового функціоналу: Перевірка чи елементи масиву який предаються є числом:
+  const arrayCheck = array.every(element => typeof element === 'number');
+  console.log(arrayCheck)
+  
+  if (arrayCheck) { // Якщо так, тоді виконується підрахунок і відмальовка за Додатковим функціоналом, а якщо ні, тоді за базовим (через об`єкт)
+    console.log(arrayCheck)
+  // метод редюс буде рахувати мені суму цін за всі продукти. Потім цей результат я буду передавати в Тотал під час перевірки.
+
+    const sumPrice = array.reduce((acc, currentProduct)=>{
+      return acc + currentProduct; //порахував ціну
+        }, 0).toFixed(2); //заокруглив до сотих
+  
+      totalOrderedPrice.innerHTML = `$${sumPrice}`; // відмалював
+
+  } else { // повторюємо те ж саме, але для об`єкту
+
+    const sumPrice = array.reduce((acc, currentProduct)=>{
+      return acc + currentProduct.price;
+        }, 0).toFixed(2);
+  
+      totalOrderedPrice.innerHTML = `$${sumPrice}`;
+    }
+  
 }
+
+
+
+
 
 
 // ФУНКЦІЯ ВІДМАЛЬОВУВАННЯ ОБРАНИХ ТОВАРІВ
@@ -187,17 +214,26 @@ function selectedProductsMarkup(
   productImg,
   productCategory,
   productSize,
-  productPrice
+  productPrice,
 ) {
 
   return `
 <div class="selected-item" id="${productId}">
     <button class="cart-remove-product-btn"><svg class="js-delete-product-icon"><use href='${spriteIcons}#icon-ion_close-sharp'></use></svg></button>
     <div class="js-selected-item-img"><img class='js-product-item-img' src="${productImg}" alt="Product"></div>
-    <div class="js-selected-item-descroption">
+    <div class="js-selected-item-description">
         <p class="js-item-product-name">${productName}</p>
-        <p class="js-item-product-properties">Category: <span class="js-item-product-descr">${productCategory}</span> Size: <span class="js-item-product-descr">${productSize}</span></p>
-        <p class="js-item-product-price">$${productPrice}</p>
+<div class="js-item-description-section">
+        <p class="js-item-product-properties">Category: <span class="js-item-product-descr">${productCategory}</span> </p> <p class="js-item-product-properties">Size: <span class="js-item-product-descr">${productSize}</span></p>
+        </div>
+        <div class="js-price-count-section"><p data-price="${productPrice}" class="js-item-product-price">$<span class="js-price-value">${productPrice}</span></p>
+        <div class="js-counter-section">
+        <button type="button" class="btn-count-minus">-</button>
+        <p class="count-product">${conterProduct}</p>
+       
+        <button type="button" class="btn-count-plus">+</button>
+        </div>
+        </div>
     </div>
 </div>
 <p class="underline"></p>
@@ -291,3 +327,85 @@ function onCloseByClick () {
  function toggleBodyScroll() {
   document.body.style.overflow = isModalOpen() ? 'hidden' : '';
 }
+
+
+
+
+
+
+
+
+
+/////////////////// Додатковий функціонал /////////////////////////////////
+
+
+
+
+const buttonMinus = document.querySelector('.btn-count-minus');
+const buttonPlus = document.querySelector('.btn-count-plus');
+const countValue = document.querySelector('.count-product')
+const itemProductPrice = document.querySelector('.js-price-value')
+const itemAllProductsPrice = document.querySelectorAll('.js-price-value');
+
+
+
+// СЛУХАЧ ДЛЯ ДОДАВАННЯ ТОВАРІВ ЗА КНОПКОЮ
+buttonPlus.addEventListener('click', couterIncrease);
+
+// ФУНКЦІЯ ДЛЯ ДОДАВАННЯ КІЛЬКОСТІ ТОВАРІВ
+function couterIncrease () {
+  conterProduct = conterProduct +=1;
+  countValue.textContent = conterProduct;
+
+  const itemPrice = document.querySelector('[data-price]');
+  const dataPriceProduct = itemPrice.dataset.price  * conterProduct;
+ console.log(dataPriceProduct)
+ productPriceRender(dataPriceProduct); //Перемальовую ціну за один товар
+const productPriceValue = productPriceValueArray();
+totalSumMarkup(productPriceValue);
+productPriceRender(dataPriceProduct);
+};
+
+// СЛУХАЧ ДЛЯ ВІДНІМАННЯ ТОВАРІВ ЗА КНОПКОЮ
+buttonMinus.addEventListener('click', conterDecrease);
+
+//ФУНКЦІЯ ДЛЯ ВІДНІМАННЯ КІЛЬКОСТІ ТОВАРІВ
+function conterDecrease () {
+  console.log(conterProduct)
+  const itemPrice = document.querySelector('[data-price]');
+let dataPriceProduct = itemPrice.dataset.price  * conterProduct;
+console.log(dataPriceProduct);
+
+  if (conterProduct <= 1) {
+       return;
+      } else {
+        conterProduct = conterProduct -=1;
+        countValue.textContent = conterProduct;
+        dataPriceProduct = itemPrice.dataset.price  * conterProduct;
+        console.log(dataPriceProduct)
+        productPriceRender(dataPriceProduct); //Перемальовую ціну за один товар
+        
+        const productPriceValue = productPriceValueArray();
+        console.log(productPriceValue);
+        totalSumMarkup(productPriceValue);
+        productPriceRender(dataPriceProduct);
+      }
+    }
+
+
+    //Функція перемальовки ціни за одиницю продукту
+function productPriceRender (amount){
+  itemProductPrice.innerHTML = `${amount}`;
+}
+
+
+
+//ФУНКЦІЯ ПОВЕРНЕННЯ ЕЛЕМЕНТІВ З DOM-ДЕРЕВА ЗА КЛАСОМ ПЕРЕДАНИМ В ЗМІННУ itemAllProductsPrice
+function productPriceValueArray() {
+const productPricesArray = Array.from(itemAllProductsPrice).map(el => { // приводжу мої елемени до масиву.
+  return Number(el.textContent); // проганяю через map дістаючи їх вміст (через textContent) приводячи одразу до числа
+});
+console.log(productPricesArray);
+return productPricesArray; //Повертаю новостворений масив
+}
+
