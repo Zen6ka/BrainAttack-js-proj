@@ -3,7 +3,7 @@ import axios from 'axios';
 import sprite from '../img/icons.svg';
 import { renderCards } from './filters';
 import { localStorageCheckCart } from './header';
-
+import { onOpenModal } from './modal';
 const discountEl = document.querySelector('.discount-container');
 const CART_KEY = 'cart';
 
@@ -45,7 +45,7 @@ function productTemplate(product) {
                 </svg>
               </div>
               <div class="discount-card-image">
-                <img src="${img}" alt="${name}" width="114" height="'114" />
+              <img src="${img}" alt="${name}" data-id=${_id} width="114" height="'114" />
               </div>
               <div class="discount-card-info">
                 <div class="discount-card-name">
@@ -66,7 +66,11 @@ function productTemplate(product) {
               </div>
           </div>`;
 }
-
+discountEl.addEventListener('click', event => {
+  const imageEl = event.target.closest('.discount-card-image img');
+  const productId = imageEl.dataset.id;
+  onOpenModal(productId);
+});
 export function handleButtonClick(ev) {
   const productId = ev.currentTarget.dataset.id;
   const selectedProduct = products.find(p => p._id === productId);
