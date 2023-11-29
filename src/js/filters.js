@@ -1,5 +1,5 @@
 import axios, { all } from 'axios';
-import {handleImageClick, onOpenModal} from './modal';
+import {onOpenModal} from './modal';
 import icons from '../img/icons.svg';
 import {element} from './app';
 import {cartButtonStyle} from './popular'
@@ -284,9 +284,9 @@ export function renderCards() {
             }
         };
         if(product.is10PercentOff){
-        itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
+        itemResult = `<li id="${product._id}" class="card-list-item id-for-del" data-id=${product._id}>
                 <div class = "div-img">
-                <img id="${product._id}" src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" />
+                <img src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" />
                 </div>
                 <h3 class="card-list-product">${product.name}</h3>
                 <div class="cardlist-descr">
@@ -305,9 +305,9 @@ export function renderCards() {
                 </svg>
                 </li>`;
         } else {
-            itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
+            itemResult = `<li id="${product._id}" class="card-list-item id-for-del" data-id=${product._id}>
                 <div class = "div-img">
-                <img id="${product._id}" src="${product.img}" loading="lazy" class="cardlist-img filters-img" alt="${product.name}" />
+                <img src="${product.img}" loading="lazy" class="cardlist-img filters-img" alt="${product.name}" />
                 </div>
                 <h3 class="card-list-product">${product.name}</h3>
                 <div class="cardlist-descr">
@@ -330,7 +330,7 @@ export function renderCards() {
     });
     filtersResult.innerHTML = `<ul class="card-list">${listResult.join(" ")}</ul>`;
     workShopButton(products);
-    const cardFiltersImages = document.querySelectorAll('.cardlist-img');
+    const cardFiltersImages = document.querySelectorAll('.card-list-item');
 cardFiltersImages.forEach(img => {
     img.addEventListener('click', imageClick);
 });
@@ -357,7 +357,7 @@ function workShopButton(products) {
             event.currentTarget.classList.remove('cardlist-add-cart-for-active');
             cartButtonStyle();
             localStorageCheckCart();
-            // handleButtonClick(idShopButton);
+            handleButtonClick(idShopButton);
         })
     })
 };
@@ -365,8 +365,8 @@ function workShopButton(products) {
 
 
 function imageClick(event){
-   const idProduct = event.currentTarget.getAttribute('id');
-   onOpenModal(idProduct)
+    const idProduct = event.currentTarget.getAttribute('id');
+    onOpenModal(idProduct)
 }
 
 
