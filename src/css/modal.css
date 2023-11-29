@@ -64,7 +64,7 @@ body.show-modal .modal-ordered {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  
 }
 .modal-info-cart {
   margin-top: 20px;
