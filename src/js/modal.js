@@ -1,6 +1,6 @@
 import axios from 'axios';
-import icons from '../img/icons.svg';
 import { cartButtonStyle } from './popular';
+import { renderCards } from './filters';
 
 const refs = {
   closeModalBtn: document.querySelector('[data-action="close-modal"]'),
@@ -55,9 +55,10 @@ const discountCardImages = document.querySelectorAll('.discount-card-image');
 discountCardImages.forEach(image => {
   image.addEventListener('click', event => {
     const discountCard = event.currentTarget.closest('.discount-card');
-    
+
     if (discountCard) {
-      const dataId = discountCard.querySelector('.discount-card-button').dataset.id;
+      const dataId = discountCard.querySelector('.discount-card-button').dataset
+        .id;
       onOpenModal(dataId);
     }
   });
@@ -161,16 +162,7 @@ function onClickAddToCart(productDetails, isInCart) {
     cartButtonStyle();
     updateAddToCartButton(true, productDetails);
   }
-  const buttonsShopFilter = document.querySelectorAll('.cardlist-add-cart');
-  const selectedButton = [...buttonsShopFilter].filter(
-    button => button.id === productId
-  );
-  selectedButton.forEach(
-    button =>
-      (button.innerHTML = `<svg class="cardlist-svg" weight="18" height="18"> 
-  <use href="${icons}#icon-check"></use> 
-  </svg>`)
-  );
+  renderCards();
 }
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Функція для додавання продукту до корзини в локальному сховищі
