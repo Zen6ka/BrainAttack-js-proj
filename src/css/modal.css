@@ -49,8 +49,8 @@ body.show-modal .modal-ordered {
 }
 .modal-discount-svg {
   position: absolute;
-  top: -14px;
-  right: -14px;
+  top: -9px;
+  left: -9px;
 }
 .hidden {
   display: none;
@@ -64,7 +64,6 @@ body.show-modal .modal-ordered {
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 .modal-info-cart {
   margin-top: 20px;
@@ -87,7 +86,7 @@ body.show-modal .modal-ordered {
 }
 
 .modal-item {
-  flex-basis: calc(50% - 8px); 
+  flex-basis: calc(50% - 8px);
   color: rgba(1, 1, 1, 0.3);
   font-family: 'Neue Montreal Regular';
   font-size: 12px;
@@ -104,8 +103,10 @@ body.show-modal .modal-ordered {
   font-style: normal;
   font-weight: 400;
   line-height: 1.16;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
 
 .modal-info-taxt {
   color: rgba(1, 1, 1, 0.7);
@@ -197,6 +198,9 @@ body.show-modal .modal-ordered {
     font-size: 16px;
     line-height: 1.25;
   }
+  .modal-discount-svg {
+    left: 190px;
+}
 }
 /* ~~~~~~ modal-ordered ~~~~~~ */
 body.show-ordered-modal .backdrop-ordered {
