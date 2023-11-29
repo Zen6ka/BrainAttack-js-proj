@@ -1,10 +1,6 @@
 let headerCounter = document.querySelector('.js-header-cart-items');
 
-let checkInterval = setInterval(localStorageCheckCart, 300);
-
-window.addEventListener('beforeunload', () => {
-  clearInterval(checkInterval);
-});
+localStorageCheckCart();
 
 export function localStorageCheckCart() {
   try {
