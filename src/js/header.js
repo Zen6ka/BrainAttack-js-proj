@@ -1,15 +1,21 @@
 let headerCounter = document.querySelector('.js-header-cart-items');
 
-let timeID = null;
+let checkInterval = setInterval(localStorageCheckCart, 300);
 
-localStorageCheckCart();
+window.addEventListener('beforeunload', () => {
+  clearInterval(checkInterval);
+});
 
 export function localStorageCheckCart() {
-  timeID = setInterval(() => {
+  try {
     const cartProducts = localStorage.getItem('cart');
-    const itemsCartObj = JSON.parse(cartProducts);
 
-    if (itemsCartObj === null) {
+    if (!cartProducts) {
+      headerCounter.innerHTML = '0';
+      return;
+    }
+    const itemsCartObj = JSON.parse(cartProducts);
+    if (!Array.isArray(itemsCartObj)) {
       headerCounter.innerHTML = '0';
       return;
     }
@@ -20,5 +26,7 @@ export function localStorageCheckCart() {
     );
 
     headerCounter.innerHTML = `${uniqueProducts.length}`;
-  }, 1000);
+  } catch (error) {
+    console.error('Error:', error.message);
+  }
 }
