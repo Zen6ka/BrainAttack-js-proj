@@ -111,7 +111,7 @@ console.log(actualId)
                   
 
                  cartSelectedProducts.innerHTML = refreshedMarkup;
-
+                 localStorageCheckCart(); // Також тут викликаю Функцію Наталі з хедера, для перевірки і оновлення інформації у віконці хедера.
 
                  totalSumMarkup(refreshedArray);
                  cartItemsQuantity.innerHTML = refreshedArray.length;
@@ -121,8 +121,10 @@ console.log(actualId)
 
               cartItemsQuantity.innerHTML = '0';
               cartSelectedProducts.innerHTML = "";
+    
               cartEmptyShow();
               cartContainerHidden();
+              localStorageCheckCart(); // і знову функцією Наталі відмальовую відповідне значення в хедері якщо нуль.
             }
              } 
             return
@@ -167,6 +169,8 @@ function removeLocalStorage(event){
     cartSelectedProducts.innerHTML = "";
     cartContainerHidden(); // приховую контейнер кошика
     cartEmptyShow();             // показую пустий кошик
+    localStorageCheckCart(); // Викликаю функцію Наталі функцію Наталі відмальовую відповідне значення в хедері якщо нуль.
+
 // cartEmptyHidden();
 // cartContainerHidden();
 cartItemsQuantity.innerHTML = '0';
@@ -306,6 +310,7 @@ function onCloseByClick () {
 
   cartEmptyShow(); // Коли закривється тоді приховую конейнер і показую пороженій кошик
   cartContainerHidden();
+  localStorageCheckCart(); //Викликаю Функцію Наталі і відмальовую відповідне значення в хедері якщо нуль.
 
   cartItemsQuantity.innerHTML = '0';
   cartSelectedProducts.innerHTML = "";
