@@ -240,7 +240,9 @@ function selectedProductsMarkup(
         </div>
     </div>
 </div>
+<div class="underline-container">
 <p class="underline"></p>
+</div>
 `
 }
 
