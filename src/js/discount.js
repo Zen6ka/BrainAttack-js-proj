@@ -1,7 +1,7 @@
 /*--------------------------------------------------------------------------*/
-
 import axios from 'axios';
 import sprite from '../img/icons.svg';
+import { renderCards } from './filters';
 
 const discountEl = document.querySelector('.discount-container');
 const CART_KEY = 'cart';
@@ -9,7 +9,7 @@ const CART_KEY = 'cart';
 let products = [];
 let addedProducts = [];
 
-const addToCart = product => {
+function addToCart(product) {
   addedProducts = JSON.parse(localStorage.getItem(CART_KEY)) || [];
 
   const existingProduct = addedProducts.find(p => p._id === product._id);
@@ -19,29 +19,23 @@ const addToCart = product => {
     localStorage.setItem(CART_KEY, JSON.stringify(addedProducts));
     renderProducts();
   }
-};
+}
 
-const isProductAlreadyInCart = id => {
+function isProductAlreadyInCart(id) {
+  const addedProducts = JSON.parse(localStorage.getItem('cart')) || [];
   return addedProducts.some(product => product._id === id);
-};
+}
 
-const renderProducts = () => {
-  const markup = productsTemplate(products);
-  discountEl.innerHTML = markup;
+function renderProducts() {
+  discountEl.innerHTML = productsTemplate(products);
   attachButtonClickHandlers();
-};
+}
 
-const handleButtonClick = ev => {
-  const productId = ev.currentTarget.dataset.id;
-  const selectedProduct = products.find(p => p._id === productId);
-  addToCart(selectedProduct);
-};
-
-const productsTemplate = products => {
+function productsTemplate(products) {
   return products.slice(0, 2).map(productTemplate).join('');
-};
+}
 
-const productTemplate = product => {
+function productTemplate(product) {
   const { _id, name, img, price } = product;
   return `<div class="discount-card">
               <div class="discount-logo">
@@ -70,16 +64,23 @@ const productTemplate = product => {
                 </div>
               </div>
           </div>`;
-};
+}
 
-const attachButtonClickHandlers = () => {
+function handleButtonClick(ev) {
+  const productId = ev.currentTarget.dataset.id;
+  const selectedProduct = products.find(p => p._id === productId);
+  addToCart(selectedProduct);
+  renderCards();
+}
+
+function attachButtonClickHandlers() {
   const cartButtons = document.querySelectorAll('.discount-card-button');
   cartButtons.forEach(button => {
     button.addEventListener('click', handleButtonClick);
   });
-};
+}
 
-const init = async () => {
+async function init() {
   try {
     const res = await axios.get(
       'https://food-boutique.b.goit.study/api/products/discount'
@@ -90,6 +91,6 @@ const init = async () => {
   } catch (error) {
     console.error('Error fetching discount products:', error.message);
   }
-};
+}
 
 init();
