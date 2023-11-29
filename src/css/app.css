@@ -57,7 +57,9 @@
 .pagination-page-list .numb:hover {
   background-color: #6d8434;
 }
-
+.pagination-page-list .numb.active {
+  background-color: #6d8434;
+}
 .dots {
   display: flex;
   align-items: center;
