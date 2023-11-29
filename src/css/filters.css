@@ -224,12 +224,14 @@ p {
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1280px) {
   .filters {
     max-width: 925px;
     width: 100%;
   }
-
+  .filters-result {
+    height: 1170px;
+  }
   .error {
     margin: 200px 0 0;
   }
