@@ -56,7 +56,7 @@
   background: #e8e8e2;
   width: 74px;
   height: 74px;
-
+  cursor: pointer;
   border-radius: 10px;
   display: flex;
   justify-content: center;
