@@ -1,6 +1,7 @@
 import { RequestToTheServer } from './filters';
 import { onOpenModal } from './modal';
 import sprite from '../img/icons.svg';
+import { localStorageCheckCart } from './header';
 document.addEventListener('DOMContentLoaded', function () {
   // Оновити стиль кнопок при завантаженні сторінки
   cartButtonStyle();
@@ -114,7 +115,7 @@ function addToCart(product) {
   }
 
   localStorage.setItem('cart', JSON.stringify(cart));
-
+  localStorageCheckCart();
   cartButtonStyle();
 }
 
