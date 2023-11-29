@@ -1,9 +1,10 @@
 import axios, { all } from 'axios';
-import {handleImageClick} from './modal';
+import {handleImageClick, onOpenModal} from './modal';
 import icons from '../img/icons.svg';
 import {element} from './app';
 import {cartButtonStyle} from './popular'
 import {localStorageCheckCart} from './header';
+import {handleButtonClick} from './discount';
 
 export class RequestToTheServer {
     baseUrl = 'https://food-boutique.b.goit.study/api/'
@@ -285,7 +286,7 @@ export function renderCards() {
         if(product.is10PercentOff){
         itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
                 <div class = "div-img">
-                <img src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" />
+                <img id="${product._id}" src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" />
                 </div>
                 <h3 class="card-list-product">${product.name}</h3>
                 <div class="cardlist-descr">
@@ -306,7 +307,7 @@ export function renderCards() {
         } else {
             itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
                 <div class = "div-img">
-                <img src="${product.img}" loading="lazy" class="cardlist-img filters-img" alt="${product.name}" />
+                <img id="${product._id}" src="${product.img}" loading="lazy" class="cardlist-img filters-img" alt="${product.name}" />
                 </div>
                 <h3 class="card-list-product">${product.name}</h3>
                 <div class="cardlist-descr">
@@ -329,9 +330,9 @@ export function renderCards() {
     });
     filtersResult.innerHTML = `<ul class="card-list">${listResult.join(" ")}</ul>`;
     workShopButton(products);
-    const cardFiltersImages = document.querySelectorAll('.filters-img');
+    const cardFiltersImages = document.querySelectorAll('.cardlist-img');
 cardFiltersImages.forEach(img => {
-    img.addEventListener('click', event => handleImageClick(event));
+    img.addEventListener('click', imageClick);
 });
 };
 
@@ -356,8 +357,18 @@ function workShopButton(products) {
             event.currentTarget.classList.remove('cardlist-add-cart-for-active');
             cartButtonStyle();
             localStorageCheckCart();
+            // handleButtonClick(idShopButton);
         })
     })
 };
+
+
+
+function imageClick(event){
+   const idProduct = event.currentTarget.getAttribute('id');
+   onOpenModal(idProduct)
+}
+
+
 
 // localStorage.clear()

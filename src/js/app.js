@@ -1,4 +1,3 @@
-// -----------------------------2variant-----------------------
 import { recordsDataForSearch, search, renderCards } from "./filters";
 
 const ulTag = document.querySelector('.pagination-page-list');
@@ -20,6 +19,7 @@ export function element(totalPages, page) {
   
     if (totalPages > 5) {
       liTag += `<li><button class="btn prev left-arrow-pagination"><span><i class="left"></i> < </span></button></li>`;
+      liTag += `<li><button class="numb first-static-button-pagination visually-hidden"><span>1</span></button></li>`;
       liTag += `<li class="dots dots-before visually-hidden"><span>...</span></li>`;
 
   for (let pageLength = beforePages; pageLength <= afterPades; pageLength++) {
@@ -40,6 +40,7 @@ export function element(totalPages, page) {
         }
       }
       liTag += `<li class="dots dots-after visually-hidden"><span>...</span></li>`;
+      liTag += `<li><button class="numb last-static-button-pagination visually-hidden"><span>${totalPages}</span></button></li>`;
       liTag += `<li><button class="btn next right-arrow-pagination"><span><i class="right"></i> > </span></button></li>`;
     } else {
         liTag += `<li><button class="btn prev left-arrow-pagination"><span><i class="left"></i> < </span></button></li>`
@@ -65,10 +66,8 @@ export function element(totalPages, page) {
   const threeDots = document.querySelector('.dots-pagination');
   const dotsBefore = document.querySelector('.dots-before');
   const dotsAfter = document.querySelector('.dots-after');
-
-  // if(totalPages <= 3){
-  //   threeDots.classList.add('visually-hidden');
-  // };
+  const firstStaticButtonPagination = document.querySelector('.first-static-button-pagination');
+  const lastStaticButtonPagination =document.querySelector('.last-static-button-pagination'); 
 
   let massifButtonsPagination = [...buttonsPagination];
 
@@ -288,15 +287,18 @@ export function element(totalPages, page) {
     };
     });
   workButtonPagination(leftArrowPagination, rigthArrowPagination, massifButtonsPagination, totalPages)
-}
-
-// element(totalPages, 2);
+};
 
 
 
 function workButtonPagination(leftArrowPagination, rigthArrowPagination, massifButtonsPagination, totalPages) {
   
-  const numberStartPage = JSON.parse(localStorage.getItem('data-for-search')).page;
+  let numberStartPage = '';
+  if(localStorage.getItem('data-for-search')){
+    numberStartPage = JSON.parse(localStorage.getItem('data-for-search')).page;
+  } else{
+    numberStartPage = '1';
+  };
   const btnStartPage = massifButtonsPagination.filter(btn => btn.textContent === String(numberStartPage));
   btnStartPage.map((btn) => {
     btn.classList.add('active');
