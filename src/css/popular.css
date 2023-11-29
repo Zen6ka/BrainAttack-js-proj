@@ -192,11 +192,13 @@ html {
   right: 15px;
   /* background-color: #000000; */
   color: white;
-  padding: 5px 10px;
+  padding: 18px 33px 20px;
   border: none;
   border-radius: 50px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 40px;
+  height: auto;
+  width: 85px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   transition: background-color 0.3s;
   opacity: 0.9;
@@ -209,7 +211,9 @@ html {
 @media screen and (min-width: 768px) {
   .top {
     bottom: 650px;
-    padding: 10px 20px;
+    width: 66px;
+
+    padding: 10px 24px;
   }
 }
 @media screen and (min-width: 1280px) {
