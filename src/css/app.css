@@ -30,6 +30,7 @@
 }
 .left-arrow-pagination:focus {
   background-color: #6d8434;
+  color: #fafafa;
 }
 .right-arrow-pagination {
   margin-left: 19px;
@@ -39,6 +40,7 @@
 
 .right-arrow-pagination:focus {
   background-color: #6d8434;
+  color: #fafafa;
 }
 
 .pagination-page-list .numb {
@@ -58,9 +60,11 @@
 
 .pagination-page-list .numb:hover {
   background-color: #6d8434;
+  color: #fafafa;
 }
 .pagination-page-list .numb.active {
   background-color: #6d8434;
+  color: #fafafa;
 }
 .dots {
   display: flex;
