@@ -150,7 +150,7 @@ function checkScroll() {
   const viewportHeight = window.innerHeight;
   const scrollRemaining = totalPageHeight - window.scrollY - viewportHeight;
   if (scrollRemaining < 600) {
-    scrollUpButton.style.display = 'block';
+    scrollUpButton.style.display = 'flex';
   } else {
     scrollUpButton.style.display = 'none';
   }
