@@ -1,4 +1,4 @@
-var ht=Object.defineProperty;var bt=(t,e,s)=>e in t?ht(t,e,{enumerable:!0,configurable:!0,writable:!0,value:s}):t[e]=s;var nt=(t,e,s)=>(bt(t,typeof e!="symbol"?e+"":e,s),s);import{i as C,l as Y}from"./assets/icons-8646af45.js";import{a as K}from"./assets/vendor-27c5a77b.js";document.addEventListener("DOMContentLoaded",function(){A();const t=JSON.parse(localStorage.getItem("popularProducts"));let e;t&&t.length>=5?e=t.slice(0,5):e=[],e.length>0?(ot(e),it()):vt()});async function vt(){const t=new tt("products/popular","",1,5);try{const e=await t.fetchBreeds();St(e);const s=e.slice(0,5);ot(s),it()}catch(e){console.error("Error:",e)}}function it(){A()}const yt=document.querySelector(".products-container");function St(t){localStorage.setItem("popularProducts",JSON.stringify(t))}function ot(t){t.forEach(e=>{const s=document.createElement("div");s.classList.add("product-template"),s.innerHTML=`
+var ht=Object.defineProperty;var bt=(t,e,s)=>e in t?ht(t,e,{enumerable:!0,configurable:!0,writable:!0,value:s}):t[e]=s;var nt=(t,e,s)=>(bt(t,typeof e!="symbol"?e+"":e,s),s);import{i as C,l as Y}from"./assets/icons-760ac4bf.js";import{a as K}from"./assets/vendor-27c5a77b.js";document.addEventListener("DOMContentLoaded",function(){A();const t=JSON.parse(localStorage.getItem("popularProducts"));let e;t&&t.length>=5?e=t.slice(0,5):e=[],e.length>0?(ot(e),it()):vt()});async function vt(){const t=new tt("products/popular","",1,5);try{const e=await t.fetchBreeds();St(e);const s=e.slice(0,5);ot(s),it()}catch(e){console.error("Error:",e)}}function it(){A()}const yt=document.querySelector(".products-container");function St(t){localStorage.setItem("popularProducts",JSON.stringify(t))}function ot(t){t.forEach(e=>{const s=document.createElement("div");s.classList.add("product-template"),s.innerHTML=`
       <div class="popular-con">
           <div class="product-image-container" data-product-id="${e._id}"> <img src="${e.img}" alt="" class="product-image"></div>
           <div class="product-text">
@@ -61,7 +61,8 @@ var ht=Object.defineProperty;var bt=(t,e,s)=>e in t?ht(t,e,{enumerable:!0,config
                 <svg class="cardlist-svg" weight="18" height="18">
                 <use href="${C}#icon-heroicons-solid_shopping-cart"></use>
                 </svg>
-                </button>`),n.is10PercentOff?p=`<li id="${n._id}" class="card-list-item id-for-del" data-id=${n._id}>
+                </button>`),n.is10PercentOff?p=`<li class="card-list-item id-for-del" data-id=${n._id}>
+                <div id="${n._id}" class ="filters-for-click">
                 <div class = "div-img">
                 <img src="${n.img}" loading="lazy" class="cardlist-img" alt="${n.name}" />
                 </div>
@@ -73,14 +74,16 @@ var ht=Object.defineProperty;var bt=(t,e,s)=>e in t?ht(t,e,{enumerable:!0,config
                 </div>
                     <p class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${n.popularity}</p>
                 </div>
-                <div class="cartlist-btn">
-                ${l}
-                </div>
                 <p class ="price-for-cards">$${n.price}</p>
                 <svg  class="discount-for-filter-cards">
                 <use href="${C}#icon-discount-1"></use>
                 </svg>
-                </li>`:p=`<li id="${n._id}" class="card-list-item id-for-del" data-id=${n._id}>
+                </div>
+                <div class="cartlist-btn">
+                ${l}
+                </div>
+                </li>`:p=`<li class="card-list-item id-for-del" data-id=${n._id}>
+                <div id="${n._id}" class ="filters-for-click">
                 <div class = "div-img">
                 <img src="${n.img}" loading="lazy" class="cardlist-img filters-img" alt="${n.name}" />
                 </div>
@@ -92,14 +95,15 @@ var ht=Object.defineProperty;var bt=(t,e,s)=>e in t?ht(t,e,{enumerable:!0,config
                 </div>    
                     <p class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${n.popularity}</p>
                 </div>
-                <div class="cartlist-btn">
-                ${l}
-                </div>
                 <p class ="price-for-cards">$${n.price}</p>
                 <svg  class="visually-hidden">
                 <use href="${C}#icon-discount-1"></use>
                 </svg>
-                </li>`,e.push(p)}),gt.innerHTML=`<ul class="card-list">${e.join(" ")}</ul>`,se(t),document.querySelectorAll(".card-list-item").forEach(n=>{n.addEventListener("click",ne)})}function se(t){[...document.querySelectorAll(".cardlist-add-cart")].forEach(s=>{s.addEventListener("click",o=>{const n=o.currentTarget.getAttribute("id"),p=t.find(f=>f._id===n),l=localStorage.getItem("cart");if(l){const f=JSON.parse(l);f.push(p),localStorage.setItem("cart",JSON.stringify(f))}else localStorage.setItem("cart",JSON.stringify([p]));o.currentTarget.innerHTML=`<svg class="cardlist-svg" weight="18" height="18">
+                </div>
+                <div class="cartlist-btn">
+                ${l}
+                </div>
+                </li>`,e.push(p)}),gt.innerHTML=`<ul class="card-list">${e.join(" ")}</ul>`,se(t),document.querySelectorAll(".filters-for-click").forEach(n=>{n.addEventListener("click",ne)})}function se(t){[...document.querySelectorAll(".cardlist-add-cart")].forEach(s=>{s.addEventListener("click",o=>{const n=o.currentTarget.getAttribute("id"),p=t.find(f=>f._id===n),l=localStorage.getItem("cart");if(l){const f=JSON.parse(l);f.push(p),localStorage.setItem("cart",JSON.stringify(f))}else localStorage.setItem("cart",JSON.stringify([p]));o.currentTarget.innerHTML=`<svg class="cardlist-svg" weight="18" height="18">
             <use href="${C}#icon-check"></use>
             </svg>`,o.currentTarget.setAttribute("disabled","true"),o.currentTarget.classList.remove("cardlist-add-cart-for-active"),A(),Y(),mt(n)})})}function ne(t){const e=t.currentTarget.getAttribute("id");T(e)}
 //# sourceMappingURL=commonHelpers2.js.map
