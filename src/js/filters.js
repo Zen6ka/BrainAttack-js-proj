@@ -18,9 +18,7 @@ export class RequestToTheServer {
 
     async fetchBreeds(){
     try{
-        console.log(`${this.endPoint}?${this.filters}&page=${this.page}&limit=${this.limit}`);
         const response = await axios.get(`${this.baseUrl}${this.endPoint}?${this.filters}&page=${this.page}&limit=${this.limit}`);
-        console.log(response.data);
         return response.data
     } catch(error){
         console.error("Error:", error.message);
@@ -361,7 +359,6 @@ function workShopButton(products) {
             event.currentTarget.classList.remove('cardlist-add-cart-for-active');
             cartButtonStyle();
             localStorageCheckCart();
-            console.log(event.currentTarget.getAttribute('id'));
             handleButtonClick(event);
         })
     })
