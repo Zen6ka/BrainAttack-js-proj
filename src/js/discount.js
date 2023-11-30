@@ -79,7 +79,6 @@ discountEl.addEventListener('click', event => {
 });
 
 export function handleButtonClick(ev) {
-  // console.log(ev.currentTarget)
   if (ev.currentTarget !== undefined) {
     const productId = ev.currentTarget.dataset.id;
     const selectedProduct = products.find(p => p._id === productId);
