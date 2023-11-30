@@ -93,6 +93,10 @@ body.show-modal .modal-ordered {
   font-style: normal;
   font-weight: 400;
   line-height: 1.16;
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .modal-item-span {
@@ -103,9 +107,6 @@ body.show-modal .modal-ordered {
   font-style: normal;
   font-weight: 400;
   line-height: 1.16;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .modal-info-taxt {
@@ -200,7 +201,7 @@ body.show-modal .modal-ordered {
   }
   .modal-discount-svg {
     left: 190px;
-}
+  }
 }
 /* ~~~~~~ modal-ordered ~~~~~~ */
 body.show-ordered-modal .backdrop-ordered {

@@ -49,9 +49,7 @@ function handleImageClickPopular(event) {
   onOpenModal(productId);
 }
 //
-
 const discountCardImages = document.querySelectorAll('.discount-card-image');
-
 discountCardImages.forEach(image => {
   image.addEventListener('click', event => {
     const discountCard = event.currentTarget.closest('.discount-card');
@@ -72,8 +70,6 @@ const baseUrl = 'https://food-boutique.b.goit.study/api/';
 async function fetchProductById(productId) {
   try {
     const response = await axios.get(`${baseUrl}products/${productId}`);
-    const responseData = response.data;
-    console.log('Product Details:', responseData);
     return response.data;
   } catch (error) {
     console.error('Error:', error.message);
@@ -241,16 +237,3 @@ function isModalOpen() {
 function toggleBodyScroll() {
   document.body.style.overflow = isModalOpen() ? 'hidden' : '';
 }
-// ///////////////////////////////////////////////////////////////////////////////////////////////
-
-// const checkoutButton = document.querySelector('.js-email-checkout');
-// checkoutButton.addEventListener('click', onCheckoutButtonClick);
-
-// function onCheckoutButtonClick() {
-//   onOpenOrderedModal();
-// }
-// export async function onOpenOrderedModal() {
-//   window.addEventListener('keydown', onCloseByEsc);
-//   document.body.classList.add('show-ordered-modal');
-//   toggleBodyScroll();
-// }
