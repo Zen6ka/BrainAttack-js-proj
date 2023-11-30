@@ -66,17 +66,29 @@ function productTemplate(product) {
               </div>
           </div>`;
 }
+
 discountEl.addEventListener('click', event => {
   const imageEl = event.target.closest('.discount-card-image img');
-  const productId = imageEl.dataset.id;
-  onOpenModal(productId);
+  if (imageEl !== null) {
+    const productId = imageEl.dataset.id;
+    onOpenModal(productId);
+  } else {
+    // console.log('null');
+    return;
+  }
 });
+
 export function handleButtonClick(ev) {
-  const productId = ev.currentTarget.dataset.id;
-  const selectedProduct = products.find(p => p._id === productId);
-  addToCart(selectedProduct);
-  renderCards();
-  localStorageCheckCart();
+  // console.log(ev.currentTarget)
+  if (ev.currentTarget !== undefined) {
+    const productId = ev.currentTarget.dataset.id;
+    const selectedProduct = products.find(p => p._id === productId);
+    addToCart(selectedProduct);
+    renderCards();
+    localStorageCheckCart();
+  } else { 
+    return ;
+}
 }
 
 function attachButtonClickHandlers() {
