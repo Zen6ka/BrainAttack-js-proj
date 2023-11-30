@@ -71,6 +71,18 @@ export function element(totalPages, page) {
 
   let massifButtonsPagination = [...buttonsPagination];
 
+  function visibelStaticBtnPage(staticButton, number){
+    if(!massifButtonsPagination.some(obj => Number(obj.textContent) === Number(number))){
+      if(staticButton.classList.contains('visually-hidden')){
+        staticButton.addEventListener('click', () => {searchForPagination(number)});
+      }
+      staticButton.classList.remove('visually-hidden');
+    }else{
+      staticButton.classList.add('visually-hidden');
+      staticButton.removeEventListener('click', () => {searchForPagination(number)});
+    }
+  };
+
   let littleNumber = massifButtonsPagination[0];
   let littleNumberPlusOne = '';
 
@@ -193,6 +205,8 @@ export function element(totalPages, page) {
     if(massifButtonsPagination.some(obj => Number(obj.textContent) === 1)){
       dotsBefore.classList.add('visually-hidden');
     };
+    visibelStaticBtnPage(lastStaticButtonPagination, totalPages);
+    visibelStaticBtnPage(firstStaticButtonPagination, 1);
     });
 
   //////////////////////////////////  RIGTH BUTTON  ////////////////////////////////////////////////////////////////////////////////  
@@ -285,6 +299,8 @@ export function element(totalPages, page) {
     if(massifButtonsPagination.some(obj => Number(obj.textContent) === totalPages)){
       dotsAfter.classList.add('visually-hidden');
     };
+    visibelStaticBtnPage(firstStaticButtonPagination, 1);
+    visibelStaticBtnPage(lastStaticButtonPagination, totalPages);
     });
   workButtonPagination(leftArrowPagination, rigthArrowPagination, massifButtonsPagination, totalPages)
 };
