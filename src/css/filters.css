@@ -96,10 +96,12 @@ p {
 }
 
 .div-for-categories{
+  max-width: 355px;
+  width: 100%;
   background-color: transparent;
   height: 428px;
   position: absolute;
-  top: -52px;
+  top: 0;
   left: 0;
   overflow: hidden;
 }
@@ -217,6 +219,11 @@ p {
 
   .first-select-div{
     max-width: 189px;
+  }
+
+  .div-for-categories{
+    max-width: 189px;
+    top: -52px;
   }
 
   .input-search {
