@@ -6,7 +6,7 @@ import './footer.js';
 import './header.js'
 
 import spriteIcons from '../img/icons.svg';
-console.log(spriteIcons)
+// console.log(spriteIcons)
 
 const cartItemsQuantity = document.querySelector(".js-cart-items-quantity"); // Місце де буде оновлюватись кількість товарів в кошику
 const cartEmpty = document.querySelector(".js-cart-empty");
@@ -20,13 +20,13 @@ const form = document.querySelector(".js-email-form");
 const input = document.querySelector(".cart-input")
 
 
-let conterProduct = 1;
+
 
 // console.log("Test start");
 // За замовчуванням сторінка кошика буде пустою.
 cartEmptyHidden();
 cartContainerHidden();
-
+let conterProduct = 1;
 
 // ФУНКЦІЯ ПЕРЕВІРКИ ЛОКАЛЬНОГО СХОВИЩА НА ВМІСТ ДАНИХ
 function localStorageCheck() { // ****** пізніше підшаманити, щоб просто повертати результат сховище, а логіку відпрацьовувати далі поза функцією.
@@ -64,7 +64,7 @@ function uniqProductsArray (baseArray) {
     cartItemsQuantity.innerHTML = '0';
     cartEmptyShow();
   cartContainerHidden();
-  console.log('Error array')
+  // console.log('Empty array')
   return [];
   }
 
@@ -81,7 +81,7 @@ const uniqueProductsArray = parsedSavedProducts.filter(obj => {
   return true; // Об'єкт є унікальним і буде включений до результату
 });
 
-console.log(uniqueProductsArray); //  Масив унікальних об`єктів з ЛС за ключем cart
+// console.log(uniqueProductsArray); //  Масив унікальних об`єктів з ЛС за ключем cart
 
 return uniqueProductsArray;
 }
@@ -93,13 +93,13 @@ return uniqueProductsArray;
       const currentElementId = event.target.closest('[id]');
       const actualId = currentElementId ? currentElementId.id : null;
       
-console.log(actualId)
+// console.log(actualId)
 
             if (event.target.closest('.cart-remove-product-btn')) {
               let cart = localStorageCheck();
 
               const refreshedArray = cart.filter(product => product._id !== actualId);
- console.log(refreshedArray)
+//  console.log(refreshedArray)
 
               if (refreshedArray.length > 0) {
                            localStorage.setItem('cart', JSON.stringify(refreshedArray));
@@ -139,8 +139,8 @@ form.addEventListener('submit', (event) => {
   event.preventDefault();
   const email = input.value;
 
-  console.log(`Ordered by: ${email}`)
-console.log('Submit successful')
+//   console.log(`Ordered by: ${email}`)
+// console.log('Submit successful')
 
 //  відкриття модалки про успішні закупи при сабміті
 onCheckoutButtonClick()
@@ -272,7 +272,7 @@ function cartContainerHidden () {
     cartContainer.style.display = 'none';
 }
 
-console.log("Test end");
+// console.log("Test end");
 
 
 
@@ -316,7 +316,7 @@ function onCloseByClick () {
 
   cartItemsQuantity.innerHTML = '0';
   cartSelectedProducts.innerHTML = "";
- console.log('closed')
+//  console.log('closed')
 }
 
 // Закритя модального вікна по кліку за модалку (на темний фон)
@@ -348,88 +348,88 @@ function onCloseByClick () {
 
 
 
-const buttonMinus = document.querySelector('.btn-count-minus');
-const buttonPlus = document.querySelector('.btn-count-plus');
-const countValue = document.querySelector('.count-product')
-const itemProductPrice = document.querySelector('.js-price-value')
-const itemAllProductsPrice = document.querySelectorAll('.js-price-value');
+// const buttonMinus = document.querySelector('.btn-count-minus');
+// const buttonPlus = document.querySelector('.btn-count-plus');
+// const countValue = document.querySelector('.count-product')
+// const itemProductPrice = document.querySelector('.js-price-value')
+// const itemAllProductsPrice = document.querySelectorAll('.js-price-value');
 
 
 
-// СЛУХАЧ ДЛЯ ДОДАВАННЯ ТОВАРІВ ЗА КНОПКОЮ
-buttonPlus.addEventListener('click', couterIncrease);
+// // СЛУХАЧ ДЛЯ ДОДАВАННЯ ТОВАРІВ ЗА КНОПКОЮ
+// buttonPlus.addEventListener('click', couterIncrease);
 
-// ФУНКЦІЯ ДЛЯ ДОДАВАННЯ КІЛЬКОСТІ ТОВАРІВ
-function couterIncrease (event) {
-  conterProduct = conterProduct +=1;
-  countValue.textContent = conterProduct;
+// // ФУНКЦІЯ ДЛЯ ДОДАВАННЯ КІЛЬКОСТІ ТОВАРІВ
+// function couterIncrease (event) {
+//   conterProduct = conterProduct +=1;
+//   countValue.textContent = conterProduct;
 
-  const itemPrice = document.querySelector('[data-price]');
-  const dataPriceProduct = itemPrice.dataset.price  * conterProduct;
- console.log(dataPriceProduct)
- productPriceRender(dataPriceProduct); //Перемальовую ціну за один товар
-const productPriceValue = productPriceValueArray();
-totalSumMarkup(productPriceValue);
-productPriceRender(dataPriceProduct);
+//   const itemPrice = document.querySelector('[data-price]');
+//   const dataPriceProduct = itemPrice.dataset.price  * conterProduct;
+//  console.log(dataPriceProduct)
+//  productPriceRender(dataPriceProduct); //Перемальовую ціну за один товар
+// const productPriceValue = productPriceValueArray();
+// totalSumMarkup(productPriceValue);
+// productPriceRender(dataPriceProduct);
 
-const currentElementId = event.target.closest('[id]');
-const actualId = currentElementId ? currentElementId.id : null;
+// const currentElementId = event.target.closest('[id]');
+// const actualId = currentElementId ? currentElementId.id : null;
 
-console.log(event.target)
+// console.log(event.target)
 
-const currentElementPrice = event.target.closest('.js-price-value');
-const actualPrice = currentElementPrice ? currentElementPrice.value : null;
+// const currentElementPrice = event.target.closest('.js-price-value');
+// const actualPrice = currentElementPrice ? currentElementPrice.value : null;
 
-// if (event.turget === currentElementPrice.currentTarget) {
-//   console.log(actualPrice.value)
-//   console.log('sdsdsd')
-// }
-// console.log(actualPrice.value)
+// // if (event.turget === currentElementPrice.currentTarget) {
+// //   console.log(actualPrice.value)
+// //   console.log('sdsdsd')
+// // }
+// // console.log(actualPrice.value)
 
 
 
-};
+// };
 
-// СЛУХАЧ ДЛЯ ВІДНІМАННЯ ТОВАРІВ ЗА КНОПКОЮ
-buttonMinus.addEventListener('click', conterDecrease);
+// // СЛУХАЧ ДЛЯ ВІДНІМАННЯ ТОВАРІВ ЗА КНОПКОЮ
+// buttonMinus.addEventListener('click', conterDecrease);
 
-//ФУНКЦІЯ ДЛЯ ВІДНІМАННЯ КІЛЬКОСТІ ТОВАРІВ
-function conterDecrease () {
-  console.log(conterProduct)
-  const itemPrice = document.querySelector('[data-price]');
-let dataPriceProduct = itemPrice.dataset.price  * conterProduct;
-console.log(dataPriceProduct);
+// //ФУНКЦІЯ ДЛЯ ВІДНІМАННЯ КІЛЬКОСТІ ТОВАРІВ
+// function conterDecrease () {
+//   console.log(conterProduct)
+//   const itemPrice = document.querySelector('[data-price]');
+// let dataPriceProduct = itemPrice.dataset.price  * conterProduct;
+// console.log(dataPriceProduct);
 
-  if (conterProduct <= 1) {
-       return;
-      } else {
-        conterProduct = conterProduct -=1;
-        countValue.textContent = conterProduct;
-        dataPriceProduct = itemPrice.dataset.price  * conterProduct;
-        console.log(dataPriceProduct)
-        productPriceRender(dataPriceProduct); //Перемальовую ціну за один товар
+//   if (conterProduct <= 1) {
+//        return;
+//       } else {
+//         conterProduct = conterProduct -=1;
+//         countValue.textContent = conterProduct;
+//         dataPriceProduct = itemPrice.dataset.price  * conterProduct;
+//         console.log(dataPriceProduct)
+//         productPriceRender(dataPriceProduct); //Перемальовую ціну за один товар
         
-        const productPriceValue = productPriceValueArray();
-        console.log(productPriceValue);
-        totalSumMarkup(productPriceValue);
-        productPriceRender(dataPriceProduct);
-      }
-    }
+//         const productPriceValue = productPriceValueArray();
+//         console.log(productPriceValue);
+//         totalSumMarkup(productPriceValue);
+//         productPriceRender(dataPriceProduct);
+//       }
+//     }
 
 
-    //Функція перемальовки ціни за одиницю продукту
-function productPriceRender (amount){
-  itemProductPrice.innerHTML = `${amount}`;
-}
+//     //Функція перемальовки ціни за одиницю продукту
+// function productPriceRender (amount){
+//   itemProductPrice.innerHTML = `${amount}`;
+// }
 
 
 
-//ФУНКЦІЯ ПОВЕРНЕННЯ ЕЛЕМЕНТІВ З DOM-ДЕРЕВА ЗА КЛАСОМ ПЕРЕДАНИМ В ЗМІННУ itemAllProductsPrice
-function productPriceValueArray() {
-const productPricesArray = Array.from(itemAllProductsPrice).map(el => { // приводжу мої елемени до масиву.
-  return Number(el.textContent); // проганяю через map дістаючи їх вміст (через textContent) приводячи одразу до числа
-});
-console.log(productPricesArray);
-return productPricesArray; //Повертаю новостворений масив
-}
+// //ФУНКЦІЯ ПОВЕРНЕННЯ ЕЛЕМЕНТІВ З DOM-ДЕРЕВА ЗА КЛАСОМ ПЕРЕДАНИМ В ЗМІННУ itemAllProductsPrice
+// function productPriceValueArray() {
+// const productPricesArray = Array.from(itemAllProductsPrice).map(el => { // приводжу мої елемени до масиву.
+//   return Number(el.textContent); // проганяю через map дістаючи їх вміст (через textContent) приводячи одразу до числа
+// });
+// console.log(productPricesArray);
+// return productPricesArray; //Повертаю новостворений масив
+// }
 

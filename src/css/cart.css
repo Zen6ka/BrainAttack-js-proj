@@ -15,7 +15,7 @@ padding-top: 72px;
 padding-left: 20px;
 padding-right: 20px;
 padding-bottom: 80px;
-/* box-sizing: content-box; */
+box-sizing: content-box;
 }
 
 .cart-quantity {
@@ -157,36 +157,24 @@ line-height: 1.28; /* 128.571% */
     overflow-y: auto;
     position: relative;
 }
-.inner-js-cart-selected-products {
-    min-height: 500px; /* Мінімальна висота внутрішнього контенту, яка викличе вертикальний скрол */
-  }
 
-/* ------------------ДОРОБИТИ СКРОЛ----------------------------- */
+
 .js-cart-selected-products::-webkit-scrollbar {
-    width: 6px;
+    width: 0;
     height: 0px;
   }
-/* .js-cart-selected-products::-webkit-scrollbar-thumb {
-    top: 0;
-  bottom: 0;
-    position: absolute;
-    right: -12px;
-    height: 25px;
-  } */
+
 
 
 
 
 /* Класи для стилізації продуктів які прийдуть з локального сховища */
-
 .selected-item {
     display: flex;
     position: relative;
     /* justify-content: space-between; */
     box-sizing: content-box;
     max-width: 100%;
-    
-    
 }
 
 .cart-remove-product-btn{
@@ -198,8 +186,8 @@ padding: 0;
     flex-shrink: 0;
     border: none;
 
-    top: 0; /* Переміщення на половину висоти батьківського елемента */
-    right: 0; /* Переміщення на половину ширини батьківського елемента */
+    top: 0;
+    right: 0; 
     /* transform: translate(-50%, -50%);  */
     background: #E8E8E2;
     
@@ -310,17 +298,15 @@ margin-right: 6px;
 
 
 
-/* Класи лічильника */
 
+/* Класи лічильника */
 .js-price-count-section {
 display: flex;
 flex-direction: row;
 justify-content: space-between;
 box-sizing: content-box;
 max-width: 100%;
-
 }
-
 .js-counter-section{
 
     display: flex;
@@ -335,13 +321,11 @@ max-width: 100%;
     border-radius: 100px;
     border: 1px solid rgba(1, 1, 1, 0.10);
     background: #E8E8E2;
-
     position: absolute;
     right: 0;
 
-    /* display: none; */
+    display: none;
 }
-
 .btn-count-minus{
     border: none;
     border-radius: 100px;
@@ -350,8 +334,6 @@ max-width: 100%;
     padding: 0;
     background: #E8E8E2;
 }
-
-
 .btn-count-plus{
     border: none;
     border-radius: 100px;
@@ -360,20 +342,13 @@ max-width: 100%;
     padding: 0;
     background: #E8E8E2;
 }
-
 .count-product{
  max-width: 24px;   
  color: #010101;
-
 font-family: inherit;
 font-size: 16px;
-
-line-height: 1.13; /* 112.5% */
+line-height: 1.13;
 }
-
-
-
-
 
 
 
@@ -515,14 +490,6 @@ font-weight: 400;
 line-height: 18px; /* 128.571% */
 }
 
-/* .cart-input-field::placeholder {
-    color: #010101;
-    font-family: Neue Montreal;
-font-size: 14px;
-font-style: normal;
-font-weight: 400;
-line-height: 1.28px;
-  } */
 
 .js-email-checkout {
     width: 100%;
@@ -557,6 +524,7 @@ line-height: 1.28; /* 128.571% */
     padding-bottom: 60px;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 
     }
 
@@ -834,14 +802,6 @@ font-weight: 400;
 line-height: 1.28; /* 128.571% */
 }
 
-/* .cart-input-field::placeholder {
-    color: #010101;
-    font-family: Neue Montreal;
-font-size: 18px;
-font-style: normal;
-font-weight: 400;
-line-height: 1.33;
-  } */
 
 .js-email-checkout {
     max-width: 215px;
