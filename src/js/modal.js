@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { cartButtonStyle } from './popular';
 import { renderCards } from './filters';
+import { localStorageCheckCart } from './header';
 
 const refs = {
   closeModalBtn: document.querySelector('[data-action="close-modal"]'),
@@ -159,6 +160,7 @@ function onClickAddToCart(productDetails, isInCart) {
     updateAddToCartButton(true, productDetails);
   }
   renderCards();
+  localStorageCheckCart();
 }
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Функція для додавання продукту до корзини в локальному сховищі
