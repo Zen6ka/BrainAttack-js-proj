@@ -22,7 +22,7 @@ const input = document.querySelector(".cart-input")
 
 let conterProduct = 1;
 
-console.log("Test start");
+// console.log("Test start");
 // За замовчуванням сторінка кошика буде пустою.
 cartEmptyHidden();
 cartContainerHidden();
@@ -35,7 +35,7 @@ function localStorageCheck() { // ****** пізніше підшаманити, 
 }  // savedProducts ?   : null
 
 const parsedSavedProducts = localStorageCheck(); // результат повернення передаю змінній Розпарсених даних
-console.log(parsedSavedProducts) // Масив всіх об`єктів з ЛС за ключем cart
+// console.log(parsedSavedProducts) // Масив всіх об`єктів з ЛС за ключем cart
 
 
 // Основна логіка запиту
@@ -183,10 +183,10 @@ cartItemsQuantity.innerHTML = '0';
 function totalSumMarkup (array) {
   // Для додаткового функціоналу: Перевірка чи елементи масиву який предаються є числом:
   const arrayCheck = array.every(element => typeof element === 'number');
-  console.log(arrayCheck)
+  // console.log(arrayCheck)
   
   if (arrayCheck) { // Якщо так, тоді виконується підрахунок і відмальовка за Додатковим функціоналом, а якщо ні, тоді за базовим (через об`єкт)
-    console.log(arrayCheck)
+    // console.log(arrayCheck)
   // метод редюс буде рахувати мені суму цін за всі продукти. Потім цей результат я буду передавати в Тотал під час перевірки.
 
     const sumPrice = array.reduce((acc, currentProduct)=>{
@@ -360,7 +360,7 @@ const itemAllProductsPrice = document.querySelectorAll('.js-price-value');
 buttonPlus.addEventListener('click', couterIncrease);
 
 // ФУНКЦІЯ ДЛЯ ДОДАВАННЯ КІЛЬКОСТІ ТОВАРІВ
-function couterIncrease () {
+function couterIncrease (event) {
   conterProduct = conterProduct +=1;
   countValue.textContent = conterProduct;
 
@@ -371,6 +371,23 @@ function couterIncrease () {
 const productPriceValue = productPriceValueArray();
 totalSumMarkup(productPriceValue);
 productPriceRender(dataPriceProduct);
+
+const currentElementId = event.target.closest('[id]');
+const actualId = currentElementId ? currentElementId.id : null;
+
+console.log(event.target)
+
+const currentElementPrice = event.target.closest('.js-price-value');
+const actualPrice = currentElementPrice ? currentElementPrice.value : null;
+
+// if (event.turget === currentElementPrice.currentTarget) {
+//   console.log(actualPrice.value)
+//   console.log('sdsdsd')
+// }
+// console.log(actualPrice.value)
+
+
+
 };
 
 // СЛУХАЧ ДЛЯ ВІДНІМАННЯ ТОВАРІВ ЗА КНОПКОЮ
