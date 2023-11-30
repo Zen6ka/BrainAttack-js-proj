@@ -89,10 +89,25 @@ p {
   height: 20px;
 }
 
-.button-categories {
+.first-select-div{
+  max-width: 355px;
+  width: 100%;
   position: relative;
+}
+
+.div-for-categories{
+  background-color: transparent;
+  height: 428px;
+  position: absolute;
+  top: -52px;
+  left: 0;
+  overflow: hidden;
+}
+
+.button-categories {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .search-arrow {
@@ -103,7 +118,7 @@ p {
 }
 
 .first-select-search-not-focus {
-  width: 1px;
+  width: 100%;
   margin: -1px;
   border: 0;
   padding: 0;
@@ -127,7 +142,6 @@ p {
   transform: translateY(0);
   top: 56px;
   display: flex;
-  width: 335px;
   padding: 14px 0 14px 20px;
   flex-direction: column;
   justify-content: center;
@@ -199,6 +213,10 @@ p {
 
   .search-form {
     max-width: 269px;
+  }
+
+  .first-select-div{
+    max-width: 189px;
   }
 
   .input-search {

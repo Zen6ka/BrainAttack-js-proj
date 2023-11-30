@@ -284,7 +284,8 @@ export function renderCards() {
             }
         };
         if(product.is10PercentOff){
-        itemResult = `<li id="${product._id}" class="card-list-item id-for-del" data-id=${product._id}>
+        itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
+                <div id="${product._id}" class ="filters-for-click">
                 <div class = "div-img">
                 <img src="${product.img}" loading="lazy" class="cardlist-img" alt="${product.name}" />
                 </div>
@@ -296,16 +297,18 @@ export function renderCards() {
                 </div>
                     <p class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</p>
                 </div>
-                <div class="cartlist-btn">
-                ${iconShop}
-                </div>
                 <p class ="price-for-cards">$${product.price}</p>
                 <svg  class="discount-for-filter-cards">
                 <use href="${icons}#icon-discount-1"></use>
                 </svg>
+                </div>
+                <div class="cartlist-btn">
+                ${iconShop}
+                </div>
                 </li>`;
         } else {
-            itemResult = `<li id="${product._id}" class="card-list-item id-for-del" data-id=${product._id}>
+            itemResult = `<li class="card-list-item id-for-del" data-id=${product._id}>
+                <div id="${product._id}" class ="filters-for-click">
                 <div class = "div-img">
                 <img src="${product.img}" loading="lazy" class="cardlist-img filters-img" alt="${product.name}" />
                 </div>
@@ -317,20 +320,21 @@ export function renderCards() {
                 </div>    
                     <p class ="li-p-cards"><span class ="span-p-cards">Popularity: </span>${product.popularity}</p>
                 </div>
-                <div class="cartlist-btn">
-                ${iconShop}
-                </div>
                 <p class ="price-for-cards">$${product.price}</p>
                 <svg  class="visually-hidden">
                 <use href="${icons}#icon-discount-1"></use>
                 </svg>
+                </div>
+                <div class="cartlist-btn">
+                ${iconShop}
+                </div>
                 </li>`;
         }
         listResult.push(itemResult)
     });
     filtersResult.innerHTML = `<ul class="card-list">${listResult.join(" ")}</ul>`;
     workShopButton(products);
-    const cardFiltersImages = document.querySelectorAll('.card-list-item');
+    const cardFiltersImages = document.querySelectorAll('.filters-for-click');
 cardFiltersImages.forEach(img => {
     img.addEventListener('click', imageClick);
 });
