@@ -361,10 +361,24 @@ function workShopButton(products) {
             event.currentTarget.classList.remove('cardlist-add-cart-for-active');
             cartButtonStyle();
             localStorageCheckCart();
-            handleButtonClick(idShopButton);
+            console.log(event.currentTarget.getAttribute('id'));
+            handleButtonClick(event);
         })
     })
 };
+
+// export function handleButtonClick(event) {
+//     console.log(event.currentTarget.getAttribute('id'));
+//     if (ev.currentTarget !== undefined) {
+//       const productId = ev.currentTarget.dataset.id;
+//       const selectedProduct = products.find(p => p._id === productId);
+//       addToCart(selectedProduct);
+//       renderCards();
+//       localStorageCheckCart();
+//     } else { 
+//       return ;
+//   }
+//   }
 
 
 
