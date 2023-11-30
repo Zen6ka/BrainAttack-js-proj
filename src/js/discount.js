@@ -80,7 +80,8 @@ discountEl.addEventListener('click', event => {
 
 export function handleButtonClick(ev) {
   if (ev.currentTarget !== undefined) {
-    const productId = ev.currentTarget.dataset.id;
+    const productId = ev.currentTarget.dataset.id || ev.currentTarget.getAttribute('id');
+    products.forEach(p => console.log(p._id));
     const selectedProduct = products.find(p => p._id === productId);
     addToCart(selectedProduct);
     renderCards();
